@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="Vertiefungsmodul zum Lernlabor „Nation im Kopf“: Warum es keine nationalen Gene gibt – mit interaktiven Experimenten und Forschungsbefunden."/>
+<title>Gene ohne Reisepass – Vertiefungsmodul</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet"/>
+<style>
+:root,[data-theme="light"]{
+ --bg:#f3efe7;--surface:#faf8f3;--surface-2:#fffdf8;--offset:#e9e2d7;--dynamic:#ddd4c7;--divider:#d5cec3;--border:rgba(36,34,31,.15);
+ --text:#24221f;--muted:#625f59;--faint:#79746c;--inverse:#fffaf2;--primary:#9b402d;--primary-hover:#763020;--primary-hi:#ead7cf;
+ --teal:#176b67;--teal-hi:#d3e3df;--gold:#8c6717;--gold-hi:#eee2bf;--error:#9a3043;--error-hi:#f0d8dc;--success:#386838;--success-hi:#dbe8d7;
+ --g1:#2f5d8a;--g2:#4f8a7a;--g3:#b9a24a;--g4:#c0703f;
+ --shadow-sm:0 1px 2px rgba(65,48,34,.07);--shadow-md:0 8px 24px rgba(65,48,34,.10);
+ --font-display:'Fraunces',Georgia,serif;--font-body:'Atkinson Hyperlegible',Arial,sans-serif;
+ --text-xs:clamp(.75rem,.7rem + .25vw,.875rem);--text-sm:clamp(.875rem,.8rem + .35vw,1rem);--text-base:clamp(1rem,.95rem + .25vw,1.125rem);--text-lg:clamp(1.125rem,1rem + .75vw,1.5rem);--text-xl:clamp(1.5rem,1.2rem + 1.25vw,2.25rem);--text-2xl:clamp(2rem,1.4rem + 2.6vw,3.6rem);
+ --s1:.25rem;--s2:.5rem;--s3:.75rem;--s4:1rem;--s5:1.25rem;--s6:1.5rem;--s8:2rem;--s10:2.5rem;--s12:3rem;--s16:4rem;--r-sm:.375rem;--r-md:.5rem;--r-lg:.75rem;--r-xl:1rem
+}
+[data-theme="dark"]{--bg:#181715;--surface:#201e1b;--surface-2:#282521;--offset:#302d28;--dynamic:#3a3630;--divider:#3a3732;--border:rgba(238,233,225,.16);--text:#eee9e1;--muted:#c0b8ae;--faint:#9d958b;--inverse:#251813;--primary:#db826c;--primary-hover:#ee9e8a;--primary-hi:#4f3028;--teal:#6bb6af;--teal-hi:#263e3c;--gold:#d6ae57;--gold-hi:#443a25;--error:#e5788c;--error-hi:#4d2930;--success:#8ab67d;--success-hi:#2c3c28;--g1:#6f9fd0;--g2:#7cbca9;--g3:#d9c46a;--g4:#e09566;--shadow-sm:0 1px 2px rgba(0,0,0,.25);--shadow-md:0 8px 24px rgba(0,0,0,.3)}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth;scroll-padding-top:5rem;-webkit-text-size-adjust:none;text-size-adjust:none}
+body{min-height:100dvh;background:var(--bg);color:var(--text);font-family:var(--font-body);font-size:var(--text-base);line-height:1.6;-webkit-font-smoothing:antialiased}
+button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer}
+h1,h2,h3{line-height:1.15;text-wrap:balance}p,li{max-width:72ch;text-wrap:pretty}
+a{color:var(--primary)}:focus-visible{outline:3px solid var(--primary);outline-offset:3px;border-radius:var(--r-sm)}
+.skip{position:fixed;left:1rem;top:-5rem;background:var(--text);color:var(--bg);padding:.75rem 1rem;z-index:100}.skip:focus{top:1rem}
+
+/* App bar */
+.appbar{position:sticky;top:0;z-index:30;background:color-mix(in oklab,var(--bg) 92%,transparent);backdrop-filter:blur(14px);border-bottom:1px solid var(--border)}
+.appbar-inner{max-width:1180px;margin:auto;min-height:64px;padding:0 var(--s5);display:flex;align-items:center;gap:var(--s4)}
+.brand{display:flex;align-items:center;gap:var(--s3);font-weight:700}.brand small{display:block;color:var(--muted);font-size:var(--text-xs);font-weight:400}
+.mark{width:34px;height:34px;color:var(--primary)}
+.toc{margin-left:auto;display:flex;gap:var(--s1);overflow-x:auto;scrollbar-width:none}.toc::-webkit-scrollbar{display:none}
+.toc a{white-space:nowrap;text-decoration:none;color:var(--muted);font-size:var(--text-sm);padding:var(--s2) var(--s3);border-radius:999px}
+.toc a:hover,.toc a.on{background:var(--surface-2);color:var(--text);box-shadow:var(--shadow-sm)}
+.icon-btn{width:44px;height:44px;flex:0 0 auto;display:grid;place-items:center;border:1px solid var(--border);background:var(--surface);border-radius:var(--r-md)}
+.icon-btn:hover{background:var(--offset)}
+.read-bar{position:absolute;left:0;bottom:-1px;height:3px;width:0;background:var(--primary)}
+
+main{max-width:1180px;margin:auto;padding:0 var(--s5) var(--s16)}
+section{padding-top:var(--s16)}
+.eyebrow{display:inline-flex;align-items:center;gap:var(--s2);font-size:var(--text-xs);font-weight:700;text-transform:uppercase;letter-spacing:.1em;color:var(--primary);margin-bottom:var(--s3)}
+.eyebrow::before{content:"";width:24px;height:2px;background:currentColor}
+h2.title{font-family:var(--font-display);font-size:var(--text-xl);margin-bottom:var(--s3);max-width:28ch}
+.intro{color:var(--muted);font-size:var(--text-lg);max-width:62ch;margin-bottom:var(--s8)}
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);padding:var(--s6);box-shadow:var(--shadow-sm)}
+.grid2{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s5)}
+.grid3{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s4)}
+.tag{display:inline-block;border:1px solid var(--border);border-radius:999px;padding:2px var(--s3);font-size:var(--text-xs);font-weight:700;color:var(--primary)}
+.note{font-size:var(--text-sm);color:var(--muted);margin-top:var(--s3)}
+sup a{font-weight:700;text-decoration:none;font-size:.75em}
+.btn{min-height:44px;border:1px solid var(--border);border-radius:var(--r-md);padding:var(--s2) var(--s5);background:var(--surface-2);font-weight:700}
+.btn:hover{background:var(--offset)}.btn.primary{background:var(--primary);color:var(--inverse);border-color:transparent}.btn.primary:hover{background:var(--primary-hover)}
+.btn.on{background:var(--text);color:var(--bg)}
+.callout{padding:var(--s5);border-radius:var(--r-lg);background:var(--gold-hi)}
+.callout.teal{background:var(--teal-hi)}
+.dark{background:var(--text);color:var(--bg);border-radius:var(--r-xl);padding:var(--s8)}
+.dark .tag{color:var(--bg);border-color:color-mix(in oklab,var(--bg) 40%,transparent)}
+
+/* Hero */
+.hero{padding-top:var(--s12);display:grid;grid-template-columns:minmax(0,1.2fr) minmax(280px,.8fr);gap:var(--s10);align-items:center}
+.hero h1{font-family:var(--font-display);font-size:var(--text-2xl);margin-bottom:var(--s5)}
+.hero h1 em{font-style:normal;color:var(--primary)}
+.hero .lead{font-size:var(--text-lg);color:var(--muted);max-width:52ch}
+.hero-art{position:relative;aspect-ratio:1/1;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-xl);box-shadow:var(--shadow-md);overflow:hidden}
+.hero-art svg{width:100%;height:100%}
+.helix-dot{animation:pulse 3.2s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:.35}50%{opacity:1}}
+.stamp{animation:stamp 900ms cubic-bezier(.2,1.6,.4,1) 600ms both}
+@keyframes stamp{from{opacity:0;transform:scale(1.6) rotate(-14deg)}to{opacity:1;transform:scale(1) rotate(-14deg)}}
+.motto{margin-top:var(--s8);display:flex;gap:var(--s4);align-items:flex-start;padding:var(--s5);border-left:4px solid var(--primary);background:var(--surface);border-radius:0 var(--r-lg) var(--r-lg) 0}
+.motto strong{font-family:var(--font-display);font-size:var(--text-lg)}
+
+/* Myth cards */
+.myths{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:var(--s4)}
+.flip{perspective:1000px;min-height:230px;border:0;background:none;text-align:left;padding:0}
+.flip-inner{position:relative;width:100%;height:100%;min-height:230px;transition:transform 600ms cubic-bezier(.16,1,.3,1);transform-style:preserve-3d}
+.flip.open .flip-inner{transform:rotateY(180deg)}
+.face{position:absolute;inset:0;backface-visibility:hidden;border-radius:var(--r-xl);padding:var(--s5);display:flex;flex-direction:column;gap:var(--s3);border:1px solid var(--border)}
+.front{background:var(--surface)}.front p{font-family:var(--font-display);font-size:var(--text-lg);line-height:1.25}
+.front small{margin-top:auto;color:var(--muted);font-size:var(--text-xs)}
+.back{transform:rotateY(180deg);background:var(--surface-2);font-size:var(--text-sm)}
+.verdict{font-weight:700;font-size:var(--text-sm);display:inline-flex;align-items:center;gap:var(--s2)}
+.verdict.no{color:var(--error)}.verdict.part{color:var(--gold)}.verdict.yes{color:var(--success)}
+
+/* Gradient lab */
+.gradient-lab{display:grid;gap:var(--s5)}
+.strip-wrap{position:relative;height:120px;border-radius:var(--r-lg);overflow:hidden;border:1px solid var(--border)}
+#strip{width:100%;height:100%;display:block}
+.border-line{position:absolute;top:0;bottom:0;width:0;border-left:3px dashed var(--text);pointer-events:none}
+.border-line span{position:absolute;top:8px;left:6px;white-space:nowrap;font-size:var(--text-xs);font-weight:700;background:var(--text);color:var(--bg);padding:2px 8px;border-radius:999px}
+.swatches{display:grid;grid-template-columns:1fr auto 1fr;gap:var(--s4);align-items:center}
+.swatch{display:flex;align-items:center;gap:var(--s3)}
+.swatch i{width:48px;height:48px;border-radius:var(--r-md);border:1px solid var(--border);flex:0 0 auto}
+.swatch.right{justify-content:flex-end;text-align:right}
+.diff{font-family:var(--font-display);font-size:var(--text-lg);color:var(--primary);text-align:center}
+input[type=range]{width:100%;accent-color:var(--primary)}
+.mode-row{display:flex;flex-wrap:wrap;gap:var(--s2)}
+.stat-row{display:grid;grid-template-columns:repeat(3,1fr);gap:var(--s4)}
+.stat{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s5)}
+.stat b{display:block;font-family:var(--font-display);font-size:var(--text-xl);color:var(--primary);line-height:1.1}
+.stat span{font-size:var(--text-sm);color:var(--muted)}
+
+/* Balkan chart */
+.chart{display:grid;gap:var(--s5)}
+.hg h3{font-size:var(--text-base);margin-bottom:var(--s2)}
+.bar-row{display:grid;grid-template-columns:110px 1fr 48px;gap:var(--s3);align-items:center;margin-bottom:6px;font-size:var(--text-sm)}
+.bar{height:16px;background:var(--dynamic);border-radius:999px;overflow:hidden}
+.bar i{display:block;height:100%;width:0;border-radius:999px;transition:width 1s cubic-bezier(.16,1,.3,1)}
+.bar-row b{font-variant-numeric:tabular-nums;text-align:right}
+.legend{display:flex;gap:var(--s4);flex-wrap:wrap;font-size:var(--text-sm)}
+.legend span{display:inline-flex;align-items:center;gap:var(--s2)}.legend i{width:14px;height:14px;border-radius:4px}
+.timeline{position:relative;display:grid;gap:var(--s4);padding-left:var(--s8)}
+.timeline::before{content:"";position:absolute;left:11px;top:6px;bottom:6px;width:3px;background:linear-gradient(var(--g1),var(--g2),var(--g3),var(--g4),var(--primary));border-radius:3px}
+.tl{position:relative}
+.tl::before{content:"";position:absolute;left:calc(-1 * var(--s8) + 4px);top:5px;width:17px;height:17px;border-radius:50%;background:var(--surface);border:3px solid var(--primary)}
+.tl time{font-size:var(--text-xs);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--primary)}
+.tl h3{font-size:var(--text-base);margin:2px 0}
+.tl p{font-size:var(--text-sm);color:var(--muted)}
+.tl.nation::before{background:var(--primary)}
+
+/* Ancestors */
+.anc{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:var(--s6);align-items:center}
+.big-num{font-family:var(--font-display);font-size:clamp(2rem,1.2rem + 3.5vw,4rem);color:var(--primary);line-height:1;font-variant-numeric:tabular-nums;word-break:break-all}
+.tree{display:flex;flex-wrap:wrap;gap:3px;max-height:220px;overflow:hidden;align-content:flex-start}
+.tree i{width:9px;height:9px;border-radius:50%;background:var(--teal);opacity:.75}
+.tree i.me{background:var(--primary);opacity:1;width:14px;height:14px}
+
+/* Within/between */
+.dots{display:grid;grid-template-columns:repeat(20,1fr);gap:4px;max-width:520px}
+.dots i{aspect-ratio:1;border-radius:50%;background:var(--teal);transition:background .4s}
+.dots i.btw{background:var(--primary)}
+
+/* DNA test sim */
+.sim{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:var(--s6)}
+.seg-track{position:relative;height:90px;border-radius:var(--r-lg);background:linear-gradient(90deg,var(--g1),var(--g2),var(--g3),var(--g4));opacity:.9;margin:var(--s4) 0 var(--s2)}
+.seg{position:absolute;top:50%;width:14px;height:14px;border-radius:50%;background:var(--surface-2);border:2px solid var(--text);transform:translate(-50%,-50%)}
+.cut{position:absolute;top:-8px;bottom:-8px;border-left:3px solid var(--text)}
+.cut span{position:absolute;bottom:-26px;left:-4px;font-size:var(--text-xs);font-weight:700;white-space:nowrap}
+.axis{display:flex;justify-content:space-between;font-size:var(--text-xs);color:var(--muted);margin-top:var(--s6)}
+.result-table{width:100%;border-collapse:collapse;font-variant-numeric:tabular-nums}
+.result-table td{padding:var(--s2) 0;border-bottom:1px solid var(--divider)}
+.result-table td:last-child{text-align:right;font-weight:700}
+.result-table .mini{height:8px;background:var(--dynamic);border-radius:999px;overflow:hidden;margin-top:4px}
+.result-table .mini i{display:block;height:100%;background:var(--primary);transition:width .5s}
+.dna-same{margin-top:var(--s4);padding:var(--s3) var(--s4);border-radius:var(--r-md);background:var(--success-hi);font-size:var(--text-sm);font-weight:700}
+
+/* Convergence */
+.conv{display:grid;grid-template-columns:1fr 70px 1fr;gap:var(--s3);align-items:stretch;margin-top:var(--s4)}
+.conv .side{background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s4)}
+.conv .side h4{font-size:var(--text-sm);margin-bottom:var(--s1)}
+.conv .side code{font-size:var(--text-xs);background:var(--offset);padding:1px 6px;border-radius:4px}
+.conv .mid{display:grid;place-items:center;text-align:center;font-size:var(--text-xs);font-weight:700;color:var(--primary)}
+
+/* Sorting game */
+.sort-statements{display:flex;flex-wrap:wrap;gap:var(--s2);margin-bottom:var(--s5)}
+.chip{border:1px solid var(--border);background:var(--surface-2);border-radius:999px;padding:var(--s2) var(--s4);text-align:left;font-size:var(--text-sm)}
+.chip.sel{outline:3px solid var(--primary)}
+.chip.ok{background:var(--success-hi);border-color:var(--success)}
+.chip.bad{animation:shake .4s}
+@keyframes shake{25%{transform:translateX(-5px)}75%{transform:translateX(5px)}}
+.bins{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s3)}
+.bin{min-height:180px;border:2px dashed var(--border);border-radius:var(--r-lg);padding:var(--s4);background:var(--surface);text-align:left;display:flex;flex-direction:column;gap:var(--s2)}
+.bin:hover{border-color:var(--primary)}
+.bin h3{font-size:var(--text-base)}.bin small{color:var(--muted);font-size:var(--text-xs)}
+.bin .chip{font-size:var(--text-xs);cursor:default}
+.feedback{min-height:28px;margin-top:var(--s3);font-weight:700}
+
+/* Mila */
+.mila{display:grid;grid-template-columns:minmax(0,.8fr) minmax(0,1.2fr);gap:var(--s6)}
+.persons{display:grid;gap:var(--s3)}
+.person{display:grid;grid-template-columns:56px 1fr;gap:var(--s3);align-items:center;background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s4)}
+.avatar{width:56px;height:56px;border-radius:50%;display:grid;place-items:center;font-family:var(--font-display);font-weight:700;font-size:1.3rem;color:var(--inverse)}
+.pills{display:flex;flex-wrap:wrap;gap:4px;margin-top:4px}.pills span{font-size:var(--text-xs);background:var(--offset);border-radius:999px;padding:1px 8px}
+details.q{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s4);margin-bottom:var(--s2)}
+details.q summary{font-weight:700;cursor:pointer;list-style:none;display:flex;gap:var(--s3)}
+details.q summary::before{content:"+";color:var(--primary);font-weight:700;width:1em}
+details.q[open] summary::before{content:"–"}
+details.q p{margin-top:var(--s3);color:var(--muted);font-size:var(--text-sm)}
+
+/* Quiz */
+.quiz{display:grid;gap:var(--s4)}
+.qcard{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s5)}
+.qcard h3{font-size:var(--text-base);margin-bottom:var(--s3)}
+.opts{display:grid;gap:var(--s2)}
+.opt{text-align:left;padding:var(--s3) var(--s4);border:1px solid var(--border);border-radius:var(--r-md);background:var(--surface-2)}
+.opt:hover{background:var(--offset)}.opt.correct{background:var(--success-hi);border-color:var(--success)}.opt.wrong{background:var(--error-hi);border-color:var(--error)}
+.why{display:none;margin-top:var(--s3);font-size:var(--text-sm);color:var(--muted)}.qcard.done .why{display:block}
+.score{display:flex;align-items:center;gap:var(--s4);margin-top:var(--s5)}
+.ring{width:84px;height:84px;border-radius:50%;display:grid;place-items:center;background:conic-gradient(var(--primary) 0deg,var(--dynamic) 0);position:relative;font-family:var(--font-display);font-weight:700}
+.ring::before{content:"";position:absolute;inset:9px;border-radius:50%;background:var(--bg)}.ring span{z-index:1}
+
+/* Law timeline */
+.law{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s3)}
+.law article{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s4);border-top:4px solid var(--g1)}
+.law article:nth-child(2){border-top-color:var(--error)}.law article:nth-child(3){border-top-color:var(--g3)}.law article:nth-child(4){border-top-color:var(--teal)}
+.law time{font-family:var(--font-display);font-size:var(--text-lg);font-weight:700}
+.law p{font-size:var(--text-sm);color:var(--muted);margin-top:var(--s2)}
+
+textarea{width:100%;min-height:130px;margin-top:var(--s2);padding:var(--s3);background:var(--surface-2);border:1px solid var(--border);border-radius:var(--r-md);resize:vertical}
+.sources ol{padding-left:var(--s5);display:grid;gap:var(--s2);font-size:var(--text-sm);color:var(--muted)}
+.sources li{max-width:none}
+footer{margin-top:var(--s12);padding-top:var(--s6);border-top:1px solid var(--divider);font-size:var(--text-sm);color:var(--muted)}
+
+.reveal{opacity:0;transform:translateY(14px);transition:opacity .7s ease,transform .7s cubic-bezier(.16,1,.3,1)}
+.reveal.in{opacity:1;transform:none}
+
+@media(max-width:900px){.hero,.anc,.sim,.mila{grid-template-columns:1fr}.bins{grid-template-columns:1fr 1fr}.law{grid-template-columns:1fr 1fr}.grid3{grid-template-columns:1fr}.toc{display:none}.hero-art{max-width:420px}}
+@media(max-width:640px){main{padding:0 var(--s4) var(--s12)}section{padding-top:var(--s12)}.grid2,.bins,.law,.stat-row{grid-template-columns:1fr}.conv{grid-template-columns:1fr}.conv .mid{padding:var(--s2)}.bar-row{grid-template-columns:84px 1fr 40px}.dots{grid-template-columns:repeat(10,1fr)}.swatches{grid-template-columns:1fr}.swatch.right{justify-content:flex-start;text-align:left;flex-direction:row-reverse}.brand small{display:none}.dark{padding:var(--s5)}}
+@media print{.appbar,.btn,.mode-row{display:none!important}.reveal{opacity:1;transform:none}.flip-inner{transform:none!important}.back{position:relative;transform:none}.front{display:none}section{break-inside:avoid}}
+@media(prefers-reduced-motion:reduce){*,*::before,*::after{animation-duration:.01ms!important;transition-duration:.01ms!important;scroll-behavior:auto!important}.reveal{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Zum Inhalt springen</a>
+<header class="appbar"><div class="appbar-inner">
+ <div class="brand"><svg class="mark" viewBox="0 0 48 48" fill="none" aria-hidden="true"><path d="M14 6c0 12 20 12 20 24S14 30 14 42" stroke="currentColor" stroke-width="3"/><path d="M34 6c0 12-20 12-20 24s20 0 20 12" stroke="currentColor" stroke-width="3" opacity=".45"/><path d="M17 13h14M17 35h14M20 24h8" stroke="currentColor" stroke-width="2.4"/></svg><div><span>Gene ohne Reisepass</span><small>Vertiefung zu „Nation im Kopf“</small></div></div>
+ <nav class="toc" aria-label="Abschnitte">
+  <a href="#mythen">Mythen</a><a href="#verlauf">Farbverlauf</a><a href="#balkan">Balkan</a><a href="#europa">Europa</a><a href="#deutschland">Deutschland</a><a href="#dnatest">DNA-Test</a><a href="#merkmale">Merkmale</a><a href="#ebenen">Ebenen</a><a href="#mila">Mila</a><a href="#check">Check</a>
+ </nav>
+ <a class="icon-btn" href="index.html" aria-label="Zurück zum Lernlabor „Nation im Kopf“" title="Zum Lernlabor" style="text-decoration:none;color:inherit;margin-left:auto"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-8 9 8v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/></svg></a>
+ <button class="icon-btn" id="themeBtn" aria-label="Hell/Dunkel wechseln" title="Hell/Dunkel"><svg id="themeIcon" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/></svg></button>
+ <div class="read-bar" id="readBar"></div>
+</div></header>
+
+<main id="main">
+
+<!-- HERO -->
+<div class="hero">
+ <div>
+  <span class="eyebrow">Vertiefungsmodul · Biologie trifft Demokratiebildung</span>
+  <h1>Gibt es ein <em>deutsches</em> oder ein <em>serbisches</em> Gen?</h1>
+  <p class="lead">Kurze Antwort: Nein. Gene erzählen etwas über Verwandtschaft und darüber, wo Vorfahren wahrscheinlich gelebt haben. Staatsangehörigkeit, Sprache, Religion oder nationale Identität stehen nicht in der DNA. In diesem Modul prüfst du diese Aussage an Forschungsbefunden – und lernst, wo sie zu ungenau wird.</p>
+  <div class="motto"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" aria-hidden="true"><rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="10" r="3"/><path d="M8.5 16h7"/></svg><div><strong>Gene haben eine Familiengeschichte, aber keinen Reisepass.</strong><p class="note" style="margin-top:4px">Merksatz für das ganze Modul</p></div></div>
+ </div>
+ <div class="hero-art" aria-label="Illustration: DNA-Doppelhelix neben einem Reisepass mit dem Stempel ‚nicht enthalten‘">
+  <svg viewBox="0 0 400 400" role="img">
+   <defs><linearGradient id="hg" x1="0" x2="1"><stop offset="0" stop-color="var(--g1)"/><stop offset=".5" stop-color="var(--g3)"/><stop offset="1" stop-color="var(--g4)"/></linearGradient></defs>
+   <rect x="0" y="0" width="400" height="400" fill="var(--surface)"/>
+   <g id="helix" transform="translate(40,30)"></g>
+   <g transform="translate(215,120) rotate(6)">
+    <rect width="140" height="190" rx="12" fill="var(--primary)"/>
+    <rect x="12" y="12" width="116" height="166" rx="8" fill="none" stroke="var(--inverse)" stroke-opacity=".35"/>
+    <circle cx="70" cy="70" r="24" fill="none" stroke="var(--inverse)" stroke-width="2.5" opacity=".8"/>
+    <path d="M46 70h48M70 46c-10 12-10 36 0 48M70 46c10 12 10 36 0 48" stroke="var(--inverse)" stroke-width="2" fill="none" opacity=".8"/>
+    <text x="70" y="128" text-anchor="middle" fill="var(--inverse)" font-family="Fraunces,serif" font-size="15" font-weight="700" letter-spacing="2">PASS</text>
+    <text x="70" y="148" text-anchor="middle" fill="var(--inverse)" font-size="10" opacity=".75">Recht · Politik</text>
+   </g>
+   <g class="stamp" style="transform-origin:290px 290px">
+    <rect x="215" y="262" width="150" height="54" rx="6" fill="none" stroke="var(--teal)" stroke-width="3.5"/>
+    <text x="290" y="285" text-anchor="middle" fill="var(--teal)" font-weight="700" font-size="14" letter-spacing="1">NICHT IN DER</text>
+    <text x="290" y="305" text-anchor="middle" fill="var(--teal)" font-weight="700" font-size="14" letter-spacing="1">DNA ENTHALTEN</text>
+   </g>
+   <text x="40" y="385" fill="var(--muted)" font-size="12">DNA · Abstammung · Verwandtschaft</text>
+  </svg>
+ </div>
+</div>
+
+<!-- MYTHEN -->
+<section id="mythen" class="reveal">
+ <span class="eyebrow">01 · Vorwissen prüfen</span>
+ <h2 class="title">Stimmt das? Fünf Aussagen zum Umdrehen</h2>
+ <p class="intro">Entscheide zuerst für dich: richtig, falsch oder „kommt darauf an“? Tippe dann auf eine Karte.</p>
+ <div class="myths" id="myths"></div>
+</section>
+
+<!-- FARBVERLAUF -->
+<section id="verlauf" class="reveal">
+ <span class="eyebrow">02 · Experiment</span>
+ <h2 class="title">Der Farbverlauf: Wo endet „deutsche“ DNA?</h2>
+ <p class="intro">Der Streifen steht für die Häufigkeit genetischer Varianten quer durch einen Teil Europas. Verschiebe die Staatsgrenze. Ändert sich die Farbe an der Linie plötzlich?</p>
+ <div class="card gradient-lab">
+  <div class="mode-row" role="group" aria-label="Modell wählen">
+   <button class="btn on" data-mode="real">Forschungsbefund: Verlauf</button>
+   <button class="btn" data-mode="myth">Vorstellung: „Nationale Blöcke“</button>
+  </div>
+  <div class="strip-wrap"><canvas id="strip" aria-label="Farbverlauf als Modell genetischer Variation"></canvas><div class="border-line" id="borderLine"><span>Staatsgrenze</span></div></div>
+  <label for="borderRange" class="note" style="margin:0">Grenze verschieben</label>
+  <input type="range" id="borderRange" min="5" max="95" value="50"/>
+  <div class="swatches">
+   <div class="swatch"><i id="swL"></i><div><b>1 km links</b><br/><small class="note" style="margin:0">vor der Grenze</small></div></div>
+   <div class="diff" id="diffText">Unterschied: kaum sichtbar</div>
+   <div class="swatch right"><div><b>1 km rechts</b><br/><small class="note" style="margin:0">hinter der Grenze</small></div><i id="swR"></i></div>
+  </div>
+ </div>
+ <div class="stat-row" style="margin-top:var(--s5)">
+  <div class="stat"><b>≈ 1.400</b><span>Personen aus fast drei Dutzend europäischen Ländern wurden in der bekannten Nature-Studie von Novembre u. a. (2008) verglichen.<sup><a href="#q2">[2]</a></sup></span></div>
+  <div class="stat"><b>50 % · 310 km</b><span>Die Hälfte der Personen ließ sich allein über DNA bis auf etwa 310 km genau ihrem Herkunftsort zuordnen …<sup><a href="#q2">[2]</a></sup></span></div>
+  <div class="stat"><b>90 % · 700 km</b><span>… und 90 % auf etwa 700 km genau. Gene folgen also der <em>Entfernung</em> – nicht dem Grenzverlauf.<sup><a href="#q2">[2]</a></sup></span></div>
+ </div>
+ <div class="callout" style="margin-top:var(--s5)"><strong>Genauer hinsehen:</strong> Trotz insgesamt geringer genetischer Unterschiede zwischen Europäerinnen und Europäern ergibt die Auswertung ein Bild, das einer Europakarte ähnelt.<sup><a href="#q2">[2]</a></sup> In der Schweiz zeigten sich sogar leichte Unterschiede zwischen deutsch- und italienischsprachigen Gruppen. Das heißt nicht, dass Sprache in den Genen liegt – sondern dass Sprachgrenzen beeinflusst haben, wer wen heiratete. <em>Kultur prägt Familiengeschichte, nicht umgekehrt.</em></div>
+</section>
+
+<!-- BALKAN -->
+<section id="balkan" class="reveal">
+ <span class="eyebrow">03 · Fallbeispiel Balkan</span>
+ <h2 class="title">Drei Nationen – ein gemeinsamer Genpool</h2>
+ <p class="intro">Erwartung vieler: Wenn sich Kroaten, Serben und Bosniaken als verschiedene Nationen verstehen, müssten sie genetisch klar zu trennen sein. Was zeigt die Forschung?</p>
+ <div class="grid2">
+  <div class="card">
+   <span class="tag">Studie 2005 · 256 Männer aus Bosnien-Herzegowina</span>
+   <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin:var(--s3) 0">Väterliche Linien (Y-Chromosom)</h3>
+   <p class="note" style="margin-bottom:var(--s4)">Untersucht wurden 90 Kroaten, 81 Serben und 85 Bosniaken. Eine <strong>Haplogruppe</strong> ist eine Gruppe verwandter väterlicher Abstammungslinien.<sup><a href="#q4">[4]</a></sup></p>
+   <div class="legend" style="margin-bottom:var(--s4)"><span><i style="background:var(--g1)"></i>Kroaten</span><span><i style="background:var(--g2)"></i>Bosniaken</span><span><i style="background:var(--g4)"></i>Serben</span></div>
+   <div class="chart" id="hgChart"></div>
+   <p class="note">Werte gerundet. Bei Haplogruppe J wurde unter den Kroaten nur eine einzige Person gefunden.<sup><a href="#q4">[4]</a></sup></p>
+  </div>
+  <div class="card" style="display:flex;flex-direction:column;gap:var(--s4)">
+   <h3 style="font-family:var(--font-display);font-size:var(--text-lg)">Was zeigt die Grafik?</h3>
+   <p>Alle drei Linien kommen in <strong>allen drei Gruppen</strong> vor. Die Unterschiede sind <em>Häufigkeiten</em>, keine Grenzen: Wer eine bestimmte Haplogruppe trägt, ist dadurch weder Kroate noch Serbe.</p>
+   <p>Die Forschenden selbst fassen zusammen: Trotz einiger mengenmäßiger Unterschiede teilen die drei Gruppen einen großen Teil desselben alten, für den Balkan typischen Genpools.<sup><a href="#q4">[4]</a></sup></p>
+   <div class="callout teal"><strong>Didaktische Pointe:</strong> Die DNA folgt hier stärker der gemeinsamen regionalen Bevölkerungsgeschichte als den später entstandenen nationalen Grenzen.</div>
+   <p class="note">Achtung, Grenze der Studie: Das Y-Chromosom zeigt nur die rein väterliche Linie – also einen sehr kleinen Ausschnitt aus dem Stammbaum eines Menschen.</p>
+  </div>
+ </div>
+
+ <div class="card" style="margin-top:var(--s5)">
+  <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--s2)">Zeitstrahl: Wie entstand die Bevölkerung des Balkans?</h3>
+  <p class="note" style="margin-bottom:var(--s6)">Grundlage ist eine Studie mit Genomdaten von 136 Menschen aus dem 1. Jahrtausend n. Chr. (Cell, 2023).<sup><a href="#q5">[5]</a></sup> Die nationalen Kategorien kommen erst ganz am Ende.</p>
+  <div class="timeline">
+   <div class="tl"><time>Vor der Römerzeit</time><h3>Ansässige Bevölkerung</h3><p>Menschen der Eisenzeit leben bereits in der gesamten Region.</p></div>
+   <div class="tl"><time>Römische Kaiserzeit</time><h3>Zuwanderung aus Anatolien</h3><p>Trotz starker römischer Militärpräsenz stammt nur wenig Abstammung von Menschen italischer Herkunft – aber viele Menschen mit anatolischen Vorfahren ziehen zu.<sup><a href="#q5">[5]</a></sup></p></div>
+   <div class="tl"><time>ca. 250–550 n. Chr.</time><h3>Gemischte „Barbaren“-Verbände</h3><p>Zuwandernde mit Vorfahren aus Mittel- und Nordeuropa sowie aus der Steppe. Die Wanderungsverbände waren ethnisch vielfältig.<sup><a href="#q5">[5]</a></sup></p></div>
+   <div class="tl"><time>Ab dem 6./7. Jh.</time><h3>Slawische Migration</h3><p>Nach dem Ende der römischen Herrschaft kommen Menschen, die heutigen slawischsprachigen Osteuropäern genetisch ähneln. Sie tragen 30–60 % zur Abstammung der Balkanbevölkerung bei.<sup><a href="#q5">[5]</a></sup> Es wanderten ganze Familien über mehrere Generationen.</p></div>
+   <div class="tl nation"><time>19. und 20. Jahrhundert</time><h3>Nationen entstehen</h3><p>Religion, Schriftsprache, Schulen, Staaten, Kriege und Grenzziehungen machen aus einer gemeinsam gewachsenen Bevölkerung verschiedene nationale „Wir“-Gruppen. Die DNA hat sich dafür nicht verändert.</p></div>
+  </div>
+ </div>
+
+ <div class="dark" style="margin-top:var(--s5)">
+  <span class="tag">Arbeitsauftrag</span>
+  <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin:var(--s3) 0">Erkläre den scheinbaren Widerspruch</h3>
+  <p>Menschen können sich als Angehörige deutlich verschiedener Nationen verstehen, obwohl sie einen großen Teil ihrer biologischen Abstammungsgeschichte teilen. Wie passt das zusammen? Nutze Andersons Begriff der „vorgestellten Gemeinschaft“.</p>
+  <textarea id="balkanTask" aria-label="Deine Antwort zum Balkan-Arbeitsauftrag" placeholder="Die Gruppen unterscheiden sich nicht durch eigene nationale Gene. Ihre Zugehörigkeit entstand …" style="background:color-mix(in oklab,var(--bg) 10%,var(--text));color:var(--bg);border-color:color-mix(in oklab,var(--bg) 30%,transparent)"></textarea>
+ </div>
+</section>
+
+<!-- EUROPA -->
+<section id="europa" class="reveal">
+ <span class="eyebrow">04 · Rechenexperiment</span>
+ <h2 class="title">Wie viele Vorfahren hattest du vor 1.000 Jahren?</h2>
+ <p class="intro">Jeder Mensch hat 2 Eltern, 4 Großeltern, 8 Urgroßeltern … Verschiebe den Regler und beobachte, was mit der Zahl der „Plätze“ im Stammbaum passiert.</p>
+ <div class="card anc">
+  <div>
+   <label for="genRange"><b>Generationen zurück:</b> <span id="genOut">10</span> <span class="note" id="yearsOut">(≈ 250 Jahre)</span></label>
+   <input type="range" id="genRange" min="1" max="40" value="10"/>
+   <p class="note" style="margin-top:var(--s4)">Plätze im Stammbaum in dieser Generation:</p>
+   <div class="big-num" id="ancNum">1.024</div>
+   <p id="ancMsg" style="margin-top:var(--s3)"></p>
+  </div>
+  <div class="tree" id="tree" aria-hidden="true"></div>
+ </div>
+ <div class="grid2" style="margin-top:var(--s5)">
+  <div class="card">
+   <span class="tag">Ralph &amp; Coop, PLOS Biology 2013</span>
+   <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin:var(--s3) 0">Europa ist eine große Verwandtschaft</h3>
+   <p>Die Studie verglich Genomdaten von 2.257 Menschen aus ganz Europa und fand 1,9 Millionen lange, gemeinsam geerbte DNA-Abschnitte.<sup><a href="#q3">[3]</a></sup> Zwei Menschen aus benachbarten Regionen teilen etwa 2 bis 12 <em>genetische</em> gemeinsame Vorfahren aus den letzten 1.500 Jahren. Selbst Menschen von entgegengesetzten Enden Europas haben rechnerisch Millionen gemeinsamer <em>genealogischer</em> Vorfahren aus den letzten 1.000 Jahren.<sup><a href="#q3">[3]</a></sup></p>
+  </div>
+  <div class="card">
+   <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--s3)">Warum der Regler „explodiert“</h3>
+   <p>Vor rund 33 Generationen hättest du über acht Milliarden Plätze im Stammbaum – weit mehr Menschen, als damals in Europa lebten. Die Lösung: Dieselben Personen tauchen <strong>sehr oft</strong> im Stammbaum auf. Stammbäume überlappen sich – über alle heutigen Grenzen hinweg.</p>
+   <p class="note">Unterschied: <em>genealogischer</em> Vorfahre = Person im Stammbaum. <em>Genetischer</em> Vorfahre = jemand, von dem du tatsächlich noch DNA-Stücke trägst. Von den meisten Vorfahren erbst du keine messbare DNA.<sup><a href="#q3">[3]</a></sup></p>
+  </div>
+ </div>
+ <div class="card" style="margin-top:var(--s5)">
+  <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--s2)">Wo liegen die meisten genetischen Unterschiede?</h3>
+  <p style="margin-bottom:var(--s4)">Schon 1972 berechnete der Genetiker Richard Lewontin: Im Durchschnitt liegen etwa <strong>85 %</strong> der menschlichen genetischen Vielfalt <em>innerhalb</em> von Bevölkerungen – nur ein kleiner Rest zwischen ihnen.<sup><a href="#q6">[6]</a></sup> Spätere Studien mit viel mehr Daten kamen zu ähnlichen Ergebnissen.<sup><a href="#q6">[6]</a></sup></p>
+  <div style="display:grid;grid-template-columns:minmax(0,1fr) auto;gap:var(--s5);align-items:center">
+   <div class="dots" id="dots" aria-label="100 Punkte: 85 innerhalb, 15 zwischen Bevölkerungen"></div>
+   <div class="legend" style="flex-direction:column;align-items:flex-start"><span><i style="background:var(--teal)"></i>innerhalb einer Bevölkerung (≈ 85)</span><span><i style="background:var(--primary)"></i>zwischen Bevölkerungen (≈ 15)</span></div>
+  </div>
+  <p class="note">Die Jenaer Erklärung (2019) spitzt zu: Es gibt nicht einmal ein einzelnes Basenpaar, das vermeintliche „Rassen“ voneinander abgrenzt.<sup><a href="#q1">[1]</a></sup> Wer große genetische Unterschiede sucht, findet sie also eher zwischen Menschen im eigenen Ort als zwischen „Völkern“.</p>
+ </div>
+</section>
+
+<!-- DEUTSCHLAND -->
+<section id="deutschland" class="reveal">
+ <span class="eyebrow">05 · Fallbeispiel Deutschland</span>
+ <h2 class="title">Wer ist deutsch? Das Recht hat die Antwort mehrfach geändert</h2>
+ <p class="intro">Die DNA der Menschen in Deutschland hat sich in 100 Jahren kaum verändert – die rechtliche Antwort auf die Frage „Wer gehört dazu?“ dagegen sehr deutlich.</p>
+ <div class="law">
+  <article><time>1913</time><p>Das Reichs- und Staatsangehörigkeitsgesetz knüpft die Staatsangehörigkeit vor allem an die Abstammung (<em>ius sanguinis</em>).</p></article>
+  <article><time>1935</time><p>Mit den Nürnberger Gesetzen führt das NS-Regime das Rasseprinzip in das Staatsangehörigkeitsrecht ein – Grundlage für Entrechtung und Verfolgung.<sup><a href="#q8">[8]</a></sup></p></article>
+  <article><time>2000</time><p>Neben dem Abstammungsprinzip gilt nun auch das Geburtsortprinzip (<em>ius soli</em>): In Deutschland geborene Kinder können unter Bedingungen Deutsche werden.<sup><a href="#q8">[8]</a></sup></p></article>
+  <article><time>2024</time><p>Seit dem 27. Juni 2024 ist Mehrstaatigkeit grundsätzlich erlaubt, und Einbürgerung ist früher möglich als zuvor.<sup><a href="#q8">[8]</a></sup></p></article>
+ </div>
+ <div class="grid2" style="margin-top:var(--s5)">
+  <div class="card">
+   <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--s3)">Bevölkerung in Bewegung</h3>
+   <p>Die Bevölkerung Deutschlands ist durch Wanderung, Heirat, Handel, Krieg und Vertreibung entstanden. Ein Beispiel aus der jüngeren Geschichte: Nach 1945 kamen mindestens 12 Millionen geflüchtete und vertriebene Deutsche aus Ostmitteleuropa; im Jahr 1950 war in Westdeutschland jede sechste Person ein Vertriebener.<sup><a href="#q9">[9]</a></sup> Dazu kamen später Arbeitsmigration, Spätaussiedlung, Fluchtmigration und EU-Freizügigkeit.</p>
+  </div>
+  <div class="card">
+   <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--s3)">Die bessere Frage</h3>
+   <p style="text-decoration:line-through;color:var(--muted)">„Welche Gene sind deutsch?“</p>
+   <p style="font-family:var(--font-display);font-size:var(--text-lg);margin-top:var(--s2)">„Warum begannen Menschen zu verschiedenen Zeiten, sich als Deutsche zu verstehen – und wer durfte dazugehören?“</p>
+   <p class="note">Damit bist du wieder bei Anderson (vorgestellte Gemeinschaft) und Gellner (Schule und Standardsprache).</p>
+  </div>
+ </div>
+</section>
+
+<!-- DNA-TEST -->
+<section id="dnatest" class="reveal">
+ <span class="eyebrow">06 · Simulation</span>
+ <h2 class="title">Der DNA-Test: Gleiche DNA, neues Ergebnis</h2>
+ <p class="intro">Kommerzielle Tests vergleichen deine DNA mit <strong>Referenzgruppen</strong> heute lebender Menschen und schätzen Ähnlichkeiten. Hier siehst du 24 DNA-Abschnitte einer erfundenen Person. Verschiebe die Grenzen der Regionen – die Punkte bewegen sich nicht.</p>
+ <div class="card sim">
+  <div>
+   <div class="mode-row" role="group" aria-label="Berechnungsversion"><button class="btn on" data-ver="2024">Berechnung 2024</button><button class="btn" data-ver="2026">Neue Berechnung 2026</button></div>
+   <div class="seg-track" id="segTrack"></div>
+   <div class="axis"><span>Mitteleuropa</span><span>Osteuropa</span><span>Balkan</span></div>
+   <label for="cut1" class="note" style="display:block;margin-top:var(--s5)">Wo endet „Mitteleuropa“?</label>
+   <input type="range" id="cut1" min="10" max="50" value="30"/>
+   <label for="cut2" class="note" style="display:block">Wo beginnt der „Balkan“?</label>
+   <input type="range" id="cut2" min="50" max="90" value="62"/>
+  </div>
+  <div>
+   <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--s3)">Angezeigte „Herkunft“</h3>
+   <table class="result-table" id="resTable"></table>
+   <div class="dna-same">✓ DNA der Person: unverändert</div>
+   <p class="note">In der „Berechnung 2026“ hat das Unternehmen sein Referenzpanel erweitert: Einige Abschnitte werden jetzt anderen Vergleichsgruppen zugeordnet. Genau das passiert bei echten Anbietern regelmäßig – AncestryDNA, MyHeritage und 23andMe haben 2025 ihre Schätzungen überarbeitet.<sup><a href="#q10">[10]</a></sup></p>
+  </div>
+ </div>
+ <div class="grid2" style="margin-top:var(--s5)">
+  <details class="q"><summary>Hat sich die DNA der Person verändert?</summary><p>Nein. Geändert haben sich nur die Vergleichsgruppen und die Rechenverfahren. Ein Anbieter erklärt selbst, dass das Ergebnis trotz validierter Statistik eine Schätzung bleibt.<sup><a href="#q10">[10]</a></sup></p></details>
+  <details class="q"><summary>Wer entscheidet, wo „Balkan“ beginnt?</summary><p>Das Unternehmen – nicht die DNA. Regionen in Testergebnissen sind gesetzte Kategorien, ähnlich wie Andersons Zensuskategorien.</p></details>
+  <details class="q"><summary>Kann ein Test sagen, ob jemand Serbin oder Deutsche ist?</summary><p>Nein. Er schätzt statistische Ähnlichkeit zu ausgewählten heutigen Gruppen. Pass, Sprache und Selbstverständnis kann er nicht messen.</p></details>
+  <details class="q"><summary>Warum empfehlen Fachleute Vorsicht bei solchen Begriffen?</summary><p>Die US National Academies empfahlen 2023, Kategorien wie „Rasse“ oder nationale Herkunft nicht als Ersatz für genetische Abstammung zu verwenden, weil Variation fließend ist.<sup><a href="#q7">[7]</a></sup></p></details>
+ </div>
+</section>
+
+<!-- MERKMALE -->
+<section id="merkmale" class="reveal">
+ <span class="eyebrow">07 · Evolution</span>
+ <h2 class="title">Gleiches Merkmal – verschiedene Gene</h2>
+ <p class="intro">Manche Merkmale gelten als „typisch europäisch“. Die Forschung zeigt: Ähnliche Eigenschaften sind teils mehrfach und unabhängig voneinander entstanden. Fachbegriff: <strong>konvergente Evolution</strong>.</p>
+ <div class="grid2">
+  <div class="card">
+   <span class="tag">Milchverträglichkeit</span>
+   <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin:var(--s3) 0">Lebensweise statt Nation</h3>
+   <p>Die Fähigkeit, als Erwachsene Milchzucker zu verdauen, hängt bei vielen Europäerinnen mit einer bestimmten DNA-Variante zusammen. In Tansania, Kenia und Sudan fanden Forschende drei <em>andere</em> Varianten mit derselben Wirkung.<sup><a href="#q11">[11]</a></sup></p>
+   <div class="conv">
+    <div class="side"><h4>Europa</h4><code>C/T-13910</code></div>
+    <div class="mid">gleiche<br/>Wirkung →</div>
+    <div class="side"><h4>Ostafrika</h4><code>G/C-14010</code> u. a.</div>
+   </div>
+   <p class="note">Gemeinsam ist nicht die Nation, sondern die Kultur der Viehhaltung und Milchnutzung, die einen ähnlichen Selektionsdruck erzeugte. Die afrikanische Variante breitete sich in den letzten rund 7.000 Jahren aus.<sup><a href="#q11">[11]</a></sup></p>
+  </div>
+  <div class="card">
+   <span class="tag">Hautfarbe</span>
+   <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin:var(--s3) 0">Ein Sonnenschutzregler, kein Ausweis</h3>
+   <p>Hautfarbe ist eine Anpassung an die Stärke der UV-Strahlung. Helle Haut entstand bei Vorfahren europäischer und ostasiatischer Bevölkerungen teilweise unabhängig – über verschiedene Gene.<sup><a href="#q12">[12]</a></sup></p>
+   <div class="conv">
+    <div class="side"><h4>Europa</h4>v. a. <code>SLC24A5</code>, <code>SLC45A2</code></div>
+    <div class="mid">ähnliches<br/>Aussehen →</div>
+    <div class="side"><h4>Ostasien</h4>v. a. andere Varianten in <code>OCA2</code></div>
+   </div>
+   <p class="note">Eine Variante von SLC24A5 kommt bei über 95 % der Europäerinnen vor, ist in Ostasien aber sehr selten.<sup><a href="#q12">[12]</a></sup> Ähnliches Aussehen bedeutet also nicht automatisch enge Verwandtschaft.</p>
+  </div>
+ </div>
+ <div class="callout teal" style="margin-top:var(--s5)"><strong>Merke:</strong> Ein genetisches Merkmal kann Menschen auf verschiedenen Kontinenten verbinden – und bei Nachbarn im selben Land unterschiedlich ausgeprägt sein. Einzelne Merkmale sind keine „nationalen Gesamtpakete“.</div>
+</section>
+
+<!-- EBENEN -->
+<section id="ebenen" class="reveal">
+ <span class="eyebrow">08 · Sortierspiel</span>
+ <h2 class="title">Vier Ebenen auseinanderhalten</h2>
+ <p class="intro">Wähle eine Aussage und ordne sie einer Ebene zu. Die Ebenen können zusammenhängen – aber keine lässt sich vollständig aus einer anderen ableiten.</p>
+ <div class="sort-statements" id="statements"></div>
+ <div class="bins" id="bins">
+  <button class="bin" data-bin="gen"><h3>🧬 Genetische Abstammung</h3><small>Von welchen Vorfahren habe ich DNA geerbt?</small></button>
+  <button class="bin" data-bin="recht"><h3>📘 Staatsangehörigkeit</h3><small>Zu welchem Staat gehöre ich rechtlich?</small></button>
+  <button class="bin" data-bin="ident"><h3>🤝 Nationale Identität</h3><small>Welcher Gemeinschaft fühle ich mich zugehörig?</small></button>
+  <button class="bin" data-bin="kultur"><h3>🗣️ Kultur</h3><small>Welche Sprachen, Bräuche, Erinnerungen prägen mich?</small></button>
+ </div>
+ <div class="feedback" id="sortFb" role="status" aria-live="polite"></div>
+</section>
+
+<!-- MILA -->
+<section id="mila" class="reveal">
+ <span class="eyebrow">09 · Gedankenexperiment</span>
+ <h2 class="title">Mila und ihre Cousine</h2>
+ <div class="mila">
+  <div class="persons">
+   <div class="person"><div class="avatar" style="background:var(--primary)">M</div><div><b>Mila, Stuttgart</b><div class="pills"><span>🇩🇪 + 🇷🇸 Pass</span><span>Deutsch</span><span>Serbisch</span><span>fühlt sich beiden verbunden</span></div></div></div>
+   <div class="person"><div class="avatar" style="background:var(--teal)">J</div><div><b>Jelena, Belgrad</b><div class="pills"><span>🇷🇸 Pass</span><span>Serbisch</span><span>Milas Cousine</span></div></div></div>
+   <p class="note">Milas Eltern stammen aus Serbien. Beide sind eng verwandt – sie teilen dieselben Großeltern.</p>
+  </div>
+  <div>
+   <details class="q"><summary>Wer ist genetisch „serbischer“?</summary><p>Die Frage ist schief gestellt. Als Cousinen haben beide eng verwandte Vorfahren. Es gibt keinen Maßstab für „serbische DNA“, weil es kein serbisches Gen gibt.</p></details>
+   <details class="q"><summary>Könnte ein Labor erkennen, welche Pässe Mila besitzt?</summary><p>Nein. Ein Labor könnte statistische Ähnlichkeiten zu regionalen Vergleichsgruppen schätzen – aber weder Pass noch Sprache noch Selbstverständnis ablesen.</p></details>
+   <details class="q"><summary>Verändert sich Milas DNA, wenn sie eine Staatsangehörigkeit ablegt?</summary><p>Nein. Staatsangehörigkeit ist eine rechtliche Beziehung zwischen Person und Staat.</p></details>
+   <details class="q"><summary>Darf Mila selbst bestimmen, wem sie sich zugehörig fühlt?</summary><p>Ihre persönliche Identität kann niemand für sie festlegen. Ob andere sie anerkennen (soziale Ebene), ist eine andere Frage – und genau dort beginnt oft Ausgrenzung.</p></details>
+   <details class="q"><summary>Welche Merkmale sind biologisch, rechtlich, kulturell?</summary><p>Biologisch: Verwandtschaft. Rechtlich: zwei Pässe. Kulturell: Zweisprachigkeit, Familienerinnerungen. Persönlich: das Gefühl doppelter Zugehörigkeit.</p></details>
+  </div>
+ </div>
+</section>
+
+<!-- CHECK -->
+<section id="check" class="reveal">
+ <span class="eyebrow">10 · Lerncheck</span>
+ <h2 class="title">Fünf Fragen – kannst du sie begründen?</h2>
+ <div class="quiz" id="quiz"></div>
+ <div class="score"><div class="ring" id="ring"><span id="ringTxt">0/5</span></div><p id="scoreMsg">Beantworte die Fragen, um deine Rückmeldung zu sehen.</p></div>
+
+ <div class="dark" style="margin-top:var(--s8)">
+  <span class="tag">Transferaufgabe</span>
+  <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin:var(--s3) 0">Beurteile: „Wer keine deutschen Vorfahren hat, kann kein richtiger Deutscher sein.“</h3>
+  <textarea id="transfer" aria-label="Deine Beurteilung" placeholder="Die Aussage vertritt ein abstammungsbezogenes Verständnis der Nation. Dagegen spricht …" style="background:color-mix(in oklab,var(--bg) 10%,var(--text));color:var(--bg);border-color:color-mix(in oklab,var(--bg) 30%,transparent)"></textarea>
+  <details class="q" style="margin-top:var(--s4);background:transparent;border-color:color-mix(in oklab,var(--bg) 30%,transparent)"><summary>Erwartungshorizont anzeigen</summary>
+   <ul style="margin:var(--s3) 0 0 var(--s5);display:grid;gap:var(--s2);font-size:var(--text-sm)">
+    <li>„Deutsch“ kann Staatsangehörigkeit <em>und</em> nationale Selbstzuordnung bezeichnen.</li>
+    <li>Es gibt kein deutsches Gen und kein Merkmal, das alle Deutschen haben und alle anderen nicht.</li>
+    <li>Die Bevölkerung Deutschlands entstand durch lange Wanderungs- und Vermischungsprozesse.</li>
+    <li>Das deutsche Recht selbst kennt seit 2000 auch das Geburtsortprinzip und lässt seit 2024 Mehrstaatigkeit grundsätzlich zu.</li>
+    <li>Die Aussage entspricht einer Abstammungsnation; eine Willens- oder Verfassungsnation begründet Zugehörigkeit über gleiche Rechte, demokratische Teilhabe und gemeinsame Regeln.</li>
+    <li>Historischer Bezug: Das Rasseprinzip von 1935 zeigt, wohin eine biologisch begründete Nationsvorstellung führen kann.</li>
+   </ul>
+  </details>
+ </div>
+
+ <div class="card" style="margin-top:var(--s5)">
+  <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--s3)">Präzise formulieren</h3>
+  <div class="grid2">
+   <div class="callout" style="background:var(--error-hi)"><b>Zu ungenau:</b><p>„Herkunft hat überhaupt nichts mit Genen zu tun.“</p></div>
+   <div class="callout" style="background:var(--success-hi)"><b>Fachlich genau:</b><p>An der DNA lassen sich Verwandtschaft und geografische Abstammungsmuster statistisch untersuchen. Eine Nationalität lässt sich daraus nicht ablesen. Nationen sind historisch entstandene politische und kulturelle Gemeinschaften.</p></div>
+  </div>
+ </div>
+</section>
+
+<!-- QUELLEN -->
+<section id="quellen" class="sources reveal">
+ <span class="eyebrow">Quellen</span>
+ <h2 class="title">Belege &amp; Vertiefung</h2>
+ <ol>
+  <li id="q1">Fischer, Hoßfeld, Krause, Richter: <em>Jenaer Erklärung – Das Konzept der Rasse ist das Ergebnis von Rassismus und nicht dessen Voraussetzung</em>, 2019. <a href="https://uni-jena.de/unijenamedia/60675/jenaer-erklaerung.pdf" target="_blank" rel="noopener noreferrer">PDF (Uni Jena)</a> · Unterrichtsmaterial: <a href="https://db-thueringen.de/servlets/MCRFileNodeServlet/dbt_derivate_00059827/Jenaer_Erklaerung_gegen_Rassismus_und_ihre_Anwendung_im_Unterricht.pdf" target="_blank" rel="noopener noreferrer">Thüringer Bildungsministerium 2023</a></li>
+  <li id="q2">Novembre u. a.: Genes mirror geography within Europe. <em>Nature</em> 456 (2008), 98–101. <a href="https://faculty.eeb.ucla.edu/Novembre/Novembreetal2008Nature.pdf" target="_blank" rel="noopener noreferrer">PDF</a> · <a href="https://www.nationalgeographic.com/science/article/european-genes-mirror-european-geography" target="_blank" rel="noopener noreferrer">Erklärartikel (National Geographic)</a></li>
+  <li id="q3">Ralph, Coop: The Geography of Recent Genetic Ancestry across Europe. <em>PLOS Biology</em> 11 (2013). <a href="https://journals.plos.org/plosbiology/article/info%3Adoi%2F10.1371%2Fjournal.pbio.1001555" target="_blank" rel="noopener noreferrer">Artikel</a> · <a href="https://gcbias.org/european-genealogy-faq/" target="_blank" rel="noopener noreferrer">FAQ der Autoren</a></li>
+  <li id="q4">Marjanović u. a.: The Peopling of Modern Bosnia-Herzegovina: Y-chromosome Haplogroups in the Three Main Ethnic Groups. <em>Annals of Human Genetics</em> 69 (2005), 757–763. <a href="https://onlinelibrary.wiley.com/doi/10.1111/j.1529-8817.2005.00190.x/full/" target="_blank" rel="noopener noreferrer">Wiley</a></li>
+  <li id="q5">Olalde u. a.: A genetic history of the Balkans from Roman frontier to Slavic migrations. <em>Cell</em> 186 (2023), 5472–5485. <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC10752003/" target="_blank" rel="noopener noreferrer">Open Access</a></li>
+  <li id="q6">Edge, Rosenberg u. a.: Celebrating 50 years since Lewontin's apportionment of human diversity. <em>Phil. Trans. R. Soc. B</em> (2022). <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC9014183/" target="_blank" rel="noopener noreferrer">Open Access</a></li>
+  <li id="q7">National Academies of Sciences: Using Population Descriptors in Genetics and Genomics Research, 2023. <a href="https://www.genome.gov/about-nhgri/Director/genomics-landscape/may-4-2023-nasem-report-population-descriptors-genetics-genomics-research" target="_blank" rel="noopener noreferrer">Zusammenfassung (NHGRI)</a></li>
+  <li id="q8">Bundeszentrale für politische Bildung: Reform des Staatsangehörigkeitsrechts (2024). <a href="https://www.bpb.de/kurz-knapp/hintergrund-aktuell/550624/reform-des-staatsangehoerigkeitsrechts/" target="_blank" rel="noopener noreferrer">bpb.de</a></li>
+  <li id="q9">Braun, Franke: The economic integration of expellees … West Germany, 1945–70 (Projektbeschreibung). <a href="https://www.openicpsr.org/openicpsr/project/118361/version/V2/view" target="_blank" rel="noopener noreferrer">openICPSR</a></li>
+  <li id="q10">Anbieterinformationen zu geänderten Ergebnissen: <a href="https://www.myheritage.com/help/en/articles/12852751-why-have-my-ethnicity-results-changed" target="_blank" rel="noopener noreferrer">MyHeritage</a> · <a href="https://www.ancestry.com/c/dna/ancestry-dna-ethnicity-estimate-update" target="_blank" rel="noopener noreferrer">AncestryDNA</a> · Überblick: <a href="https://scgensoc.org/wp-content/uploads/2026/03/DNA-SIG-handout-Ethnicity-Estimate-Updates-February-2026.pdf" target="_blank" rel="noopener noreferrer">Handout 2026</a></li>
+  <li id="q11">Tishkoff u. a.: Convergent adaptation of human lactase persistence in Africa and Europe. <em>Nature Genetics</em> 39 (2007), 31–40. <a href="https://pubmed.ncbi.nlm.nih.gov/17159977/" target="_blank" rel="noopener noreferrer">PubMed</a></li>
+  <li id="q12">Norton u. a.: Genetic evidence for the convergent evolution of light skin in Europeans and East Asians. <em>Mol. Biol. Evol.</em> 24 (2007). <a href="https://academic.oup.com/mbe/article/24/3/710/1240790" target="_blank" rel="noopener noreferrer">Oxford Academic</a> · Yang u. a. 2016: <a href="https://pmc.ncbi.nlm.nih.gov/articles/PMC4839214/" target="_blank" rel="noopener noreferrer">OCA2 in Ostasien</a></li>
+ </ol>
+ <p style="margin-top:var(--s6)"><a class="btn primary" href="index.html" style="display:inline-flex;align-items:center;text-decoration:none">← Zurück zum Lernlabor „Nation im Kopf“</a></p>
+ <footer>Didaktisch reduzierte Darstellung für das Wahlfach Demokratiebildung. Simulationen (Farbverlauf, DNA-Test) sind vereinfachte Modelle, keine echten Daten. Biografische Angaben sind freiwillig; Mila und Jelena sind erfundene Personen.</footer>
+</section>
+</main>
+
+<script>
+(()=>{
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const root=document.documentElement;
+let theme=matchMedia('(prefers-color-scheme: dark)').matches?'dark':'light';root.dataset.theme=theme;
+const css=v=>getComputedStyle(root).getPropertyValue(v).trim();
+const moon='<path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"/>',sun='<circle cx="12" cy="12" r="5"/><path d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"/>';
+function setIcon(){$('#themeIcon').innerHTML=theme==='dark'?sun:moon}setIcon();
+$('#themeBtn').addEventListener('click',()=>{theme=theme==='dark'?'light':'dark';root.dataset.theme=theme;setIcon();drawStrip()});
+
+/* helix */
+const hx=$('#helix');let h='';for(let i=0;i<18;i++){const y=i*19,a=Math.sin(i*.55)*55,x1=80+a,x2=80-a;h+=`<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="var(--dynamic)" stroke-width="3"/><circle class="helix-dot" style="animation-delay:${i*.15}s" cx="${x1}" cy="${y}" r="6" fill="var(--g${i%4+1})"/><circle cx="${x2}" cy="${y}" r="5" fill="var(--muted)" opacity=".5"/>`}hx.innerHTML=h;
+
+/* reading progress + toc */
+const secs=$$('main section[id]'),links=$$('.toc a');
+addEventListener('scroll',()=>{const p=scrollY/(document.body.scrollHeight-innerHeight);$('#readBar').style.width=(p*100)+'%';let cur='';secs.forEach(s=>{if(s.getBoundingClientRect().top<160)cur=s.id});links.forEach(a=>a.classList.toggle('on',a.getAttribute('href')==='#'+cur))},{passive:true});
+const io=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting){e.target.classList.add('in');if(e.target.id==='balkan')animBars();io.unobserve(e.target)}}),{threshold:.08});
+$$('.reveal').forEach(el=>io.observe(el));
+
+/* myths */
+const myths=[
+ ['Es gibt ein Gen, das alle Deutschen haben und alle anderen nicht.','no','Falsch','Kein einzelnes Gen und keine DNA-Stelle trennt nationale Gruppen sauber. Unterschiede zeigen sich nur als <b>Häufigkeiten</b>, die fließend ineinander übergehen.'],
+ ['Mit DNA kann man ungefähr sagen, aus welcher Region die Vorfahren einer Person stammen.','part','Teilweise richtig','Ja, statistisch oft bis auf einige hundert Kilometer – aber nur als Wahrscheinlichkeit und abhängig von den Vergleichsgruppen.'],
+ ['Zwei Menschen aus derselben Nation sind sich genetisch immer ähnlicher als zwei Menschen aus verschiedenen Nationen.','no','Falsch','Der größte Teil der genetischen Vielfalt liegt <b>innerhalb</b> von Bevölkerungen. Zwei Nachbarn über eine Grenze hinweg können sich ähnlicher sein als zwei Menschen aus demselben großen Staat.'],
+ ['Alle Menschen sind genetisch identisch.','no','Falsch','Menschen unterscheiden sich in vielen DNA-Varianten. Die Aussage „Es gibt keine nationalen Gene“ heißt nicht, dass es keine Unterschiede gibt – sondern dass sie nicht an Staatsgrenzen enden.'],
+ ['Eine Staatsangehörigkeit kann man erwerben, ohne dass sich die DNA verändert.','yes','Richtig','Staatsangehörigkeit ist eine rechtliche Beziehung. Deutschland erlaubt seit 2024 grundsätzlich mehrere Staatsangehörigkeiten – die Biologie bleibt davon unberührt.']
+];
+$('#myths').innerHTML=myths.map(m=>`<button class="flip" aria-label="Karte umdrehen"><div class="flip-inner"><div class="face front"><span class="tag">Aussage</span><p>${m[0]}</p><small>Tippen zum Umdrehen ↻</small></div><div class="face back"><span class="verdict ${m[1]}">${m[1]==='yes'?'✓':m[1]==='no'?'✗':'≈'} ${m[2]}</span><p>${m[3]}</p></div></div></button>`).join('');
+$$('.flip').forEach(f=>f.addEventListener('click',()=>f.classList.toggle('open')));
+
+/* gradient strip */
+const cv=$('#strip'),br=$('#borderRange');let mode='real';
+function hexToRgb(h){h=h.replace('#','');if(h.length===3)h=h.split('').map(c=>c+c).join('');const n=parseInt(h,16);return[n>>16&255,n>>8&255,n&255]}
+function colAt(t){const stops=['--g1','--g2','--g3','--g4'].map(v=>hexToRgb(css(v)));if(mode==='myth'){const b=+br.value/100;return t<b?stops[0]:stops[3]}const p=t*(stops.length-1),i=Math.min(Math.floor(p),stops.length-2),f=p-i;return stops[i].map((c,k)=>Math.round(c+(stops[i+1][k]-c)*f))}
+function drawStrip(){const w=cv.clientWidth,hgt=cv.clientHeight;cv.width=w*devicePixelRatio;cv.height=hgt*devicePixelRatio;const ctx=cv.getContext('2d');ctx.scale(devicePixelRatio,devicePixelRatio);for(let x=0;x<w;x++){const c=colAt(x/w);ctx.fillStyle=`rgb(${c})`;ctx.fillRect(x,0,1,hgt)}
+ // individual dots: people with noise
+ let seed=7;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;for(let i=0;i<160;i++){const x=rnd()*w,y=10+rnd()*(hgt-20);const t=Math.min(1,Math.max(0,x/w+(mode==='real'?(rnd()-.5)*.25:0)));const c=colAt(t);ctx.beginPath();ctx.arc(x,y,3.2,0,7);ctx.fillStyle=`rgb(${c})`;ctx.fill();ctx.strokeStyle='rgba(255,255,255,.7)';ctx.lineWidth=1;ctx.stroke()}
+ const b=+br.value/100;$('#borderLine').style.left=(b*100)+'%';const l=colAt(Math.max(0,b-.004)),r=colAt(Math.min(1,b+.004));$('#swL').style.background=`rgb(${l})`;$('#swR').style.background=`rgb(${r})`;const d=Math.round(Math.hypot(...l.map((c,i)=>c-r[i])));$('#diffText').textContent=d<12?'Unterschied: kaum sichtbar':'Unterschied: harte Kante!';$('#diffText').style.color=d<12?'var(--teal)':'var(--error)'}
+br.addEventListener('input',drawStrip);addEventListener('resize',drawStrip);
+$$('[data-mode]').forEach(b=>b.addEventListener('click',()=>{mode=b.dataset.mode;$$('[data-mode]').forEach(x=>x.classList.toggle('on',x===b));drawStrip()}));
+drawStrip();
+
+/* balkan chart */
+const hg=[['Haplogruppe I-P37','„Altes“ Balkan-Signal nach der letzten Eiszeit',[71,44,31]],['Haplogruppe E-M78','',[9,13,20]],['Haplogruppe J','',[1,12,9]]];
+const grp=['Kroaten','Bosniaken','Serben'],gc=['--g1','--g2','--g4'];
+$('#hgChart').innerHTML=hg.map(g=>`<div class="hg"><h3>${g[0]}${g[1]?` <span class="note" style="font-weight:400">· ${g[1]}</span>`:''}</h3>${g[2].map((v,i)=>`<div class="bar-row"><span>${grp[i]}</span><div class="bar"><i data-w="${v}" style="background:var(${gc[i]})"></i></div><b>${i===0&&g[0].endsWith('J')?'1 Pers.':'≈ '+v+' %'}</b></div>`).join('')}</div>`).join('')+`<div class="hg"><h3>Haplogruppe R-M17</h3><p class="note" style="margin:0">ähnliche Häufigkeit in allen drei Gruppen</p></div>`;
+let barsDone=false;function animBars(){if(barsDone)return;barsDone=true;setTimeout(()=>$$('#hgChart .bar i').forEach(i=>i.style.width=i.dataset.w+'%'),200)}
+
+/* ancestors */
+const gr=$('#genRange'),fmt=n=>n.toLocaleString('de-DE');
+function anc(){const g=+gr.value,n=2**g;$('#genOut').textContent=g;$('#yearsOut').textContent=`(≈ ${fmt(g*25)} Jahre, um ${fmt(2026-g*25)})`;$('#ancNum').textContent=fmt(n);
+ let msg='';if(n<1e4)msg='Noch überschaubar – das sind Menschen, deren Namen in Kirchenbüchern stehen könnten.';else if(n<1e7)msg='Mehr Plätze, als damals in vielen Regionen Menschen lebten. Einige Vorfahren müssen mehrfach vorkommen.';else if(n<1e9)msg='Mehr Plätze, als damals ganz Europa Einwohner hatte. Stammbäume überlappen massiv.';else msg='Mehr Plätze, als jemals gleichzeitig Menschen auf der Erde lebten. Fast alle damaligen Europäerinnen mit heutigen Nachkommen sind <b>auch deine</b> Vorfahren.';$('#ancMsg').innerHTML=msg;
+ const shown=Math.min(n,320);$('#tree').innerHTML='<i class="me"></i>'+'<i></i>'.repeat(shown)+(n>320?`<span class="note" style="margin:4px 0 0">+ ${fmt(n-320)} weitere</span>`:'')}
+gr.addEventListener('input',anc);anc();
+
+/* dots */
+$('#dots').innerHTML=Array.from({length:100},(_,i)=>`<i class="${i>=85?'btw':''}"></i>`).join('');
+
+/* dna sim */
+const segs=[8,12,15,19,22,26,29,33,36,38,41,44,47,51,55,58,61,64,67,71,74,79,84,90];
+let ver='2024';
+function sim(){const c1=+$('#cut1').value,c2=+$('#cut2').value;const shift=ver==='2026'?6:0;const track=$('#segTrack');
+ track.innerHTML=segs.map(p=>`<span class="seg" style="left:${p}%"></span>`).join('')+`<span class="cut" style="left:${c1}%"><span>Grenze A</span></span><span class="cut" style="left:${c2}%"><span>Grenze B</span></span>`;
+ let m=0,o=0,b=0,u=0;segs.forEach((p,i)=>{const q=p+(ver==='2026'&&i%3===0?shift:0);if(Math.abs(q-c1)<2.2||Math.abs(q-c2)<2.2){u++;return}if(q<c1)m++;else if(q<c2)o++;else b++});
+ const t=segs.length,rows=[['Mitteleuropa',m],['Osteuropa',o],['Balkan',b],['unbestimmt',u]];
+ $('#resTable').innerHTML=rows.map(r=>{const pct=Math.round(r[1]/t*100);return `<tr><td>${r[0]}<div class="mini"><i style="width:${pct}%"></i></div></td><td>${pct} %</td></tr>`}).join('')}
+['#cut1','#cut2'].forEach(s=>$(s).addEventListener('input',sim));
+$$('[data-ver]').forEach(b=>b.addEventListener('click',()=>{ver=b.dataset.ver;$$('[data-ver]').forEach(x=>x.classList.toggle('on',x===b));sim()}));sim();
+
+/* sorting */
+const st=[['Einige meiner Vorfahren lebten wahrscheinlich in Südosteuropa.','gen'],['Ich besitze die deutsche Staatsangehörigkeit.','recht'],['Ich fühle mich deutsch und serbisch zugleich.','ident'],['In meiner Familie wird Deutsch und Serbisch gesprochen.','kultur'],['Ein Test zeigt Ähnlichkeit zu einer osteuropäischen Referenzgruppe.','gen'],['Ich darf bei der Bundestagswahl wählen.','recht'],['Bei Länderspielen jubele ich für zwei Teams.','ident'],['Wir feiern Weihnachten am 25. Dezember und am 7. Januar.','kultur']];
+let sel=null;const box=$('#statements');
+box.innerHTML=st.map((s,i)=>`<button class="chip" data-i="${i}">${s[0]}</button>`).join('');
+box.addEventListener('click',e=>{const c=e.target.closest('.chip');if(!c)return;$$('.chip',box).forEach(x=>x.classList.remove('sel'));sel=c;c.classList.add('sel')});
+$$('.bin').forEach(bn=>bn.addEventListener('click',()=>{const fb=$('#sortFb');if(!sel){fb.textContent='Wähle zuerst oben eine Aussage aus.';return}const ok=st[sel.dataset.i][1]===bn.dataset.bin;if(ok){sel.classList.remove('sel');sel.classList.add('ok');bn.append(sel);sel=null;const left=$$('.chip',box).length;fb.textContent=left?`Passt! Noch ${left} Aussage${left>1?'n':''}.`:'Alle zugeordnet. Beachte: Bei Mila treffen alle vier Ebenen in einer Person zusammen – ohne dass eine die andere bestimmt.';fb.style.color='var(--success)'}else{sel.classList.remove('bad');void sel.offsetWidth;sel.classList.add('bad');fb.textContent='Prüfe noch einmal: Geht es um DNA, um Recht, um Gefühl oder um gelebte Praxis?';fb.style.color='var(--error)'}}));
+
+/* quiz */
+const qs=[
+ ['Was zeigt die Studie von Novembre u. a. (2008)?',['Jede Nation hat einen eigenen genetischen Block.','Genetische Ähnlichkeit hängt vor allem mit geografischer Nähe zusammen.','Europäer sind genetisch identisch.'],1,'Die genetische „Karte“ ähnelt der Europakarte, weil Nachbarn sich ähnlicher sind – ein Verlauf, keine Blöcke.'],
+ ['Was ist das wichtigste Ergebnis der Bosnien-Studie (2005)?',['Kroaten, Serben und Bosniaken teilen einen großen Teil desselben Genpools.','Jede Gruppe hat eine exklusive Haplogruppe.','Religion lässt sich am Y-Chromosom ablesen.'],0,'Die Unterschiede sind nur Häufigkeiten; alle Linien kommen in allen Gruppen vor.'],
+ ['Warum ändern sich DNA-Testergebnisse nach einem Update?',['Weil sich die DNA mit dem Alter verändert.','Weil Referenzgruppen und Rechenverfahren geändert werden.','Weil der Test die Staatsangehörigkeit neu prüft.'],1,'Die DNA bleibt gleich – Vergleichsgruppen und Regionsgrenzen sind gesetzte Kategorien.'],
+ ['Was bedeutet „konvergente Evolution“ beim Beispiel Milchverträglichkeit?',['Alle Milchtrinker stammen von denselben Vorfahren ab.','Ähnliche Lebensweise führte unabhängig zu ähnlichen Merkmalen über verschiedene Genvarianten.','Milchverträglichkeit ist ein nationales Merkmal.'],1,'In Europa und Ostafrika entstanden verschiedene Varianten mit gleicher Wirkung – Ursache war die Viehhaltung.'],
+ ['Welche Formulierung ist fachlich am genauesten?',['Herkunft hat gar nichts mit Genen zu tun.','Gene bestimmen die Nationalität.','DNA zeigt Verwandtschaftsmuster, aber keine Nationalität.'],2,'Abstammung ist biologisch messbar (statistisch), Nation ist eine politische und kulturelle Gemeinschaft.']
+];
+const res=new Map();
+$('#quiz').innerHTML=qs.map((q,i)=>`<div class="qcard" data-q="${i}"><h3>${i+1}. ${q[0]}</h3><div class="opts">${q[1].map((o,j)=>`<button class="opt" data-j="${j}">${o}</button>`).join('')}</div><p class="why">${q[3]}</p></div>`).join('');
+$$('.qcard').forEach(card=>card.addEventListener('click',e=>{const o=e.target.closest('.opt');if(!o||card.classList.contains('done'))return;const i=+card.dataset.q,c=qs[i][2],j=+o.dataset.j;card.classList.add('done');$$('.opt',card).forEach((x,k)=>{x.disabled=true;if(k===c)x.classList.add('correct')});if(j!==c)o.classList.add('wrong');res.set(i,j===c);const s=[...res.values()].filter(Boolean).length,n=res.size;$('#ringTxt').textContent=`${s}/5`;$('#ring').style.background=`conic-gradient(var(--primary) ${s/5*360}deg,var(--dynamic) 0)`;$('#scoreMsg').textContent=n<5?`${n} von 5 beantwortet.`:s===5?'Sehr sicher: Du trennst Biologie, Recht und Identität sauber.':s>=3?'Gute Grundlage – lies die Erklärungen bei den markierten Fragen.':'Geh noch einmal zu Farbverlauf und DNA-Test zurück.'}));
+})();
+</script>
+</body>
+</html>
