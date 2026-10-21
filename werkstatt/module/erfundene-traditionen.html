@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="Vertiefungsmodul zum Lernlabor „Nation im Kopf“: Hobsbawms These der erfundenen Traditionen, geprüft am Kaiserreich, an Schottland und an der Gegenwart."/>
+<title>Erfundene Traditionen – Vertiefungsmodul</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet"/>
+<style>
+{{CSS}}
+/* Modulspezifisch */
+.hero-art .tick{stroke:var(--divider)}
+.dumb{width:100%;height:auto;display:block}
+.dumb text{font-family:var(--font-body)}
+.monument-svg{width:100%;max-width:300px;height:auto;display:block;margin:auto}
+.guess-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:var(--s4)}
+.guess-grid .qcard h3{font-size:var(--text-base)}
+.guess-grid .opts{grid-template-columns:1fr 1fr}
+.guess-note{display:none;margin-top:var(--s3);font-size:var(--text-sm);color:var(--muted)}
+.qcard.done .guess-note{display:block}
+.chart-wrap{display:none}
+.chart-wrap.show{display:block;animation:fadeUp .6s cubic-bezier(.16,1,.3,1)}
+@keyframes fadeUp{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+.toolbox{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s3)}
+.tool{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s4)}
+.tool .ic{width:40px;height:40px;border-radius:var(--r-md);display:grid;place-items:center;background:var(--primary-hi);color:var(--primary);margin-bottom:var(--s2);font-size:1.2rem}
+.tool h3{font-size:var(--text-base);margin-bottom:var(--s1)}
+.tool p{font-size:var(--text-sm);color:var(--muted)}
+.types{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3)}
+.types div{padding:var(--s4);border-radius:var(--r-lg);background:var(--surface-2);border-top:4px solid var(--teal)}
+.types div:nth-child(2){border-top-color:var(--gold)}.types div:nth-child(3){border-top-color:var(--primary)}
+.types b{display:block;margin-bottom:var(--s1)}
+.types p{font-size:var(--text-sm);color:var(--muted)}
+.excl{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s3)}
+.excl div{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s4);font-size:var(--text-sm)}
+.excl b{display:block;font-size:var(--text-base);margin-bottom:var(--s1);color:var(--error)}
+.result-panel{display:none;margin-top:var(--s4)}
+.result-panel.show{display:block}
+.meter{height:12px;border-radius:999px;background:var(--dynamic);overflow:hidden;margin:var(--s2) 0}
+.meter i{display:block;height:100%;background:var(--primary);transition:width .5s}
+@media(max-width:900px){.toolbox,.excl{grid-template-columns:1fr 1fr}.types{grid-template-columns:1fr}}
+@media(max-width:640px){.toolbox,.excl{grid-template-columns:1fr}.guess-grid .opts{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Zum Inhalt springen</a>
+{{HEADER}}
+
+<main id="main">
+
+<div class="hero">
+ <div>
+  <span class="eyebrow">Vertiefungsmodul · Theoriebrille Hobsbawm</span>
+  <h1>Wie alt ist das <em>Alte</em>?</h1>
+  <p class="lead">Nationalfeiertage, Hymnen, Denkmäler und Trachten wirken oft, als gäbe es sie schon immer. Der Historiker Eric Hobsbawm behauptete 1983: Viele dieser Traditionen sind erstaunlich jung. Sie wurden gezielt geschaffen, um ein nationales „Wir“ herzustellen. Du prüfst diese These an Fällen aus dem Kaiserreich, aus Frankreich und Schottland und an der Gegenwart. Und du fragst, wo sie an ihre Grenzen stößt.</p>
+  <div class="motto"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><div><strong>Was alt aussieht, muss nicht alt sein. Und was neu erfunden wurde, ist deshalb nicht bedeutungslos.</strong><p class="note" style="margin-top:4px">Merksatz für das ganze Modul</p></div></div>
+ </div>
+ <div class="hero-art" aria-label="Illustration: Ein Denkmal auf einem Sockel, darunter ein Zeitstrahl, der von 9 n. Chr. bis 1875 reicht">
+  <svg viewBox="0 0 400 400" role="img">
+   <rect width="400" height="400" fill="var(--surface)"/>
+   <g transform="translate(200,40)">
+    <path d="M-14 10 a14 14 0 1 1 28 0 a14 14 0 1 1 -28 0" fill="var(--primary)"/>
+    <path d="M-22 30 L22 30 L30 150 L-30 150 Z" fill="var(--primary)"/>
+    <path d="M18 34 L70 -20" stroke="var(--primary)" stroke-width="7" stroke-linecap="round"/>
+    <path d="M-60 150 L60 150 L70 175 L-70 175 Z" fill="var(--dynamic)"/>
+    <rect x="-90" y="175" width="180" height="70" fill="var(--offset)" stroke="var(--border)"/>
+    <text x="0" y="215" text-anchor="middle" fill="var(--muted)" font-size="13" font-weight="700" letter-spacing="2">„SEIT JEHER“?</text>
+   </g>
+   <g transform="translate(30,330)">
+    <line x1="0" y1="0" x2="340" y2="0" stroke="var(--divider)" stroke-width="3"/>
+    <circle cx="20" cy="0" r="8" fill="var(--teal)"/><text x="20" y="28" text-anchor="middle" fill="var(--muted)" font-size="12">9 n. Chr.</text>
+    <path d="M110 -8 l10 16 M122 -8 l10 16" stroke="var(--muted)" stroke-width="2"/>
+    <circle cx="320" cy="0" r="8" fill="var(--primary)"/><text x="320" y="28" text-anchor="middle" fill="var(--muted)" font-size="12">1875</text>
+    <path d="M28 -14 Q170 -70 312 -14" fill="none" stroke="var(--primary)" stroke-width="2" stroke-dasharray="5 5" class="stamp" style="transform-origin:170px -30px"/>
+   </g>
+  </svg>
+ </div>
+</div>
+
+<section id="schaetzen" class="reveal">
+ <span class="eyebrow">01 · Einstieg</span>
+ <h2 class="title">Schätze: Seit wann gibt es das?</h2>
+ <p class="intro">Wähle bei jeder Karte das Jahr, das du für richtig hältst. Danach siehst du, wie weit die Tradition in die Vergangenheit verweist und wann sie tatsächlich entstand.</p>
+ <div class="guess-grid" id="guess"></div>
+ <div class="chart-wrap card" id="chartWrap" style="margin-top:var(--s5)">
+  <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--s2)">Behauptetes Alter und tatsächliche Entstehung</h3>
+  <p class="note" style="margin:0 0 var(--s4)">Der helle Punkt markiert die Vergangenheit, auf die sich die Tradition beruft. Der farbige Punkt zeigt, wann sie als Ritual oder Symbol eingeführt wurde. Achse vor 1700 gestaucht.</p>
+  <div id="dumb"></div>
+  <p id="guessScore" style="margin-top:var(--s4);font-weight:700"></p>
+ </div>
+</section>
+
+<section id="these" class="reveal">
+ <span class="eyebrow">02 · Theorie</span>
+ <h2 class="title">Hobsbawms These: Traditionen werden gemacht</h2>
+ <p class="intro">1983 gaben Eric Hobsbawm und Terence Ranger den Sammelband <em>The Invention of Tradition</em> heraus. Ihre Grundidee lässt sich in einem Satz fassen: Traditionen, die alt wirken, sind oft jung und wurden bewusst eingeführt.</p>
+ <div class="grid2">
+  <div class="card">
+   <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--s3)">Was ist eine „erfundene Tradition“?</h3>
+   <p>Hobsbawm meint damit Praktiken mit festen Regeln und symbolischem Charakter. Sie sollen durch <strong>Wiederholung</strong> bestimmte Werte und Verhaltensnormen einüben. Dabei behaupten sie automatisch eine <strong>Kontinuität zu einer passenden Vergangenheit</strong>.<sup><a href="#q1">[1]</a></sup></p>
+   <p style="margin-top:var(--s3)">Er grenzt Tradition von <em>Brauch</em> ab: Ein Brauch darf sich langsam verändern. Eine erfundene Tradition dagegen beansprucht, unveränderlich zu sein, mit festen Abläufen, Kleidung und Formeln.</p>
+  </div>
+  <div class="card">
+   <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--s3)">Warum gerade 1870–1914?</h3>
+   <p>Für diese Zeit spricht Hobsbawm von einer regelrechten <strong>Massenproduktion</strong> von Traditionen in Europa. Mit Wahlrecht, Massenpresse und Industrialisierung gewann „das Volk“ an Gewicht. Die Staaten brauchten neue Bindungen an die Nation. Drei Werkzeuge standen dabei im Mittelpunkt: die staatliche Grundschule, öffentliche Zeremonien und Denkmäler.<sup><a href="#q1">[1]</a></sup></p>
+  </div>
+ </div>
+ <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin:var(--s8) 0 var(--s3)">Der Werkzeugkasten einer erfundenen Tradition</h3>
+ <div class="toolbox">
+  <div class="tool"><div class="ic" aria-hidden="true">↻</div><h3>Wiederholung</h3><p>Fester Termin im Kalender, jedes Jahr gleich.</p></div>
+  <div class="tool"><div class="ic" aria-hidden="true">⌛</div><h3>Bezug auf Vergangenheit</h3><p>Eine Schlacht, ein Held, ein Ursprung, der „passt“.</p></div>
+  <div class="tool"><div class="ic" aria-hidden="true">⚑</div><h3>Symbole</h3><p>Flagge, Hymne, Farben, Figuren wie Germania.</p></div>
+  <div class="tool"><div class="ic" aria-hidden="true">▣</div><h3>Feste Form</h3><p>Abläufe, Kleidung, Formeln, die nicht verändert werden dürfen.</p></div>
+ </div>
+ <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin:var(--s8) 0 var(--s3)">Drei Funktionen, die sich überschneiden</h3>
+ <div class="types">
+  <div><b>1 · Zusammenhalt stiften</b><p>Sie zeigen, wer zu einer Gemeinschaft gehört, und machen dieses „Wir“ erlebbar.</p></div>
+  <div><b>2 · Herrschaft legitimieren</b><p>Sie stützen Institutionen, Status und Autorität, etwa Kaiser, Armee oder Staat.</p></div>
+  <div><b>3 · Werte einüben</b><p>Sie vermitteln Überzeugungen und Verhaltensregeln, besonders in der Schule.</p></div>
+ </div>
+ <p class="note">Unterscheidung nach Hobsbawms Einleitung zu <em>The Invention of Tradition</em>.<sup><a href="#q1">[1]</a></sup></p>
+</section>
+
+<section id="kaiserreich" class="reveal">
+ <span class="eyebrow">03 · Fall Kaiserreich</span>
+ <h2 class="title">Ein neues Reich braucht alte Wurzeln</h2>
+ <p class="intro">Das Deutsche Kaiserreich wurde 1871 gegründet. Es war jung, aber es sollte wirken, als hätte es eine jahrhundertealte Vorgeschichte. Untersuche drei Werkzeuge: Feiertag, Denkmal, Lied.</p>
+ <div class="tabs" role="tablist" aria-label="Fallbeispiele Kaiserreich">
+  <button role="tab" aria-selected="true" data-tab="sedan">Sedantag</button>
+  <button role="tab" aria-selected="false" data-tab="denkmal">Nationaldenkmäler</button>
+  <button role="tab" aria-selected="false" data-tab="hymne">Hymne</button>
+ </div>
+
+ <div class="card" data-panel="sedan" role="tabpanel">
+  <div class="panel-grid">
+   <div>
+    <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--s3)">Der Sedantag (2. September)</h3>
+    <div class="facts">
+     <div><b>Anlass</b><span>Sieg über die französische Armee bei Sedan 1870, Gefangennahme Napoleons III.</span></div>
+     <div><b>Gefeiert</b><span>1871 bis 1918, jedes Jahr am 2. September</span></div>
+     <div><b>Status</b><span>Nie offiziell ausgerufen, aber faktisch ein Nationalfeiertag<sup><a href="#q4">[4]</a></sup></span></div>
+     <div><b>Formen</b><span>Schulfeiern, Gottesdienste, Umzüge, Reden, festlich beleuchtete Gebäude</span></div>
+     <div><b>Ende</b><span>27. August 1919: Das Reichsinnenministerium der Weimarer Republik untersagt weitere Feiern<sup><a href="#q4">[4]</a></sup></span></div>
+    </div>
+   </div>
+   <div class="qa">
+    <details class="q"><summary>Wer feierte nicht oder nur widerwillig?</summary><p>Die Arbeiterbewegung hat den Tag nie wirklich angenommen. Süddeutsche Staaten wie Bayern, Baden und Württemberg feierten lieber Schlachten, in denen ihre eigenen Truppen wichtig gewesen waren, etwa Wörth am 6. August 1870. In Preußen galt die Königskrönung von 1701 vielen als bedeutender als die Kaiserproklamation.<sup><a href="#q4">[4]</a></sup></p></details>
+    <details class="q"><summary>Welche Funktion nach Hobsbawm erfüllt der Sedantag?</summary><p>Vor allem Funktion 1 (Zusammenhalt stiften) und 2 (Herrschaft legitimieren): Der Sieg über Frankreich wird zum Gründungsmythos des Reiches und der preußisch geführten Monarchie. In Schulfeiern kommt Funktion 3 hinzu.</p></details>
+    <details class="q"><summary>Wer wird durch dieses Ritual als „Feind“ definiert?</summary><p>Nach außen Frankreich als „Erbfeind“. Nach innen alle, die nicht mitfeierten. Das waren vor allem Teile der Arbeiterbewegung und der Katholiken, die ohnehin als „Reichsfeinde“ galten.</p></details>
+    <div class="callout"><strong>Pointe:</strong> Zwischen Ereignis (1870) und Ritual (ab 1871) liegt kein Jahrhundert, sondern ein Jahr. Trotzdem sollte der Tag bald wirken, als gehöre er schon immer zum deutschen Kalender. Und er endete mit dem Staat, der ihn brauchte.</div>
+   </div>
+  </div>
+ </div>
+
+ <div class="card" data-panel="denkmal" role="tabpanel" hidden>
+  <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--s3)">Steinerne Geschichtserzählungen</h3>
+  <p style="margin-bottom:var(--s5)">Innerhalb von vier Jahrzehnten entstanden mehrere riesige Nationaldenkmäler.<sup><a href="#q5">[5]</a></sup> Klicke auf ein Denkmal und beantworte die Analysefragen, bevor du die Lösung öffnest.</p>
+  <div class="tabs" role="tablist" aria-label="Denkmäler" id="monTabs"></div>
+  <div class="panel-grid" id="monPanel"></div>
+ </div>
+
+ <div class="card" data-panel="hymne" role="tabpanel" hidden>
+  <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--s3)">Das „Lied der Deutschen“: alt oder neu?</h3>
+  <p class="note" style="margin-bottom:var(--s5)">Ein Lied, viele Entstehungsdaten. Je nach Blickwinkel ist die deutsche Hymne 230, 180, 100, 70 oder 35 Jahre alt.<sup><a href="#q6">[6]</a></sup></p>
+  <div class="timeline">
+   <div class="tl"><time>1797</time><h3>Melodie</h3><p>Joseph Haydn komponiert die Melodie als Hymne für den österreichischen Kaiser.</p></div>
+   <div class="tl"><time>1841</time><h3>Text</h3><p>August Heinrich Hoffmann von Fallersleben schreibt das „Lied der Deutschen“ auf Helgoland, damals britisch. Ein deutscher Nationalstaat existiert noch nicht. Das Lied fordert ihn.</p></div>
+   <div class="tl"><time>1871–1918</time><h3>Keine offizielle Hymne</h3><p>Im Kaiserreich gibt es keine festgelegte Nationalhymne. Bei offiziellen Anlässen erklingt oft „Heil dir im Siegerkranz“, regional auch „Die Wacht am Rhein“.</p></div>
+   <div class="tl nation"><time>1922</time><h3>Nationalhymne</h3><p>Reichspräsident Friedrich Ebert erklärt das Deutschlandlied zur Hymne der Weimarer Republik.</p></div>
+   <div class="tl"><time>1933</time><h3>Missbrauch</h3><p>Im Nationalsozialismus wird die erste Strophe mit dem Horst-Wessel-Lied, einem NS-Kampflied, kombiniert.</p></div>
+   <div class="tl"><time>1952</time><h3>Neuanfang</h3><p>Nach einem Briefwechsel zwischen Bundespräsident Heuss und Bundeskanzler Adenauer wird das Lied wieder Hymne. Bei staatlichen Anlässen soll nur die dritte Strophe gesungen werden.</p></div>
+   <div class="tl"><time>1991</time><h3>Dritte Strophe</h3><p>Ein Briefwechsel zwischen Weizsäcker und Kohl legt fest: Nur die dritte Strophe („Einigkeit und Recht und Freiheit“) ist Nationalhymne. Ein Gesetz dazu gibt es bis heute nicht.</p></div>
+  </div>
+  <div class="callout teal" style="margin-top:var(--s5)"><strong>Denkanstoß:</strong> Dieselbe Melodie stand für einen österreichischen Kaiser, für eine Republik, für eine Diktatur und für eine Demokratie. Ist eine Tradition dann „alt“, oder wird sie immer wieder neu erfunden?</div>
+ </div>
+
+ <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin:var(--s8) 0 var(--s3)">Wer gehörte nicht zum gefeierten „Wir“?</h3>
+ <p style="margin-bottom:var(--s4)">Erfundene Traditionen schaffen nicht nur Zugehörigkeit, sondern auch Grenzen. Im Kaiserreich galten mehrere Gruppen als „Reichsfeinde“.<sup><a href="#q5">[5]</a></sup></p>
+ <div class="excl">
+  <div><b>Katholiken</b>Im Kulturkampf der 1870er-Jahre als „ultramontan“ verdächtigt, also als romtreu statt reichstreu.</div>
+  <div><b>Sozialdemokraten</b>Durch die Sozialistengesetze (1878–1890) verfolgt; Wilhelm II. nannte sie „vaterlandslose Gesellen“.</div>
+  <div><b>Nationale Minderheiten</b>Polen, Dänen, Franzosen in Elsass-Lothringen: Germanisierung über Schule, Sprache und Ansiedlung.</div>
+  <div><b>Juden</b>Trotz rechtlicher Gleichstellung 1871 wachsender Antisemitismus, besonders in Wirtschaftskrisen.</div>
+ </div>
+</section>
+
+<section id="vergleich" class="reveal">
+ <span class="eyebrow">04 · Vergleich</span>
+ <h2 class="title">Auch anderswo: Frankreich und Schottland</h2>
+ <p class="intro">Erfundene Traditionen sind kein deutscher Sonderfall. Zwei Vergleichsfälle zeigen, dass dasselbe Muster auftaucht. Sie zeigen aber auch, wo Hobsbawms These selbst umstritten ist.</p>
+ <div class="grid2">
+  <div class="card">
+   <span class="tag">Frankreich</span>
+   <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin:var(--s3) 0">Der 14. Juli: ein Feiertag von 1880</h3>
+   <p>Der französische Nationalfeiertag erinnert an den Sturm auf die Bastille 1789. Eingeführt wurde er aber erst 1880 per Gesetz, von der jungen Dritten Republik, zehn Jahre nach der Niederlage gegen Deutschland.<sup><a href="#q1">[1]</a></sup></p>
+   <p class="note">Spiegelbild zum Sedantag: Beide Staaten erfanden in den 1870er/1880er-Jahren Feiertage, die eine Republik bzw. ein Kaiserreich in einer passenden Vergangenheit verankern sollten. Genau diese Gleichzeitigkeit meint Hobsbawm mit „Massenproduktion“.</p>
+  </div>
+  <div class="card">
+   <span class="tag">Schottland</span>
+   <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin:var(--s3) 0">Kilt und Clan-Tartan: Erfindung mit Fragezeichen</h3>
+   <p>Im Band von Hobsbawm und Ranger argumentiert Hugh Trevor-Roper, die „Highland-Tradition“ sei weitgehend jung. Drei Belege werden oft genannt:</p>
+   <ul style="margin:var(--s3) 0 0 var(--s5);display:grid;gap:var(--s2);font-size:var(--text-sm)">
+    <li><b>Der kurze Kilt:</b> Ein Brief von 1785 schreibt ihn dem englischen Unternehmer Thomas Rawlinson zu, der um 1730 Arbeiter in seiner Eisenhütte damit eingekleidet haben soll.<sup><a href="#q7">[7]</a></sup></li>
+    <li><b>1822:</b> Der Besuch von König George IV. in Edinburgh, inszeniert von Walter Scott, macht Tartan zum Nationalkostüm.<sup><a href="#q7">[7]</a></sup></li>
+    <li><b>1842:</b> Das Buch <em>Vestiarium Scoticum</em> der „Sobieski-Stuart“-Brüder ordnet Clans feste Muster zu und beruft sich auf eine angebliche Handschrift aus dem 16. Jahrhundert. Heute gilt es als Fälschung.</li>
+   </ul>
+   <div class="callout" style="margin-top:var(--s4)"><strong>Aber:</strong> Die Rawlinson-Geschichte ist umstritten. Der Briefschreiber war ein Gegner der Highlands, und es gibt Abbildungen kurzer Kilts aus der Zeit <em>vor</em> Rawlinson.<sup><a href="#q7">[7]</a></sup> Karierte Plaids gab es also schon lange. Erfunden wurde eher ihre Bedeutung als „uraltes Clan-Erbe“.</div>
+  </div>
+ </div>
+</section>
+
+<section id="duell" class="reveal">
+ <span class="eyebrow">05 · Theorie-Duell</span>
+ <h2 class="title">Hobsbawm gegen Smith: Erfunden oder wiederbelebt?</h2>
+ <p class="intro">Anthony D. Smith widerspricht Hobsbawm nicht völlig, setzt aber anders an: Nationen knüpfen an ältere Mythen, Erinnerungen und Symbole an. Ohne diesen „ethnischen Kern“ würden erfundene Traditionen gar nicht wirken.<sup><a href="#q2">[2]</a></sup> Positioniere jeden Fall und vergleiche dann mit einem begründeten Vorschlag.</p>
+ <div class="grid2" id="duel"></div>
+ <div class="callout teal" style="margin-top:var(--s5)"><strong>Zwischensicherung:</strong> Hobsbawm erklärt gut, <em>wann</em> und <em>warum</em> Traditionen geschaffen werden: durch Staaten, für Massen, in Umbruchszeiten. Smith erklärt besser, <em>warum sie überzeugen</em>: weil sie an Geschichten anknüpfen, die Menschen schon kennen. Die beiden Ansätze schließen sich nicht aus. Sie beleuchten verschiedene Seiten derselben Sache.</div>
+</section>
+
+<section id="gegenwart" class="reveal">
+ <span class="eyebrow">06 · Gegenwart</span>
+ <h2 class="title">Ritual-Analyse: Wie funktionieren heutige Traditionen?</h2>
+ <p class="intro">Wähle ein Ritual aus der Gegenwart und kreuze an, welche Merkmale einer erfundenen Tradition du erkennst. Danach vergleichst du mit einer Analyse.</p>
+ <div class="card">
+  <div class="tabs" role="tablist" aria-label="Rituale" id="ritTabs"></div>
+  <div class="panel-grid">
+   <div>
+    <p id="ritDesc" style="margin-bottom:var(--s4)"></p>
+    <ul class="check-list" id="ritChecks"></ul>
+    <button class="btn primary" id="ritBtn" style="margin-top:var(--s4)">Mit Analyse vergleichen</button>
+   </div>
+   <div>
+    <div class="result-panel" id="ritResult"></div>
+    <div class="src-box" id="ritHint"><b>Leitfragen</b>Welche Vergangenheit wird aufgerufen? Wer ist das „Wir“? Wer steht am Rand oder draußen? Welche Werte werden eingeübt?</div>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section id="aufgaben" class="reveal">
+ <span class="eyebrow">07 · Aufgaben</span>
+ <h2 class="title">Operatorengerechte Aufgaben</h2>
+ <p class="intro">Bearbeite die Aufgaben schriftlich. Der Erwartungshorizont hilft dir bei der Selbstkontrolle. Er ist keine Musterlösung zum Abschreiben.</p>
+ <div class="tasks">
+  <div class="task"><h3><span class="afb i">AFB I</span>Beschreiben Sie, wie der Sedantag im Kaiserreich gefeiert wurde und welchen Status er hatte.</h3>
+   <textarea aria-label="Antwort Aufgabe 1"></textarea>
+   <details><summary>Erwartungshorizont</summary><ul><li>Jährlich am 2. September von 1871 bis 1918, Erinnerung an den Sieg bei Sedan 1870.</li><li>Formen: Schulfeiern, Gottesdienste, Umzüge, Reden, Beleuchtung.</li><li>Nie offiziell ausgerufen, aber faktisch Nationalfeiertag; 1919 abgeschafft.</li></ul></details></div>
+  <div class="task"><h3><span class="afb ii">AFB II</span>Erklären Sie mithilfe Hobsbawms Theorie, warum zwischen 1871 und 1914 im Deutschen Reich zahlreiche Nationaldenkmäler und Feiern entstanden.</h3>
+   <textarea aria-label="Antwort Aufgabe 2"></textarea>
+   <details><summary>Erwartungshorizont</summary><ul><li>Das Reich ist neu (1871) und muss Loyalität erst herstellen; regionale und konfessionelle Bindungen sind stark.</li><li>Massengesellschaft: Wahlrecht, Presse, Schule machen „das Volk“ politisch wichtig.</li><li>Erfundene Traditionen stiften Zusammenhalt, legitimieren Kaiser und Armee und vermitteln Werte.</li><li>Bezug auf passende Vergangenheit: Arminius, Barbarossa, Befreiungskriege, Sedan.</li><li>Einordnung in Hobsbawms „Massenproduktion von Traditionen“ 1870–1914.</li></ul></details></div>
+  <div class="task"><h3><span class="afb ii">AFB II</span>Vergleichen Sie die Erklärungen von Hobsbawm und Smith am Beispiel des Hermannsdenkmals.</h3>
+   <textarea aria-label="Antwort Aufgabe 3"></textarea>
+   <details><summary>Erwartungshorizont</summary><ul><li>Gemeinsamkeit: Beide sehen, dass das Denkmal eine Vergangenheit für die Nation nutzt.</li><li>Hobsbawm: Bau 1875 im neuen Reich; nationale Deutung des Arminius ist modern; Ziel: Legitimation und Zusammenhalt.</li><li>Smith: Die Erinnerung an Arminius ist älter (Tacitus, Wiederentdeckung im 16. Jahrhundert); das Denkmal wirkt, weil es an bekannte Mythen anknüpft.</li><li>Unterschied im Schwerpunkt: Herstellung durch Eliten und Staat vs. Wirksamkeit älterer Erinnerungen.</li><li>Abschließender Vergleichsaspekt, z. B. welche Theorie die Breitenwirkung besser erklärt.</li></ul></details></div>
+  <div class="task"><h3><span class="afb iii">AFB III</span>Beurteilen Sie die These: „Wenn nationale Traditionen erfunden sind, sind sie bedeutungslos.“</h3>
+   <textarea aria-label="Antwort Aufgabe 4"></textarea>
+   <details><summary>Erwartungshorizont</summary><ul><li>Klärung: „erfunden“ heißt gemacht und jung, nicht gefälscht oder unwirksam.</li><li>Gegenargument: Erfundene Traditionen erzeugen reale Gefühle, Zugehörigkeit und politische Folgen (Sedantag, Hymne).</li><li>Pro-Aspekt: Das Wissen um die Entstehung kann Traditionen entzaubern und Ausgrenzungen sichtbar machen.</li><li>Abwägung mit Smith: Wirksamkeit hängt auch an älteren Mythen.</li><li>Begründetes Sachurteil, z. B.: Erfunden ≠ bedeutungslos; entscheidend ist, wer einbezogen und wer ausgeschlossen wird.</li></ul></details></div>
+  <div class="task"><h3><span class="afb iii">AFB III</span>Bewerten Sie, ob eine pluralistische Demokratie eigene Rituale (z. B. Einbürgerungsfeiern, Verfassungstag) braucht.</h3>
+   <textarea aria-label="Antwort Aufgabe 5"></textarea>
+   <details><summary>Erwartungshorizont</summary><ul><li>Werturteil mit offengelegtem Maßstab (z. B. Gleichheit, Pluralismus, Menschenwürde).</li><li>Pro: Rituale machen Zugehörigkeit sichtbar, stärken Bindung an demokratische Werte (Verfassungspatriotismus).</li><li>Contra: Gefahr von Pathos, Konformitätsdruck, Ausgrenzung derer, die nicht teilnehmen.</li><li>Kriterium für demokratische Rituale: offen für alle Staatsbürger, Bezug auf Rechte statt Abstammung, Kritik bleibt erlaubt.</li><li>Eigene Position mit Gegenposition und Grenze des Urteils.</li></ul></details></div>
+ </div>
+</section>
+
+<section id="check" class="reveal">
+ <span class="eyebrow">08 · Lerncheck</span>
+ <h2 class="title">Fünf Fragen zur Selbstkontrolle</h2>
+ <div class="quiz" id="quiz"></div>
+ <div class="score"><div class="ring" id="ring"><span id="ringTxt">0/5</span></div><p id="scoreMsg">Beantworte die Fragen, um deine Rückmeldung zu sehen.</p></div>
+</section>
+
+{{PDFCTA}}
+
+{{MODULES}}
+
+<section id="quellen" class="sources reveal">
+ <span class="eyebrow">Quellen</span>
+ <h2 class="title">Belege &amp; Vertiefung</h2>
+ <ol>
+  <li id="q1">Hobsbawm, Eric / Ranger, Terence (Hg.): <em>The Invention of Tradition</em>. Cambridge University Press 1983 (darin: Hobsbawm, „Introduction: Inventing Traditions“ und „Mass-Producing Traditions: Europe, 1870–1914“; Trevor-Roper, „The Invention of Tradition: The Highland Tradition of Scotland“). Rezension: <a href="https://lrb.co.uk/v05/n13/norman-stone/pastiche" target="_blank" rel="noopener noreferrer">London Review of Books</a></li>
+  <li id="q2">Smith, Anthony D.: <em>The Ethnic Origins of Nations</em>. Oxford 1986; ders.: <em>Nationalism and Modernism</em>. London 1998.</li>
+  <li id="q3">Anderson, Benedict: <em>Imagined Communities</em>. London 1983.</li>
+  <li id="q4">Sedantag: Überblick und Belege: <a href="https://en.wikipedia.org/wiki/Sedantag" target="_blank" rel="noopener noreferrer">Wikipedia (en)</a> · Quellenheft: <a href="https://www.stuttgart.de/medien/ibs/web-quellenheft-sedantag-stadtarchiv.pdf" target="_blank" rel="noopener noreferrer">Stadtarchiv Stuttgart</a></li>
+  <li id="q5">Bundeszentrale für politische Bildung: Nation und Nationalismus im Kaiserreich. <a href="https://www.bpb.de/themen/kolonialismus-imperialismus/kaiserreich/138915/nation-und-nationalismus" target="_blank" rel="noopener noreferrer">bpb.de</a></li>
+  <li id="q6">Konrad-Adenauer-Stiftung: Geschichte der deutschen Nationalhymne. <a href="https://www.kas.de/de/geschichte-der-deutschen-nationalhymne" target="_blank" rel="noopener noreferrer">kas.de</a> · <a href="https://www.dhm.de/lemo/rueckblick/das-lied-der-deutschen-1841" target="_blank" rel="noopener noreferrer">LeMO (DHM)</a></li>
+  <li id="q7">Thomas Rawlinson und die Kilt-Kontroverse: <a href="https://en.wikipedia.org/wiki/Thomas_Rawlinson_(industrialist)" target="_blank" rel="noopener noreferrer">Wikipedia (en)</a></li>
+ </ol>
+ <footer>Didaktisch reduzierte Darstellung für das Wahlfach Demokratiebildung / Geschichte mit Gemeinschaftskunde. Die Positionen im Theorie-Duell und in der Ritual-Analyse sind begründete Vorschläge, keine endgültigen Lösungen. Eingaben werden nicht gespeichert.</footer>
+</section>
+</main>
+
+<script>
+{{COMMONJS}}
+(()=>{
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+
+/* 01 Schätzspiel + Hantel-Diagramm */
+const items=[
+ {q:'Seit wann steht das Hermannsdenkmal bei Detmold?',o:['um 1500','1813','1875','1933'],a:2,ref:9,refL:'Varusschlacht 9 n. Chr.',made:1875,label:'Hermannsdenkmal',n:'Eingeweiht 1875. Es erinnert an die Varusschlacht im Jahr 9 n. Chr. – fast 1.900 Jahre früher.'},
+ {q:'Seit wann ist der 14. Juli Frankreichs Nationalfeiertag?',o:['1789','1815','1880','1945'],a:2,ref:1789,refL:'Sturm auf die Bastille 1789',made:1880,label:'14. Juli (Frankreich)',n:'Per Gesetz 1880, über 90 Jahre nach dem Ereignis.'},
+ {q:'Seit wann haben schottische Clans „ihre“ festen Tartanmuster?',o:['Mittelalter','um 1600','vor allem 19. Jh.','1950er'],a:2,ref:1500,refL:'angebliche Handschrift, 16. Jh.',made:1842,label:'Clan-Tartans',n:'Systematische Clan-Zuordnungen verbreiten sich vor allem im 19. Jahrhundert, u. a. durch das „Vestiarium Scoticum“ von 1842.'},
+ {q:'Seit wann steht das Kyffhäuser-Denkmal mit Barbarossa?',o:['1190','1525','1896','1990'],a:2,ref:1190,refL:'Tod Barbarossas 1190',made:1896,label:'Kyffhäuser-Denkmal',n:'Eingeweiht 1896. Es verbindet den mittelalterlichen Kaiser Barbarossa mit Wilhelm I.'},
+ {q:'Seit wann ist das Deutschlandlied Nationalhymne?',o:['1797','1841','1871','1922'],a:3,ref:1841,refL:'Text 1841',made:1922,label:'Deutschlandlied als Hymne',n:'1922 durch Friedrich Ebert. Der Text stammt von 1841, die Melodie von 1797.'},
+ {q:'Seit wann ist der 3. Oktober Tag der Deutschen Einheit?',o:['1871','1949','1953','1990'],a:3,ref:1990,refL:'Wiedervereinigung 1990',made:1990,label:'Tag der Deutschen Einheit',n:'Seit 1990. Er beruft sich auf kein „uraltes“ Datum. Ein bewusst neuer Feiertag.'}
+];
+const res=new Map();
+$('#guess').innerHTML=items.map((it,i)=>`<div class="qcard" data-g="${i}"><h3>${it.q}</h3><div class="opts">${it.o.map((o,j)=>`<button class="opt" data-j="${j}">${o}</button>`).join('')}</div><p class="guess-note">${it.n}</p></div>`).join('');
+$$('#guess .qcard').forEach(c=>c.addEventListener('click',e=>{const b=e.target.closest('.opt');if(!b||c.classList.contains('done'))return;const i=+c.dataset.g,j=+b.dataset.j;c.classList.add('done');$$('.opt',c).forEach((x,k)=>{x.disabled=true;if(k===items[i].a)x.classList.add('correct')});if(j!==items[i].a)b.classList.add('wrong');res.set(i,j===items[i].a);if(res.size===items.length)showChart()}));
+function sx(y,W,L){const p=y<1700?(y/1700)*.28:.28+((y-1700)/325)*.72;return L+p*W}
+function showChart(){const W=660,L=215,R=20,rowH=40,H=items.length*rowH+50,iw=W-L-R;
+ let s=`<svg class="dumb" viewBox="0 0 ${W} ${H}" role="img" aria-label="Hantel-Diagramm: Bezugszeit und Entstehungszeit von sechs Traditionen">`;
+ [0,1000,1700,1800,1900,2000].forEach(y=>{const x=sx(y,iw,L);s+=`<line x1="${x}" y1="10" x2="${x}" y2="${H-30}" stroke="var(--divider)" stroke-width="1"/><text x="${x}" y="${H-10}" text-anchor="middle" font-size="11" fill="var(--muted)">${y===0?'0':y}</text>`});
+ const bx=sx(1700,iw,L)-6;s+=`<path d="M${bx-4} ${H-34} l6 8 M${bx+2} ${H-34} l6 8" stroke="var(--muted)" stroke-width="1.5"/>`;
+ items.forEach((it,i)=>{const y=30+i*rowH,x1=sx(it.ref,iw,L),x2=sx(it.made,iw,L);
+  s+=`<text x="${L-10}" y="${y+4}" text-anchor="end" font-size="12.5" font-weight="700" fill="var(--text)">${it.label}</text>`;
+  s+=`<line x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="var(--primary)" stroke-width="3" stroke-opacity=".35"/>`;
+  s+=`<circle cx="${x1}" cy="${y}" r="7" fill="var(--surface-2)" stroke="var(--teal)" stroke-width="3"><title>${it.refL}</title></circle>`;
+  s+=`<circle cx="${x2}" cy="${y}" r="7" fill="var(--primary)"><title>eingeführt ${it.made}</title></circle>`;
+  if(it.made-it.ref>0)s+=`<text x="${x2-12}" y="${y-10}" text-anchor="end" font-size="11" fill="var(--muted)">${it.made-it.ref} J.</text>`;});
+ s+='</svg>';$('#dumb').innerHTML=s;
+ const ok=[...res.values()].filter(Boolean).length;$('#guessScore').textContent=`${ok} von ${items.length} richtig. Fünf der sechs Traditionen berufen sich auf eine Vergangenheit, die weit vor ihrer Entstehung liegt.`;$('#chartWrap').classList.add('show')}
+
+/* Tabs Kaiserreich */
+$$('[data-tab]').forEach(t=>t.addEventListener('click',()=>{$$('[data-tab]').forEach(x=>x.setAttribute('aria-selected',x===t));$$('[data-panel]').forEach(p=>p.hidden=p.dataset.panel!==t.dataset.tab)}));
+
+/* Denkmäler */
+const mons=[
+ {n:'Hermannsdenkmal',y:'1875',o:'Teutoburger Wald bei Detmold',past:'Arminius (Hermann), Anführer der Cherusker, Sieg über römische Legionen 9 n. Chr.',we:'Die „Deutschen“ als Nachfahren freiheitsliebender Germanen, die sich gegen eine fremde Großmacht wehren.',out:'Rom bzw. Frankreich als „welscher“ Gegner; die Inschrift am Schwert betont deutsche Einheit und Stärke.',msg:'Das neue Reich erscheint als Vollendung eines fast 2.000 Jahre alten Freiheitskampfes. Historisch war Arminius kein „Deutscher“ – eine deutsche Nation gab es nicht.',svg:'herm'},
+ {n:'Niederwalddenkmal',y:'1883',o:'über Rüdesheim am Rhein',past:'Der Krieg 1870/71 und die Reichsgründung.',we:'Die geeinte Nation, verkörpert durch die Figur der Germania mit Kaiserkrone.',out:'Frankreich als „Erbfeind“; die Wacht am Rhein als Grenze gegen den Westen.<sup><a href="#q5">[5]</a></sup>',msg:'Die Nation steht wehrhaft am Rhein. Einheit wird über Abgrenzung nach außen definiert.',svg:'germ'},
+ {n:'Kyffhäuser-Denkmal',y:'1896',o:'Kyffhäusergebirge, Thüringen',past:'Die Sage vom schlafenden Kaiser Friedrich Barbarossa (gest. 1190), der eines Tages zurückkehrt.',we:'Untertanen eines Kaiserreichs, das das mittelalterliche Reich „wiederherstellt“.',out:'Wer das Reich als bloß neu oder preußisch kritisiert, z. B. Sozialdemokraten oder Katholiken.',msg:'Wilhelm I. erscheint als „Barbablanca“, als Erfüller der Barbarossa-Sage. Ein neues Reich bekommt eine 700-jährige Ahnenreihe.',svg:'kyff'},
+ {n:'Völkerschlachtdenkmal',y:'1913',o:'Leipzig',past:'Die Völkerschlacht 1813 gegen Napoleon, 100 Jahre zuvor.',we:'Ein opferbereites Volk, das in den Befreiungskriegen zur Nation geworden sei.',out:'Dass 1813 auch Österreicher, Russen und Schweden kämpften, tritt zurück; Frankreich bleibt Gegenbild.',msg:'Kurz vor dem Ersten Weltkrieg wird der Krieg als nationales Opferfest gedeutet.',svg:'voelk'}
+];
+const svgs={
+ herm:'<svg class="monument-svg" viewBox="0 0 200 220" aria-hidden="true"><rect x="40" y="150" width="120" height="60" fill="var(--offset)" stroke="var(--border)"/><path d="M60 150 Q100 120 140 150" fill="var(--dynamic)"/><circle cx="100" cy="52" r="12" fill="var(--teal)"/><path d="M86 66 h28 l8 70 h-44z" fill="var(--teal)"/><path d="M112 70 L150 18" stroke="var(--teal)" stroke-width="6" stroke-linecap="round"/><path d="M90 40 l10 -14 l10 14" fill="var(--teal)"/></svg>',
+ germ:'<svg class="monument-svg" viewBox="0 0 200 220" aria-hidden="true"><rect x="30" y="140" width="140" height="70" fill="var(--offset)" stroke="var(--border)"/><rect x="45" y="155" width="110" height="30" fill="none" stroke="var(--muted)" stroke-dasharray="3 3"/><circle cx="100" cy="46" r="12" fill="var(--primary)"/><path d="M92 30 h16 l-3 -8 h-10z" fill="var(--gold)"/><path d="M84 60 h32 l12 80 h-56z" fill="var(--primary)"/><path d="M116 64 L132 120" stroke="var(--primary)" stroke-width="5" stroke-linecap="round"/><circle cx="80" cy="64" r="7" fill="var(--gold)"/></svg>',
+ kyff:'<svg class="monument-svg" viewBox="0 0 200 220" aria-hidden="true"><rect x="70" y="20" width="60" height="110" fill="var(--offset)" stroke="var(--border)"/><path d="M60 20 h80 l-10 -12 h-60z" fill="var(--dynamic)"/><circle cx="100" cy="90" r="11" fill="var(--gold)"/><path d="M88 102 h24 l6 30 h-36z" fill="var(--gold)"/><rect x="30" y="150" width="140" height="60" fill="var(--dynamic)"/><circle cx="100" cy="172" r="8" fill="var(--teal)"/><path d="M80 190 q20 -14 40 0 v12 h-40z" fill="var(--teal)"/></svg>',
+ voelk:'<svg class="monument-svg" viewBox="0 0 200 220" aria-hidden="true"><path d="M30 210 L50 90 Q100 20 150 90 L170 210z" fill="var(--offset)" stroke="var(--border)"/><path d="M60 120 h80" stroke="var(--muted)"/><g fill="var(--primary)"><rect x="66" y="128" width="10" height="34"/><rect x="86" y="128" width="10" height="34"/><rect x="106" y="128" width="10" height="34"/><rect x="126" y="128" width="10" height="34"/></g><path d="M85 60 h30" stroke="var(--muted)" stroke-width="3"/></svg>'
+};
+$('#monTabs').innerHTML=mons.map((m,i)=>`<button role="tab" aria-selected="${i===0}" data-m="${i}">${m.n} · ${m.y}</button>`).join('');
+function showMon(i){const m=mons[i];$('#monPanel').innerHTML=`<div>${svgs[m.svg]}<p class="note" style="text-align:center">Schematische Darstellung · ${m.o}</p></div><div class="qa"><details class="q"><summary>Welche Vergangenheit wird aufgerufen?</summary><p>${m.past}</p></details><details class="q"><summary>Wer ist das „Wir“?</summary><p>${m.we}</p></details><details class="q"><summary>Wer oder was wird abgegrenzt?</summary><p>${m.out}</p></details><details class="q"><summary>Botschaft für die Gegenwart von ${m.y}?</summary><p>${m.msg}</p></details></div>`;$$('#monTabs button').forEach((b,k)=>b.setAttribute('aria-selected',k===i))}
+$('#monTabs').addEventListener('click',e=>{const b=e.target.closest('button');if(b)showMon(+b.dataset.m)});showMon(0);
+
+/* 05 Duell */
+const duel=[
+ {n:'Sedantag',ref:12,h:'Ein Jahr nach dem Ereignis eingeführt, vom Staat und von Vereinen getragen, mit dem Kaiserreich wieder verschwunden. Fast ein Lehrbuchfall.',s:'Er knüpft an die ältere Erinnerung an die Befreiungskriege gegen Frankreich (1813) an, deshalb wirkte die Deutung als „Erbfeind“ glaubwürdig.'},
+ {n:'Hermannsdenkmal',ref:55,h:'Die nationale Deutung von Arminius als „erster Deutscher“ ist eine Konstruktion des 19. Jahrhunderts.',s:'Die Erinnerung an Arminius ist alt: Tacitus beschreibt ihn; seine Werke wurden im 16. Jahrhundert wiederentdeckt, Humanisten machten ihn zum Helden. Das Denkmal greift einen bekannten Mythos auf.'},
+ {n:'Kilt & Clan-Tartan',ref:45,h:'Clan-Muster und das Kostüm als Nationalsymbol entstehen im 18./19. Jahrhundert, teils durch Fälschungen wie das „Vestiarium Scoticum“.',s:'Karierte Stoffe und Plaids gab es lange vorher; die „Erfindung“ verlieh altem Material eine neue Bedeutung. Selbst die Rawlinson-Geschichte ist umstritten.'},
+ {n:'Deutschlandlied',ref:40,h:'Hymne erst 1922, Neufestlegung 1952 und 1991 – die Bedeutung wurde mehrfach politisch bestimmt.',s:'Text (1841) und Melodie (1797) sind älter und waren in der Nationalbewegung bekannt. Die Hymne knüpft an eine populäre Liedtradition an.'}
+];
+$('#duel').innerHTML=duel.map((d,i)=>`<div class="slider-case"><h3>${d.n}</h3><div class="scale-labels"><span>weitgehend erfunden (Hobsbawm)</span><span>knüpft an Altes an (Smith)</span></div><div class="scale-track"><span class="mk ref" style="left:${d.ref}%"></span><span class="mk you" id="mk${i}" style="left:50%"></span></div><label class="note" for="dr${i}" style="margin:0">Deine Einschätzung</label><input type="range" id="dr${i}" min="0" max="100" value="50"/><button class="btn" data-d="${i}">Vergleichen</button><div class="reveal-box" id="rv${i}"><p><b>Vorschlag:</b> heller Punkt auf der Skala. <span id="dt${i}"></span></p><div class="two-args"><div><b style="color:var(--primary)">Hobsbawm</b>${d.h}</div><div><b style="color:var(--teal)">Smith</b>${d.s}</div></div></div></div>`).join('');
+duel.forEach((d,i)=>{$('#dr'+i).addEventListener('input',e=>$('#mk'+i).style.left=e.target.value+'%')});
+$('#duel').addEventListener('click',e=>{const b=e.target.closest('[data-d]');if(!b)return;const i=+b.dataset.d,v=+$('#dr'+i).value,diff=Math.abs(v-duel[i].ref);$('#rv'+i).classList.add('show');$('.mk.ref',b.parentElement).classList.add('show');$('#dt'+i).textContent=diff<=15?'Deine Einschätzung liegt nah dran.':`Deine Einschätzung weicht um ${diff} Punkte ab. Prüfe, ob deine Begründung trägt – andere Positionen sind möglich.`});
+
+/* 06 Ritual-Analyse */
+const crit=['Findet regelmäßig zu festen Zeiten statt','Hat eine feste, kaum veränderbare Form (Ablauf, Kleidung, Formeln)','Bezieht sich auf eine bedeutsame Vergangenheit','Nutzt nationale Symbole (Flagge, Hymne, Farben)','Macht sichtbar, wer zum „Wir“ gehört','Stützt eine Institution oder Autorität','Vermittelt Werte oder Verhaltensregeln'];
+const rits=[
+ {n:'Einbürgerungsfeier',d:'Neu eingebürgerte Menschen erhalten in vielen Städten ihre Urkunde in einer Feier, oft mit Rede, Hymne und Bekenntnis zum Grundgesetz.',ans:[0,1,0,1,1,1,1],t:'Ein junges Ritual, das Zugehörigkeit über <b>Rechte und Verfassung</b> statt über Abstammung markiert (Funktionen 1–3). Bemerkenswert: Es bezieht sich kaum auf eine „uralte“ Vergangenheit, sondern auf das Grundgesetz. Es ist damit eher eine Tradition im Sinne der Willens- bzw. Verfassungsnation.',q:'Wer bleibt draußen? Menschen ohne Einbürgerungsanspruch, z. B. mit kurzem Aufenthalt. Rechtliche Zugehörigkeit ist nicht dasselbe wie soziale Anerkennung.'},
+ {n:'Hymne vor dem Länderspiel',d:'Vor internationalen Fußballspielen stehen Spieler und Publikum zur Nationalhymne, die Spieler legen oft die Hand aufs Herz.',ans:[1,1,0,1,1,0,0],t:'Stark ritualisiert, wiederholt, symbolisch: ein klassisches Massenritual (Funktion 1). Ein Bezug auf eine bestimmte Vergangenheit fehlt meist; die Hymne selbst trägt Geschichte mit. Diskussionen darüber, ob Spieler mitsingen „müssen“, zeigen, wie solche Rituale Zugehörigkeit prüfen.',q:'Wer wird ausgeschlossen? Wer nicht mitsingt, wird manchmal als „weniger zugehörig“ markiert – ein Beispiel für Anpassungsdruck.'},
+ {n:'Tag der Deutschen Einheit',d:'Seit 1990 wird am 3. Oktober die Wiedervereinigung gefeiert, jedes Jahr mit einem Bürgerfest in einem anderen Bundesland.',ans:[1,0,1,1,1,1,1],t:'Ein offen neuer Feiertag (seit 1990), der sich auf ein kurz zurückliegendes Ereignis bezieht. Die Form ist bewusst locker (Bürgerfest statt Parade). Er stiftet Zusammenhalt und legitimiert den vereinten Staat.',q:'Wie fühlen sich Menschen angesprochen, deren Familie erst nach 1990 nach Deutschland kam? Wie erinnern Ost- und Westdeutsche den Tag?'}
+];
+let rIdx=0;
+function drawRit(){const r=rits[rIdx];$('#ritTabs').innerHTML=rits.map((x,i)=>`<button role="tab" aria-selected="${i===rIdx}" data-r="${i}">${x.n}</button>`).join('');$('#ritDesc').textContent=r.d;$('#ritChecks').innerHTML=crit.map((c,i)=>`<li><label><input type="checkbox" data-c="${i}"/>${c}</label></li>`).join('');$('#ritResult').classList.remove('show');$('#ritHint').hidden=false}
+$('#ritTabs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;rIdx=+b.dataset.r;drawRit()});
+$('#ritBtn').addEventListener('click',()=>{const r=rits[rIdx],mine=$$('#ritChecks input').map(x=>x.checked?1:0),same=mine.filter((v,i)=>v===r.ans[i]).length,pct=Math.round(same/crit.length*100);
+ $('#ritResult').innerHTML=`<p style="font-weight:700">Übereinstimmung mit der Analyse: ${same} von ${crit.length} Merkmalen</p><div class="meter"><i style="width:${pct}%"></i></div><ul style="margin:var(--s3) 0 var(--s3) var(--s5);font-size:var(--text-sm);display:grid;gap:4px">${crit.map((c,i)=>`<li>${r.ans[i]?'✓':'–'} ${c}${mine[i]!==r.ans[i]?' <b style="color:var(--error)">(abweichend)</b>':''}</li>`).join('')}</ul><p style="font-size:var(--text-sm)">${r.t}</p><div class="callout" style="margin-top:var(--s3);font-size:var(--text-sm)"><strong>Ein- und Ausschluss:</strong> ${r.q}</div>`;
+ $('#ritResult').classList.add('show');$('#ritHint').hidden=true});
+drawRit();
+
+/* 08 Quiz */
+const qs=[
+ ['Was meint Hobsbawm mit „erfundenen Traditionen“?',['Gefälschte historische Dokumente','Wiederholte, symbolische Praktiken, die eine Kontinuität zu einer passenden Vergangenheit behaupten','Bräuche, die sich langsam verändern'],1,'Entscheidend sind Wiederholung, feste Form und der behauptete Bezug zur Vergangenheit. Eine Fälschung ist nicht gemeint.'],
+ ['Warum spricht Hobsbawm für 1870–1914 von einer „Massenproduktion“ von Traditionen?',['Weil es damals besonders viele Kriege gab','Weil Staaten in der Massengesellschaft neue Bindungen an die Nation schaffen mussten','Weil die Menschen sich nach alten Bräuchen sehnten'],1,'Wahlrecht, Presse und Schule machten die Massen politisch wichtig. Schule, Zeremonien und Denkmäler sollten Loyalität erzeugen.'],
+ ['Welche Aussage zum Sedantag ist richtig?',['Er war ein gesetzlicher Feiertag des Kaiserreichs','Er wurde von allen Gruppen gleichermaßen gefeiert','Er war faktisch Nationalfeiertag, wurde aber nie offiziell ausgerufen'],2,'Nie offiziell proklamiert, 1871–1918 gefeiert, von der Arbeiterbewegung und süddeutschen Staaten nur zögerlich angenommen.'],
+ ['Was betont Anthony D. Smith gegenüber Hobsbawm?',['Nationen sind reine Erfindungen der Eliten','Nationen knüpfen an ältere Mythen, Erinnerungen und Symbole an','Nationen entstehen nur durch Industrialisierung'],1,'Smith sieht ältere ethnische und kulturelle Muster als Voraussetzung dafür, dass moderne Nationalsymbole wirken.'],
+ ['Was zeigt das Beispiel Kilt besonders gut?',['Dass alle schottischen Traditionen gefälscht sind','Dass auch die Erfindungs-These selbst überprüft werden muss','Dass Kleidung für Nationen unwichtig ist'],1,'Die Rawlinson-Erzählung ist umstritten. Erfunden wurde eher die Bedeutung als uraltes Clan-Erbe als der Stoff selbst.']
+];
+const qr=new Map();
+$('#quiz').innerHTML=qs.map((q,i)=>`<div class="qcard" data-q="${i}"><h3>${i+1}. ${q[0]}</h3><div class="opts">${q[1].map((o,j)=>`<button class="opt" data-j="${j}">${o}</button>`).join('')}</div><p class="why">${q[3]}</p></div>`).join('');
+$$('#quiz .qcard').forEach(card=>card.addEventListener('click',e=>{const o=e.target.closest('.opt');if(!o||card.classList.contains('done'))return;const i=+card.dataset.q,c=qs[i][2],j=+o.dataset.j;card.classList.add('done');$$('.opt',card).forEach((x,k)=>{x.disabled=true;if(k===c)x.classList.add('correct')});if(j!==c)o.classList.add('wrong');qr.set(i,j===c);const s=[...qr.values()].filter(Boolean).length,n=qr.size;$('#ringTxt').textContent=`${s}/5`;$('#ring').style.background=`conic-gradient(var(--primary) ${s/5*360}deg,var(--dynamic) 0)`;$('#scoreMsg').textContent=n<5?`${n} von 5 beantwortet.`:s===5?'Sehr sicher: Du kannst Hobsbawm und Smith präzise anwenden.':s>=3?'Gute Grundlage – lies die Erklärungen bei den markierten Fragen.':'Geh noch einmal zu Theorie und Theorie-Duell zurück.'}));
+})();
+</script>
+</body>
+</html>

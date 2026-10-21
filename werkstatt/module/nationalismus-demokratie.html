@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="Vertiefungsmodul zum Lernlabor „Nation im Kopf“: Wann wird Nationalismus zur Gefahr für Pluralismus, Gleichheit und Menschenrechte? Begriffe, Geschichte, Grundgesetz und Urteilsbildung."/>
+<title>Nationalismus und Demokratie – Vertiefungsmodul</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet"/>
+<style>
+{{CSS}}
+/* Modulspezifisch */
+.defs{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3)}
+.def{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s4);border-left:5px solid var(--c,var(--teal))}
+.def h3{font-size:var(--text-base);margin-bottom:var(--s1)}
+.def p{font-size:var(--text-sm);color:var(--muted)}
+.classify{display:grid;gap:var(--s3)}
+.cl-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s4)}
+.cl-item p.st{font-weight:700;margin-bottom:var(--s3)}
+.cl-btns{display:flex;flex-wrap:wrap;gap:var(--s2)}
+.cl-btns button{min-height:40px;border:1px solid var(--border);border-radius:999px;padding:4px 14px;background:var(--surface-2);font-size:var(--text-sm)}
+.cl-btns button.correct{background:var(--success-hi);border-color:var(--success)}
+.cl-btns button.wrong{background:var(--error-hi);border-color:var(--error)}
+.cl-fb{display:none;margin-top:var(--s3);font-size:var(--text-sm);color:var(--muted)}
+.cl-item.done .cl-fb{display:block}
+.twin{display:grid;grid-template-columns:1fr 1fr;gap:var(--s5)}
+.twin h3{font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--s4);display:flex;align-items:center;gap:var(--s2)}
+.twin .timeline::before{background:var(--c)}
+.twin .tl::before{border-color:var(--c)}
+.knobs{display:grid;gap:var(--s4)}
+.knob label{font-weight:700;display:block;margin-bottom:var(--s1)}
+.segctl{display:grid;grid-template-columns:repeat(3,1fr);gap:4px;background:var(--offset);padding:4px;border-radius:var(--r-md)}
+.segctl button{min-height:44px;border:0;border-radius:6px;background:transparent;font-size:var(--text-xs);line-height:1.25;padding:4px 6px}
+.segctl button[aria-pressed=true]{background:var(--surface-2);box-shadow:var(--shadow-sm);font-weight:700}
+.segctl button[aria-pressed=true][data-v="1"]{box-shadow:inset 0 -3px 0 var(--gold)}
+.segctl button[aria-pressed=true][data-v="2"]{box-shadow:inset 0 -3px 0 var(--error)}
+.segctl button[aria-pressed=true][data-v="0"]{box-shadow:inset 0 -3px 0 var(--success)}
+.gauge-wrap{position:sticky;top:90px}
+.gauge{width:100%;max-width:340px;display:block;margin:auto}
+.zone{padding:var(--s4);border-radius:var(--r-lg);margin-top:var(--s3)}
+.zone h4{font-family:var(--font-display);font-size:var(--text-lg);margin-bottom:var(--s1)}
+.zone p{font-size:var(--text-sm)}
+.flags{display:grid;gap:var(--s2);margin-top:var(--s3)}
+.flags div{font-size:var(--text-sm);padding:var(--s2) var(--s3);border-radius:var(--r-md);background:var(--error-hi)}
+.articles{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:var(--s3)}
+.article{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s5)}
+.article b{font-family:var(--font-display);font-size:var(--text-lg);color:var(--primary)}
+.article blockquote{margin-top:var(--s2);font-size:var(--text-sm);border-left:3px solid var(--divider);padding-left:var(--s3)}
+.article p{font-size:var(--text-sm);color:var(--muted);margin-top:var(--s2)}
+.demos{display:grid;grid-template-columns:1fr auto 1fr;gap:var(--s4);align-items:stretch}
+.demos .side{border-radius:var(--r-xl);padding:var(--s6)}
+.demos .side h3{font-family:var(--font-display);font-size:var(--text-xl);margin-bottom:var(--s1)}
+.demos .side ul{margin:var(--s3) 0 0 var(--s5);display:grid;gap:var(--s1);font-size:var(--text-sm)}
+.demos .vs{display:grid;place-items:center;font-family:var(--font-display);font-size:var(--text-lg);color:var(--muted)}
+.stack{display:flex;height:48px;border-radius:var(--r-md);overflow:hidden;margin:var(--s4) 0 var(--s2)}
+.stack i{display:grid;place-items:center;color:#fff;font-style:normal;font-weight:700;font-size:var(--text-sm);transition:flex-grow 1s cubic-bezier(.16,1,.3,1)}
+.positions{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s4)}
+.pos{display:flex;flex-direction:column;gap:var(--s2);text-align:left;padding:var(--s5);border:2px solid var(--border);border-radius:var(--r-xl);background:var(--surface)}
+.pos[aria-pressed=true]{border-color:var(--primary);box-shadow:var(--shadow-md)}
+.pos h3{font-family:var(--font-display);font-size:var(--text-lg)}
+.pos p{font-size:var(--text-sm);color:var(--muted)}
+.pos .crit{font-size:var(--text-xs);background:var(--offset);border-radius:var(--r-md);padding:var(--s2) var(--s3);color:var(--text)}
+.chips{display:flex;flex-wrap:wrap;gap:var(--s2);margin:var(--s3) 0}
+.chips button{border:1px dashed var(--border);background:var(--surface-2);border-radius:999px;padding:4px 12px;font-size:var(--text-xs);min-height:36px}
+.chips button:hover{border-color:var(--primary);color:var(--primary)}
+.crit-list{list-style:none;display:grid;gap:6px;font-size:var(--text-sm)}
+.crit-list li{display:flex;gap:var(--s2);align-items:flex-start}
+.crit-list li i{flex:0 0 22px;height:22px;border-radius:50%;display:grid;place-items:center;font-style:normal;font-size:12px;background:var(--dynamic);color:var(--muted)}
+.crit-list li.ok i{background:var(--success);color:var(--inverse)}
+#judgeText{min-height:260px}
+@media(max-width:900px){.defs,.positions{grid-template-columns:1fr 1fr}.twin,.articles{grid-template-columns:1fr}.gauge-wrap{position:static}}
+@media(max-width:640px){.defs,.positions{grid-template-columns:1fr}.demos{grid-template-columns:1fr}.demos .vs{padding:0}.segctl button{font-size:11px}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Zum Inhalt springen</a>
+{{HEADER}}
+
+<main id="main">
+
+<div class="hero">
+ <div>
+  <span class="eyebrow">Vertiefungsmodul · J1 · Gefährdungen der Demokratie</span>
+  <h1>Wann wird das <em>Wir</em> zur Gefahr?</h1>
+  <p class="lead">Nationalismus hat Menschen geholfen, Freiheit und Selbstbestimmung zu erkämpfen. Er hat aber auch Ausgrenzung, Verfolgung und Krieg gerechtfertigt. In diesem Modul untersuchst du, an welchen Punkten nationale Zugehörigkeit mit Demokratie in Konflikt gerät. Und du entwickelst dazu ein eigenes, begründetes Urteil.</p>
+  <div class="motto"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" aria-hidden="true"><path d="M12 3l8 4v5c0 5-3.5 8-8 9-4.5-1-8-4-8-9V7z"/></svg><div><strong>Die entscheidende Grenze verläuft dort, wo Menschen gleiche Würde und gleiche Rechte abgesprochen werden.</strong><p class="note" style="margin-top:4px">Merksatz für das ganze Modul</p></div></div>
+ </div>
+ <div class="hero-art" aria-label="Illustration: Ein Kreis aus vielen verschiedenen Figuren, daneben ein abgeschlossener Kreis aus gleichen Figuren mit ausgeschlossenen Figuren außerhalb">
+  <svg viewBox="0 0 400 400" role="img">
+   <rect width="400" height="400" fill="var(--surface)"/>
+   <g id="heroDots"></g>
+   <line x1="200" y1="40" x2="200" y2="360" stroke="var(--divider)" stroke-width="2" stroke-dasharray="6 6"/>
+   <text x="100" y="380" text-anchor="middle" fill="var(--teal)" font-size="13" font-weight="700">offenes Wir</text>
+   <text x="300" y="380" text-anchor="middle" fill="var(--error)" font-size="13" font-weight="700">geschlossenes Wir</text>
+  </svg>
+ </div>
+</div>
+
+<div class="callout teal" style="margin-top:var(--s8)"><strong>Spielregeln für dieses Modul:</strong> Politische Fragen sollen im Unterricht so kontrovers dargestellt werden, wie sie in Wissenschaft und Politik kontrovers sind. Du sollst dir eine eigene Meinung bilden, ohne überwältigt zu werden. So verlangt es der Beutelsbacher Konsens von 1976.<sup><a href="#q10">[10]</a></sup> Strittig sind hier Deutungen, Zugehörigkeitsmodelle und politische Wege. <strong>Nicht verhandelbar</strong> sind Menschenwürde und gleiche Grundrechte. Sie sind der Maßstab der Analyse.</div>
+
+<section id="begriffe" class="reveal">
+ <span class="eyebrow">01 · Begriffe klären</span>
+ <h2 class="title">Patriotismus, Nationalismus, Chauvinismus: Wo liegt der Unterschied?</h2>
+ <p class="intro">Diese Begriffe werden im Alltag oft vermischt. Die Forschung trennt sie, auch wenn die Grenzen umstritten bleiben.</p>
+ <div class="defs">
+  <div class="def" style="--c:var(--teal)"><h3>Nationalbewusstsein</h3><p>Das Wissen und Gefühl, einer Nation anzugehören. Es kann schwach oder stark sein und sagt allein noch nichts über die Haltung zu anderen.</p></div>
+  <div class="def" style="--c:var(--teal)"><h3>Patriotismus</h3><p>Verbundenheit mit dem eigenen Land, seiner Sprache, Landschaft und Kultur, ohne andere abzuwerten. Kritik am eigenen Land ist dabei möglich.</p></div>
+  <div class="def" style="--c:var(--g1)"><h3>Verfassungspatriotismus</h3><p>Bindung an die Werte und Verfahren der Verfassung: Menschenwürde, Grundrechte, Demokratie. Geprägt von Dolf Sternberger (1979) und Jürgen Habermas.<sup><a href="#q6">[6]</a></sup></p></div>
+  <div class="def" style="--c:var(--gold)"><h3>Nationalismus</h3><p>Eine politische Ideologie, die die Nation zum höchsten Wert macht. Staat und Nation sollen sich decken; andere Loyalitäten treten zurück. Kann liberal-integrativ oder ausgrenzend auftreten.</p></div>
+  <div class="def" style="--c:var(--error)"><h3>Chauvinismus</h3><p>Überzeugung, die eigene Nation sei anderen überlegen. Verbunden mit Abwertung anderer Völker und oft mit aggressiver Außenpolitik.</p></div>
+  <div class="def" style="--c:var(--error)"><h3>Völkischer Nationalismus</h3><p>Die Nation wird als Abstammungsgemeinschaft verstanden. Wer nicht „dazu geboren“ ist, gehört nicht dazu. Grundlage der NS-Ideologie.</p></div>
+ </div>
+ <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin:var(--s8) 0 var(--s3)">Ordne die Aussagen zu</h3>
+ <div class="classify" id="classify"></div>
+ <p class="note">Die Zuordnung ist nicht immer eindeutig. Manche Forschende halten auch die Trennung von „gutem Patriotismus“ und „schlechtem Nationalismus“ für zu einfach, weil beide aus derselben Bindung an die Nation entstehen können.</p>
+</section>
+
+<section id="ambivalenz" class="reveal">
+ <span class="eyebrow">02 · Ambivalenz</span>
+ <h2 class="title">Motor und Gefahr der Demokratie</h2>
+ <p class="intro">Dieselbe Idee, dass ein Volk über sich selbst bestimmen soll, hat sehr unterschiedliche Folgen gehabt. Vergleiche beide Spalten.</p>
+ <div class="twin">
+  <div class="card" style="--c:var(--teal)">
+   <h3><span style="color:var(--teal)">▲</span> Nationalismus als Motor</h3>
+   <div class="timeline">
+    <div class="tl"><time>1832</time><h3>Hambacher Fest</h3><p>Rund 30.000 Menschen fordern nationale Einheit, Freiheit und Volkssouveränität. Polnische und französische Gäste sind willkommen.</p></div>
+    <div class="tl"><time>1848/49</time><h3>Paulskirche</h3><p>Die Nationalversammlung beschließt „Grundrechte des deutschen Volkes“ und eine Verfassung. Einheit und Freiheit gehören zusammen.</p></div>
+    <div class="tl"><time>1945–1975</time><h3>Dekolonisation</h3><p>Nationale Bewegungen erkämpfen die Unabhängigkeit von Kolonialmächten, z. B. die Côte d’Ivoire 1960.</p></div>
+    <div class="tl"><time>1980–1989</time><h3>Solidarność und Friedliche Revolution</h3><p>In Polen und der DDR berufen sich Bürgerbewegungen auf das Volk als Souverän: „Wir sind das Volk!“</p></div>
+   </div>
+  </div>
+  <div class="card" style="--c:var(--error)">
+   <h3><span style="color:var(--error)">▼</span> Nationalismus als Gefahr</h3>
+   <div class="timeline">
+    <div class="tl"><time>1871–1914</time><h3>„Reichsfeinde“ im Kaiserreich</h3><p>Katholiken, Sozialdemokraten, Polen und Juden werden ausgegrenzt. Der Alldeutsche Verband (1891) vertritt einen völkischen, expansiven Nationalismus.<sup><a href="#q4">[4]</a></sup></p></div>
+    <div class="tl"><time>1919–1933</time><h3>Gegen die Republik</h3><p>Völkische Gruppen bekämpfen die Weimarer Demokratie, u. a. mit der „Dolchstoßlegende“.</p></div>
+    <div class="tl"><time>1933–1945</time><h3>„Volksgemeinschaft“</h3><p>Der NS-Staat definiert das Volk rassistisch. Nürnberger Gesetze 1935, Entrechtung, Verfolgung und der Mord an rund sechs Millionen europäischen Jüdinnen und Juden.</p></div>
+    <div class="tl"><time>1991–1995</time><h3>Jugoslawienkriege</h3><p>Ethnische Säuberungen und Völkermord: In Srebrenica werden 1995 mehr als 8.000 bosniakische Männer und Jungen ermordet. Der Krieg in Bosnien kostet rund 100.000 Menschen das Leben.</p></div>
+   </div>
+  </div>
+ </div>
+ <div class="callout" style="margin-top:var(--s5)"><strong>Analyseschlüssel <em>demos</em> und <em>ethnos</em>:</strong> Wo „Volk“ die Gemeinschaft gleichberechtigter Bürgerinnen und Bürger meint (griech. <em>demos</em>), stützt Nationalismus die Demokratie eher. Wo „Volk“ als Abstammungs- oder Kulturgemeinschaft verstanden wird (<em>ethnos</em>), die man nicht erwerben kann, kippt er leicht in Ausgrenzung.</div>
+</section>
+
+<section id="kipppunkte" class="reveal">
+ <span class="eyebrow">03 · Experiment</span>
+ <h2 class="title">Kipp-Punkte: Wann wird aus Zugehörigkeit Ausgrenzung?</h2>
+ <p class="intro">Stelle die fünf Regler ein und beobachte, wie sich das Gesamtbild verändert. Teste auch historische Fälle aus diesem Modul.</p>
+ <div class="card panel-grid">
+  <div class="knobs" id="knobs"></div>
+  <div class="gauge-wrap">
+   <svg class="gauge" viewBox="0 0 240 140" role="img" aria-label="Anzeige: von demokratisch-inklusiv bis antidemokratisch">
+    <path d="M20 120 A100 100 0 0 1 70 33.4" fill="none" stroke="var(--success)" stroke-width="18"/>
+    <path d="M70 33.4 A100 100 0 0 1 170 33.4" fill="none" stroke="var(--gold)" stroke-width="18"/>
+    <path d="M170 33.4 A100 100 0 0 1 220 120" fill="none" stroke="var(--error)" stroke-width="18"/>
+    <g id="needle" style="transform-origin:120px 120px;transition:transform .6s cubic-bezier(.16,1,.3,1)"><line x1="120" y1="120" x2="120" y2="32" stroke="var(--text)" stroke-width="4" stroke-linecap="round"/></g>
+    <circle cx="120" cy="120" r="9" fill="var(--text)"/>
+   </svg>
+   <div class="zone" id="zone"></div>
+   <div class="flags" id="flags"></div>
+   <div class="tabs" style="margin-top:var(--s4)" aria-label="Voreinstellungen">
+    <button data-pre="0,0,0,0,0">Grundgesetz</button>
+    <button data-pre="1,1,2,1,1">Kaiserreich (wilhelminisch)</button>
+    <button data-pre="2,2,2,2,2">NS-Staat</button>
+   </div>
+   <p class="note">Die Voreinstellungen sind vereinfachte Deutungen und laden zur Diskussion ein.</p>
+  </div>
+ </div>
+ <div class="callout teal" style="margin-top:var(--s5)"><strong>Wichtig für dein Urteil:</strong> Positionen der mittleren Stufe, etwa die Erwartung kultureller Anpassung oder „eigene Interessen zuerst“, sind Teil des <em>demokratischen Streits</em>. Man kann sie kritisieren, aber sie sind nicht automatisch verfassungswidrig. Eine Grenze ist dagegen klar überschritten, wenn Menschen wegen ihrer Abstammung Würde oder gleiche Rechte abgesprochen werden.</div>
+</section>
+
+<section id="grundgesetz" class="reveal">
+ <span class="eyebrow">04 · Maßstab</span>
+ <h2 class="title">Was sagt das Grundgesetz?</h2>
+ <p class="intro">Das Grundgesetz von 1949 ist auch eine Antwort auf den völkischen Nationalismus des NS-Staats. Vier Artikel sind für die Frage nach Zugehörigkeit zentral.<sup><a href="#q7">[7]</a></sup></p>
+ <div class="articles">
+  <div class="article"><b>Art. 1 Abs. 1</b><blockquote>„Die Würde des Menschen ist unantastbar. Sie zu achten und zu schützen ist Verpflichtung aller staatlichen Gewalt.“</blockquote><p>Gilt für jeden Menschen, nicht nur für Staatsangehörige. Durch Art. 79 Abs. 3 ist dieser Grundsatz jeder Verfassungsänderung entzogen.</p></div>
+  <div class="article"><b>Art. 3 Abs. 3</b><blockquote>„Niemand darf wegen seines Geschlechtes, seiner Abstammung, seiner Rasse, seiner Sprache, seiner Heimat und Herkunft, seines Glaubens, seiner religiösen oder politischen Anschauungen benachteiligt oder bevorzugt werden. […]“</blockquote><p>Abstammung und Herkunft dürfen keine Grundlage für ungleiche Rechte sein.</p></div>
+  <div class="article"><b>Art. 20 Abs. 2</b><blockquote>„Alle Staatsgewalt geht vom Volke aus. […]“</blockquote><p>Gemeint ist das Staatsvolk: die Gesamtheit der Staatsangehörigen, also ein <em>demos</em>.</p></div>
+  <div class="article"><b>Art. 116 Abs. 1</b><blockquote>„Deutscher im Sinne dieses Grundgesetzes ist vorbehaltlich anderweitiger gesetzlicher Regelung, wer die deutsche Staatsangehörigkeit besitzt oder als Flüchtling oder Vertriebener deutscher Volkszugehörigkeit […] Aufnahme gefunden hat.“</blockquote><p>Spannend: Der zweite Teil nennt „deutsche Volkszugehörigkeit“. Er sollte nach 1945 Geflüchtete und Vertriebene aufnehmen. Ein Rest des Abstammungsdenkens, oder eine historische Sonderregel?</p></div>
+ </div>
+
+ <div class="dark" style="margin-top:var(--s5)">
+  <span class="tag">Bundesverfassungsgericht · 17. Januar 2017</span>
+  <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin:var(--s3) 0">Das NPD-Urteil: verfassungsfeindlich, aber nicht verboten</h3>
+  <div class="grid2" style="gap:var(--s5)">
+   <p>Das Gericht stellte fest: Die NPD strebt eine an einer „ethnisch definierten Volksgemeinschaft“ ausgerichtete Ordnung an. Ihr Volksbegriff missachtet die Menschenwürde, weil er allen, die nicht dazugehören, die elementare Rechtsgleichheit abspricht.<sup><a href="#q8">[8]</a></sup></p>
+   <p>Verboten wurde die Partei trotzdem nicht: Es fehlten „konkrete Anhaltspunkte von Gewicht“, dass sie ihre Ziele erreichen könnte, denn sie war zu klein und zu erfolglos.<sup><a href="#q8">[8]</a></sup> Danach wurde das Grundgesetz ergänzt (Art. 21 Abs. 3). Im Januar 2024 schloss das Gericht die Nachfolgepartei „Die Heimat“ für sechs Jahre von der staatlichen Parteienfinanzierung aus.</p>
+  </div>
+ </div>
+
+ <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin:var(--s8) 0 var(--s2)">Demokratie-Prüfraster</h3>
+ <p style="margin-bottom:var(--s4)">Ordne jede Forderung einer von drei Stufen zu. So übst du, legitimen politischen Streit von Grenzüberschreitungen zu unterscheiden.</p>
+ <div class="classify" id="check2"></div>
+</section>
+
+<section id="volk" class="reveal">
+ <span class="eyebrow">05 · Populismus</span>
+ <h2 class="title">Wer spricht für „das Volk“?</h2>
+ <p class="intro">Der Politikwissenschaftler Jan-Werner Müller beschreibt Populismus nicht über Inhalte, sondern über einen Anspruch: Populisten behaupten, sie allein verträten das „wahre Volk“.<sup><a href="#q9">[9]</a></sup></p>
+ <div class="demos">
+  <div class="side" style="background:var(--teal-hi)"><h3>„Wir sind das Volk!“</h3><p class="note" style="margin:0">Leipzig, Herbst 1989</p><ul><li>Bürgerinnen und Bürger fordern ihre Rechte gegenüber einer Diktatur ein.</li><li>Das Volk ist der <em>demos</em>: alle, die betroffen sind.</li><li>Pluralistisch: Viele Stimmen, freie Wahlen werden gefordert.</li></ul></div>
+  <div class="vs" aria-hidden="true">≠</div>
+  <div class="side" style="background:var(--error-hi)"><h3>„Wir <em>allein</em> sind das Volk!“</h3><p class="note" style="margin:0">Populistischer Alleinvertretungsanspruch</p><ul><li><b>Anti-elitär:</b> „Die da oben“ verraten das Volk.</li><li><b>Anti-pluralistisch:</b> Wer widerspricht, gehört nicht zum „wahren“ Volk.</li><li>Das „wahre“ Volk wird oft kulturell oder ethnisch gedacht.</li></ul></div>
+ </div>
+ <p class="note">Nach Müller ist nicht jede Kritik an Eliten populistisch. Gefährlich für die Demokratie wird erst der moralische Anspruch, als Einzige für das Volk zu sprechen. Denn damit werden alle anderen zu Gegnern oder „Verrätern“ erklärt.<sup><a href="#q9">[9]</a></sup></p>
+</section>
+
+<section id="gegenwart" class="reveal">
+ <span class="eyebrow">06 · Gegenwart</span>
+ <h2 class="title">Wie verbreitet sind demokratiefeindliche Einstellungen?</h2>
+ <p class="intro">Die Mitte-Studie der Friedrich-Ebert-Stiftung misst seit Jahren rechtsextreme Einstellungen in Deutschland. Dazu gehören auch Chauvinismus und völkisches Denken. Die Ausgabe 2022/23 sorgte für Aufsehen.<sup><a href="#q11">[11]</a></sup></p>
+ <div class="card">
+  <h3 style="font-family:var(--font-display);font-size:var(--text-lg)">Einstellungen der Befragten, Mitte-Studie 2022/23</h3>
+  <div class="stack" id="stack" role="img" aria-label="Rund 70 Prozent lehnen rechtsextreme Einstellungen klar ab, rund 20 Prozent liegen im Graubereich, 8 Prozent haben ein manifest rechtsextremes Weltbild">
+   <i style="flex:70 1 0;background:var(--teal)">≈ 70 %</i><i style="flex:20 1 0;background:var(--gold)">≈ 20 %</i><i style="flex:8 1 0;background:var(--error)">8 %</i>
+  </div>
+  <div class="legend"><span><i style="background:var(--teal)"></i>klare Ablehnung</span><span><i style="background:var(--gold)"></i>Graubereich</span><span><i style="background:var(--error)"></i>manifest rechtsextremes Weltbild</span></div>
+  <div class="stat-row" style="margin-top:var(--s5)">
+   <div class="stat"><b>8 %</b><span>manifest rechtsextremes Weltbild (2022/23)</span></div>
+   <div class="stat"><b>2–3 %</b><span>so hoch lag der Anteil in den Vorgängerstudien</span></div>
+   <div class="stat"><b>12,3 %</b><span>unter den 18- bis 34-Jährigen</span></div>
+  </div>
+  <p class="note">Quelle: Zusammenfassung der Mitte-Studie 2022/23.<sup><a href="#q11">[11]</a></sup> Inzwischen ist die Ausgabe 2024/25 erschienen; prüfe dort die aktuellen Werte. Umfragen messen Einstellungen, nicht Handlungen, und hängen von der Fragestellung ab.</p>
+ </div>
+ <div class="dark" style="margin-top:var(--s5)">
+  <span class="tag">Quellenkritik</span>
+  <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin:var(--s3) 0">Bevor du mit diesen Zahlen argumentierst</h3>
+  <ul style="margin-left:var(--s5);display:grid;gap:var(--s2)">
+   <li>Wer hat die Studie herausgegeben, und mit welchem Interesse?</li>
+   <li>Wie werden „Chauvinismus“ oder „rechtsextremes Weltbild“ gemessen? Welche Aussagen mussten Befragte bewerten?</li>
+   <li>Warum kann ein Anstieg von 3 auf 8 Prozent auch mit Krisen (Pandemie, Krieg, Inflation) zusammenhängen?</li>
+   <li>Was sagen Einstellungen über Wahlverhalten oder Gewalt, und was nicht?</li>
+  </ul>
+ </div>
+</section>
+
+<section id="kontroverse" class="reveal">
+ <span class="eyebrow">07 · Kontroverse</span>
+ <h2 class="title">Braucht Demokratie eine Nation?</h2>
+ <p class="intro">Hier gehen auch in der Wissenschaft die Meinungen auseinander. Drei Positionen, jede mit einem gewichtigen Einwand. Wähle die Position, die dich am meisten überzeugt.</p>
+ <div class="positions" id="positions">
+  <button class="pos" aria-pressed="false" data-p="0"><span class="tag">Position A</span><h3>Verfassungspatriotismus</h3><p>Bürgerinnen und Bürger sollen sich an Grundrechte und demokratische Verfahren binden, nicht an Abstammung oder Kultur (Sternberger, Habermas). Zugehörigkeit ist für alle offen, die die Regeln teilen.</p><span class="crit"><b>Einwand:</b> Zu abstrakt; Prinzipien allein stiften kaum Gefühle. Kritiker nannten das Konzept eine „dünnblütige, wenn auch wohlmeinende Professorenfiktion“.<sup><a href="#q6">[6]</a></sup></span></button>
+  <button class="pos" aria-pressed="false" data-p="1"><span class="tag">Position B</span><h3>Liberaler Nationalismus</h3><p>Eine gemeinsame, offene nationale Identität schafft Vertrauen und Solidarität, die Sozialstaat und Demokratie brauchen (z. B. Yael Tamir, David Miller). Die Nation ist kulturell, aber erlernbar.</p><span class="crit"><b>Einwand:</b> Wer bestimmt die „gemeinsame Kultur“? Die Grenze zum Anpassungsdruck ist schmal.</span></button>
+  <button class="pos" aria-pressed="false" data-p="2"><span class="tag">Position C</span><h3>Postnationale Demokratie</h3><p>Globale Probleme und die EU zeigen: Demokratie muss über Nationen hinausgehen. Menschenrechte und europäische Bürgerschaft werden zum Bezugsrahmen (Habermas: „postnationale Konstellation“).</p><span class="crit"><b>Einwand:</b> Ohne gemeinsamen öffentlichen Raum und Sprache fehlt vielen Menschen die Bindung. Demokratie könnte sich entfernt anfühlen.</span></button>
+ </div>
+ <label for="posText" style="display:block;font-weight:700;margin-top:var(--s5)" id="posLabel">Begründe deine Wahl. Gehe dabei auch auf den Einwand ein.</label>
+ <textarea id="posText" placeholder="Mich überzeugt Position … am meisten, weil … Der Einwand … trifft zu / trifft nicht zu, denn …"></textarea>
+</section>
+
+<section id="urteil" class="reveal">
+ <span class="eyebrow">08 · Urteilsbildung</span>
+ <h2 class="title">Sachurteil oder Werturteil?</h2>
+ <p class="intro">Ein Sachurteil beurteilt einen Sachverhalt anhand von Kriterien wie Wirkung, Folgen oder Erklärungskraft. Ein Werturteil bewertet ihn anhand von Normen wie Menschenwürde, Gerechtigkeit oder Freiheit und legt diesen Maßstab offen.</p>
+ <div class="classify" id="check3"></div>
+
+ <h3 style="font-family:var(--font-display);font-size:var(--text-lg);margin:var(--s10) 0 var(--s2)">Urteilsbaukasten: dein Abschlussurteil</h3>
+ <div class="card">
+  <p class="quote" style="margin-bottom:var(--s4)">Wann ist ein Mensch Teil einer Nation, wer entscheidet darüber, und welche Kriterien sind mit einer pluralistischen Demokratie vereinbar?<cite>Leitfrage des Projekts</cite></p>
+  <div class="panel-grid">
+   <div>
+    <label for="judgeText" style="font-weight:700">Dein Urteil</label>
+    <div class="chips" id="chips" aria-label="Satzbausteine einfügen"></div>
+    <textarea id="judgeText" placeholder="Schreibe hier oder füge Satzbausteine ein …"></textarea>
+    <div style="display:flex;gap:var(--s2);flex-wrap:wrap;margin-top:var(--s3)"><button class="btn" id="copyBtn">Text kopieren</button><button class="btn" id="dlBtn">Als Textdatei sichern</button></div>
+    <p class="note" id="copyMsg" role="status" aria-live="polite">Dein Text wird nicht gespeichert und nirgendwohin gesendet.</p>
+   </div>
+   <div>
+    <h4 style="margin-bottom:var(--s3)">Selbstcheck – live</h4>
+    <ul class="crit-list" id="critList"></ul>
+    <p class="note">Der Check sucht nur nach Fachbegriffen. Ob deine Argumentation trägt, musst du selbst prüfen.</p>
+   </div>
+  </div>
+ </div>
+</section>
+
+<section id="aufgaben" class="reveal">
+ <span class="eyebrow">09 · Aufgaben</span>
+ <h2 class="title">Operatorengerechte Aufgaben</h2>
+ <p class="intro">Bearbeite die Aufgaben schriftlich und prüfe sie danach mit dem Erwartungshorizont.</p>
+ <div class="tasks">
+  <div class="task"><h3><span class="afb i">AFB I</span>Erläutern Sie die Begriffe Patriotismus, Nationalismus und Chauvinismus und grenzen Sie sie voneinander ab.</h3><textarea aria-label="Antwort Aufgabe 1"></textarea>
+   <details><summary>Erwartungshorizont</summary><ul><li>Patriotismus: Verbundenheit mit dem eigenen Land ohne Abwertung anderer, Kritik möglich.</li><li>Nationalismus: Nation als höchster politischer Wert, Deckung von Staat und Nation, Vorrang vor anderen Loyalitäten.</li><li>Chauvinismus: behauptete Überlegenheit, Abwertung anderer Nationen.</li><li>Abgrenzungskriterium: Verhältnis zu anderen und Umgang mit inneren Minderheiten; Hinweis auf fließende Übergänge.</li></ul></details></div>
+  <div class="task"><h3><span class="afb ii">AFB II</span>Arbeiten Sie an zwei historischen Beispielen heraus, warum Nationalismus sowohl demokratische Bewegungen stützen als auch Demokratie gefährden konnte.</h3><textarea aria-label="Antwort Aufgabe 2"></textarea>
+   <details><summary>Erwartungshorizont</summary><ul><li>Beispiel Motor (z. B. Hambach 1832, Paulskirche 1848/49, 1989): Volk als demos, Einheit verbunden mit Freiheit und Grundrechten.</li><li>Beispiel Gefahr (z. B. Kaiserreich, NS-Staat, Jugoslawien): Volk als ethnos, Ausgrenzung innerer „Feinde“, Gewalt.</li><li>Erklärung über die Unterscheidung demos/ethnos und die Frage, wer zum „Wir“ gehört.</li><li>Fazit zur Ambivalenz.</li></ul></details></div>
+  <div class="task"><h3><span class="afb ii">AFB II</span>Analysieren Sie das NPD-Urteil des Bundesverfassungsgerichts von 2017 im Hinblick auf das Verhältnis von Volksbegriff und Menschenwürde.</h3><textarea aria-label="Antwort Aufgabe 3"></textarea>
+   <details><summary>Erwartungshorizont</summary><ul><li>Kernaussage: ethnisch definierte Volksgemeinschaft missachtet die Menschenwürde, weil sie Nicht-Zugehörigen elementare Rechtsgleichheit abspricht.</li><li>Bezug zu Art. 1, Art. 3 Abs. 3 und Art. 20 Abs. 2 GG (Staatsvolk als demos).</li><li>Unterscheidung: Verfassungsfeindlichkeit festgestellt, Verbot abgelehnt wegen fehlender Potentialität.</li><li>Folge: Art. 21 Abs. 3 GG; 2024 Ausschluss der Nachfolgepartei von der Parteienfinanzierung.</li></ul></details></div>
+  <div class="task"><h3><span class="afb iii">AFB III</span>Erörtern Sie, ob Verfassungspatriotismus eine tragfähige Alternative zu einem kulturell oder ethnisch begründeten Nationsverständnis ist.</h3><textarea aria-label="Antwort Aufgabe 4"></textarea>
+   <details><summary>Erwartungshorizont</summary><ul><li>Darstellung des Konzepts (Sternberger 1979, Habermas).</li><li>Pro: offen für alle, vereinbar mit Art. 1 und 3 GG, schützt vor völkischem Denken.</li><li>Contra: abstrakt, emotional schwach; Position des liberalen Nationalismus (Solidarität braucht gemeinsame Identität).</li><li>Abwägung mit Kriterien (z. B. Inklusion, Bindungskraft, Pluralismus).</li><li>Begründetes Urteil mit Grenze (z. B. Abhängigkeit von gelebter Anerkennung, soziale Zugehörigkeit).</li></ul></details></div>
+  <div class="task"><h3><span class="afb iii">AFB III</span>Beurteilen Sie die Aussage: „Wer seine Nation liebt, ist eine Gefahr für die Demokratie.“</h3><textarea aria-label="Antwort Aufgabe 5"></textarea>
+   <details><summary>Erwartungshorizont</summary><ul><li>Begriffsklärung: Liebe zur Nation kann Patriotismus, Nationalismus oder Chauvinismus meinen.</li><li>Gegenargumente: demokratische Bewegungen mit nationalem Bezug; Verfassungspatriotismus.</li><li>Zustimmende Aspekte: Kipp-Punkte (Abstammung, Überlegenheit, Feindbilder, Antipluralismus).</li><li>Kriterienbasiertes Urteil: Nicht die Bindung als solche ist das Problem, sondern ihre exklusive, hierarchische Ausprägung.</li><li>Gegenposition und Grenze des eigenen Urteils benennen.</li></ul></details></div>
+ </div>
+</section>
+
+<section id="check" class="reveal">
+ <span class="eyebrow">10 · Lerncheck</span>
+ <h2 class="title">Fünf Fragen zur Selbstkontrolle</h2>
+ <div class="quiz" id="quiz"></div>
+ <div class="score"><div class="ring" id="ring"><span id="ringTxt">0/5</span></div><p id="scoreMsg">Beantworte die Fragen, um deine Rückmeldung zu sehen.</p></div>
+</section>
+
+{{PDFCTA}}
+
+{{MODULES}}
+
+<section id="quellen" class="sources reveal">
+ <span class="eyebrow">Quellen</span>
+ <h2 class="title">Belege &amp; Vertiefung</h2>
+ <ol>
+  <li id="q1">Anderson, Benedict: <em>Imagined Communities</em>. London 1983; Gellner, Ernest: <em>Nations and Nationalism</em>. Oxford 1983.</li>
+  <li id="q2">Hobsbawm, Eric: <em>Nationen und Nationalismus. Mythos und Realität seit 1780</em>. Frankfurt/M. 1991.</li>
+  <li id="q3">Smith, Anthony D.: <em>National Identity</em>. London 1991.</li>
+  <li id="q4">Bundeszentrale für politische Bildung: Nation und Nationalismus im Kaiserreich. <a href="https://www.bpb.de/themen/kolonialismus-imperialismus/kaiserreich/138915/nation-und-nationalismus" target="_blank" rel="noopener noreferrer">bpb.de</a></li>
+  <li id="q5">Tamir, Yael: <em>Liberal Nationalism</em>. Princeton 1993; Miller, David: <em>On Nationality</em>. Oxford 1995; Habermas, Jürgen: <em>Die postnationale Konstellation</em>. Frankfurt/M. 1998.</li>
+  <li id="q6">Verfassungspatriotismus als Identitätskonzept der Nation. <a href="https://www.bpb.de/shop/zeitschriften/apuz/archiv/536463/verfassungspatriotismus-als-identitaetskonzept-der-nation/" target="_blank" rel="noopener noreferrer">APuZ / bpb</a></li>
+  <li id="q7">Grundgesetz für die Bundesrepublik Deutschland. <a href="https://www.gesetze-im-internet.de/gg/" target="_blank" rel="noopener noreferrer">gesetze-im-internet.de</a></li>
+  <li id="q8">Bundesverfassungsgericht, Urteil vom 17. Januar 2017, 2 BvB 1/13 (Pressemitteilung). <a href="https://www.jura.fu-berlin.de/fachbereich/einrichtungen/oeffentliches-recht/emeriti/pestalozzac/Ressourcen/BVerfG-NPD-PM-17_-Jan-2017.pdf" target="_blank" rel="noopener noreferrer">PDF</a> · Ausarbeitung: <a href="https://www.bundestag.de/resource/blob/489892/58fc1170ce5f16e12ced106f01afaef4/Das-NPD-Urteil-des-Bundesverfassungsgerichts-vom-17-Januar-2017.pdf" target="_blank" rel="noopener noreferrer">Wissenschaftliche Dienste des Bundestags</a></li>
+  <li id="q9">Müller, Jan-Werner: <em>Was ist Populismus? Ein Essay</em>. Berlin 2016. Einführung: <a href="https://www.bpb.de/lernen/kulturelle-bildung/273521/identitaetspolitik-und-populismus/" target="_blank" rel="noopener noreferrer">bpb.de</a></li>
+  <li id="q10">Landeszentrale für politische Bildung Baden-Württemberg: Beutelsbacher Konsens. <a href="https://www.lpb-bw.de/beutelsbacher-konsens" target="_blank" rel="noopener noreferrer">lpb-bw.de</a></li>
+  <li id="q11">Zick, Andreas / Küpper, Beate / Mokros, Nico (Hg.): <em>Die distanzierte Mitte</em>. Mitte-Studie 2022/23, Bonn 2023. Zusammenfassung: <a href="https://www.gew.de/aktuelles/detailseite/mehr-als-distanziert" target="_blank" rel="noopener noreferrer">GEW</a> · <a href="https://www.fes.de/referat-demokratie-gesellschaft-und-innovation/gegen-rechtsextremismus/mitte-studie-2023" target="_blank" rel="noopener noreferrer">FES</a></li>
+ </ol>
+ <footer>Didaktisch reduzierte Darstellung für das Wahlfach Demokratiebildung / Geschichte mit Gemeinschaftskunde (J1). Das Modul nennt bewusst keine aktuellen Parteien als Fallbeispiele; Maßstab sind Grundgesetz und Rechtsprechung. Eingaben werden nicht gespeichert.</footer>
+</section>
+</main>
+
+<script>
+{{COMMONJS}}
+(()=>{
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+
+/* Hero-Illustration */
+let seed=11;const rnd=()=>(seed=(seed*16807)%2147483647)/2147483647;const cols=['--g1','--g2','--g3','--g4','--teal','--primary'];let h='';
+for(let i=0;i<18;i++){const a=i/18*6.283,r=60+rnd()*12;h+=`<circle cx="${100+Math.cos(a)*r}" cy="${190+Math.sin(a)*r}" r="${8+rnd()*4}" fill="var(${cols[i%6]})"/>`}
+for(let i=0;i<12;i++){const a=i/12*6.283;h+=`<circle cx="${300+Math.cos(a)*48}" cy="${190+Math.sin(a)*48}" r="9" fill="var(--muted)"/>`}
+h+=`<circle cx="300" cy="190" r="66" fill="none" stroke="var(--error)" stroke-width="3"/>`;
+[[250,110],[365,120],[370,270],[240,280]].forEach(([x,y],i)=>h+=`<circle cx="${x}" cy="${y}" r="9" fill="var(${cols[i]})" opacity=".8"/>`);
+$('#heroDots').innerHTML=h;
+
+/* Generische Zuordnungsaufgabe */
+function classify(el,cats,items){
+ $(el).innerHTML=items.map((it,i)=>`<div class="cl-item" data-i="${i}"><p class="st">„${it[0]}“</p><div class="cl-btns">${cats.map((c,j)=>`<button data-j="${j}">${c}</button>`).join('')}</div><p class="cl-fb">${it[2]}</p></div>`).join('');
+ $$(el+' .cl-item').forEach(card=>card.addEventListener('click',e=>{const b=e.target.closest('button');if(!b||card.classList.contains('done'))return;const it=items[+card.dataset.i];card.classList.add('done');$$('button',card).forEach((x,k)=>{x.disabled=true;if(k===it[1])x.classList.add('correct')});if(+b.dataset.j!==it[1])b.classList.add('wrong')}));
+}
+classify('#classify',['Patriotismus','Verfassungspatriotismus','Nationalismus','Chauvinismus / völkisch'],[
+ ['Ich freue mich, wenn Deutschland bei der WM gewinnt, und gönne anderen Teams ihre Siege.',0,'Verbundenheit ohne Abwertung anderer: Patriotismus bzw. Nationalbewusstsein.'],
+ ['Ich bin stolz darauf, dass bei uns Meinungs- und Pressefreiheit gelten.',1,'Bezugspunkt sind Grundrechte, nicht Herkunft oder Kultur: Verfassungspatriotismus.'],
+ ['Unser Land muss seine Interessen immer zuerst durchsetzen – was mit anderen passiert, ist zweitrangig.',2,'Die Nation wird zum obersten Maßstab politischen Handelns: Nationalismus. Über „eigene Interessen“ wird in Demokratien aber legitim gestritten.'],
+ ['Deutsche sind von Natur aus fleißiger und anständiger als andere Völker.',3,'Behauptete natürliche Überlegenheit: Chauvinismus mit biologisierendem Denken.'],
+ ['Wer keine deutschen Vorfahren hat, gehört nie wirklich dazu.',3,'Zugehörigkeit nur durch Abstammung: völkischer Nationalismus (vgl. BVerfG 2017).'],
+ ['Wer die Regierung in Kriegszeiten kritisiert, verrät die Nation.',2,'Die Nation wird über Pluralismus und Meinungsfreiheit gestellt: integraler, antipluralistischer Nationalismus.']
+]);
+classify('#check2',['legitimer demokratischer Streit','verfassungsrechtlich problematisch','unvereinbar mit Würde und Gleichheit'],[
+ ['Die Fristen für eine Einbürgerung sollten wieder verlängert werden.',0,'Über die Bedingungen der Einbürgerung wird in Demokratien legitim gestritten. Der Gesetzgeber kann sie ändern.'],
+ ['Deutsche Staatsangehörige mit Migrationsgeschichte sollen kein Wahlrecht haben.',2,'Benachteiligung wegen Abstammung und Herkunft (Art. 3 Abs. 3 GG); spaltet das Staatsvolk in Bürger erster und zweiter Klasse.'],
+ ['Zum deutschen Volk gehören nur Menschen deutscher Abstammung.',2,'Genau diesen ethnischen Volksbegriff hat das Bundesverfassungsgericht 2017 als Missachtung der Menschenwürde eingestuft.'],
+ ['Der Staat sollte mehr Geld für Gedenkstätten und den Nationalfeiertag ausgeben.',0,'Eine politische Prioritätenfrage, die man unterschiedlich beantworten kann.'],
+ ['Journalisten, die die Regierung kritisieren, sollten bestraft werden.',1,'Verstößt gegen die Meinungs- und Pressefreiheit (Art. 5 GG) und das Demokratieprinzip. Gerichte würden ein solches Gesetz aufheben.'],
+ ['Wer eingebürgert werden will, sollte Deutsch können und die Grundwerte kennen.',0,'Entspricht weitgehend dem geltenden Recht und ist demokratisch umstritten nur im Detail (Sprachniveau, Fristen).'],
+ ['Eine bestimmte Religionsgemeinschaft sollte generell keine Gotteshäuser bauen dürfen.',1,'Greift in die Religionsfreiheit (Art. 4 GG) und das Gleichbehandlungsgebot (Art. 3 GG) ein.']
+]);
+classify('#check3',['Sachurteil','Werturteil'],[
+ ['Der Sedantag hat im Kaiserreich die Bindung vieler Protestanten an das Reich gestärkt, die Arbeiterbewegung aber kaum erreicht.',0,'Beurteilt Wirkung und Reichweite: Sachurteil.'],
+ ['Ein Nationsverständnis, das Menschen nach Abstammung sortiert, ist mit der Menschenwürde nicht vereinbar und daher abzulehnen.',1,'Maßstab Menschenwürde, normative Folgerung: Werturteil.'],
+ ['Hobsbawms Theorie erklärt die Entstehung der Nationaldenkmäler nach 1871 überzeugender als Smiths Ansatz.',0,'Beurteilt die Erklärungskraft von Theorien: Sachurteil.'],
+ ['Eine Demokratie sollte Einbürgerung so gestalten, dass alle Dauerbewohner die Chance auf gleiche Rechte erhalten.',1,'Normative Forderung auf Basis von Gleichheit: Werturteil.'],
+ ['Die Mitte-Studie 2022/23 zeigt einen deutlichen Anstieg rechtsextremer Einstellungen gegenüber früheren Erhebungen.',0,'Aussage über einen Befund und seine Bedeutung: Sachurteil (genauer: eine gestützte Sachaussage).']
+]);
+
+/* Kipp-Punkte */
+const dims=[
+ ['Wer gehört dazu?',['alle Staatsbürger:innen','wer sich kulturell anpasst','nur wer passende Abstammung hat']],
+ ['Verhältnis zu anderen Nationen',['gleichwertig, Zusammenarbeit','eigene Interessen zuerst','eigene Nation ist überlegen']],
+ ['Umgang mit Vielfalt',['Pluralismus ist erwünscht','„Leitkultur“ wird erwartet','Homogenität wird gefordert']],
+ ['Opposition und Kritik',['sind legitim','gelten als „unpatriotisch“','gelten als „Volksverrat“']],
+ ['Grund- und Bürgerrechte',['gleich für alle','an Bedingungen geknüpft','nur für das „eigene Volk“']]
+];
+let vals=[0,0,0,0,0];
+$('#knobs').innerHTML=dims.map((d,i)=>`<div class="knob"><label id="kl${i}">${d[0]}</label><div class="segctl" role="group" aria-labelledby="kl${i}">${d[1].map((o,j)=>`<button data-k="${i}" data-v="${j}" aria-pressed="${j===0}">${o}</button>`).join('')}</div></div>`).join('');
+function upd(){$$('#knobs button').forEach(b=>b.setAttribute('aria-pressed',vals[+b.dataset.k]===+b.dataset.v));const s=vals.reduce((a,b)=>a+b,0);$('#needle').style.transform=`rotate(${-90+s/10*180}deg)`;
+ let z;if(s<=2)z=['var(--success-hi)','Demokratisch-inklusiv','Zugehörigkeit ist offen, Vielfalt und Kritik sind Teil der Ordnung. Das entspricht einem Verständnis der Willens- bzw. Verfassungsnation.'];
+ else if(s<=5)z=['var(--gold-hi)','Zone des demokratischen Streits','Hier liegen viele reale politische Positionen. Sie lassen sich kritisieren und verteidigen. Entscheidend ist, ob die Richtung hin zu mehr Ausgrenzung geht.'];
+ else if(s<=7)z=['var(--error-hi)','Demokratiegefährdend','Zugehörigkeit wird eng, Kritik wird delegitimiert, andere werden abgewertet. Pluralismus und Gleichheit geraten unter Druck.'];
+ else z=['var(--error-hi)','Antidemokratisch / völkisch','Das Volk wird als geschlossene Abstammungsgemeinschaft gedacht. Rechte gelten nicht mehr für alle. Das ist mit der Menschenwürde unvereinbar.'];
+ $('#zone').style.background=z[0];$('#zone').innerHTML=`<h4>${z[1]}</h4><p>${z[2]}</p>`;
+ const f=[];if(vals[0]===2)f.push('⚠ Abstammung als Kriterium: verstößt gegen Art. 3 Abs. 3 GG; vgl. BVerfG 2017.');if(vals[4]===2)f.push('⚠ Rechte nur für das „eigene Volk“: verletzt Art. 1 GG (Menschenwürde).');if(vals[3]===2)f.push('⚠ Opposition als Verrat: verletzt Meinungsfreiheit und Demokratieprinzip.');$('#flags').innerHTML=f.map(x=>`<div>${x}</div>`).join('')}
+$('#knobs').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;vals[+b.dataset.k]=+b.dataset.v;upd()});
+$$('[data-pre]').forEach(b=>b.addEventListener('click',()=>{vals=b.dataset.pre.split(',').map(Number);upd()}));upd();
+
+/* Positionen */
+const pl=['Verfassungspatriotismus','Liberaler Nationalismus','Postnationale Demokratie'];
+$('#positions').addEventListener('click',e=>{const b=e.target.closest('.pos');if(!b)return;$$('.pos').forEach(x=>x.setAttribute('aria-pressed',x===b));$('#posLabel').textContent=`Begründe, warum dich „${pl[+b.dataset.p]}“ überzeugt. Gehe dabei auf den Einwand ein.`});
+
+/* Urteilsbaukasten */
+const chips=['Ich vertrete die These, dass …','Rechtlich gehört dazu, wer … Sozial und persönlich …','Mit Anderson lässt sich erklären, dass …','Hobsbawm zeigt dagegen, dass …','Am Länderfall … wird deutlich, dass …','Ein Verständnis als Willensnation bedeutet …, eine Kulturnation dagegen …','Dagegen ließe sich einwenden, dass …','Abwägend komme ich zu dem Ergebnis, dass …','Eine Grenze meines Urteils liegt darin, dass …'];
+$('#chips').innerHTML=chips.map((c,i)=>`<button data-c="${i}">+ ${c.split(' ').slice(0,3).join(' ')} …</button>`).join('');
+const ta=$('#judgeText');
+$('#chips').addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;ta.value+=(ta.value&&!ta.value.endsWith('\n')?'\n':'')+chips[+b.dataset.c]+' ';ta.focus();check()});
+const crits=[
+ ['Mindestens zwei Theorien (Anderson, Gellner, Hobsbawm, Smith)',t=>(t.match(/anderson|gellner|hobsbawm|smith/gi)||[]).map(x=>x.toLowerCase()).filter((v,i,a)=>a.indexOf(v)===i).length>=2],
+ ['Ein historischer Länderfall',t=>/argentinien|griechenland|polen|côte|elfenbeinküste|bosnien|kaiserreich|jugoslawien|deutschland/i.test(t)],
+ ['Begriffe Willensnation und Kulturnation',t=>/willensnation/i.test(t)&&/kulturnation/i.test(t)],
+ ['Ebenen: rechtlich, politisch, sozial, persönlich (mind. drei)',t=>['rechtlich','politisch','sozial','persönlich'].filter(w=>t.toLowerCase().includes(w)).length>=3],
+ ['Maßstab offengelegt (Würde, Gleichheit, Grundgesetz …)',t=>/würde|gleichheit|grundgesetz|grundrecht|menschenrecht|pluralis/i.test(t)],
+ ['Erkennbare Gegenposition',t=>/dagegen|einwand|einwenden|kritiker|gegenposition|allerdings/i.test(t)],
+ ['Abwägung und Ergebnis',t=>/abwäg|insgesamt|ergebnis|daher|deshalb|folglich/i.test(t)],
+ ['Grenze des eigenen Urteils',t=>/grenze|einschränk|offen bleibt|nicht beantworten/i.test(t)]
+];
+function check(){const t=ta.value;$('#critList').innerHTML=crits.map(c=>`<li class="${c[1](t)?'ok':''}"><i>${c[1](t)?'✓':''}</i>${c[0]}</li>`).join('')}
+ta.addEventListener('input',check);check();
+$('#copyBtn').addEventListener('click',async()=>{try{await navigator.clipboard.writeText(ta.value);$('#copyMsg').textContent='Kopiert. Füge den Text z. B. in dein Dokument ein.'}catch(e){ta.select();$('#copyMsg').textContent='Bitte markierten Text mit Strg+C / Cmd+C kopieren.'}});
+$('#dlBtn').addEventListener('click',()=>{const blob=new Blob([ta.value],{type:'text/plain;charset=utf-8'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='mein-urteil-nation.txt';a.click();setTimeout(()=>URL.revokeObjectURL(a.href),1000);$('#copyMsg').textContent='Die Datei wurde auf deinem Gerät gespeichert – nirgendwo sonst.'});
+
+/* Quiz */
+const qs=[
+ ['Was unterscheidet Chauvinismus von Patriotismus?',['Chauvinismus ist nur lauter','Chauvinismus behauptet die Überlegenheit der eigenen Nation und wertet andere ab','Patriotismus lehnt jede Kritik am eigenen Land ab'],1,'Patriotismus kommt ohne Abwertung anderer aus und erlaubt Kritik; Chauvinismus nicht.'],
+ ['Was meint die Unterscheidung demos/ethnos?',['Stadt und Land','Volk als Gemeinschaft gleichberechtigter Bürger vs. Volk als Abstammungsgemeinschaft','Demokratie und Diktatur'],1,'Demos ist erwerbbar (Staatsbürgerschaft), ethnos wird als angeboren gedacht.'],
+ ['Warum wurde die NPD 2017 nicht verboten?',['Weil ihr Volksbegriff verfassungskonform war','Weil es an Anhaltspunkten fehlte, dass sie ihre Ziele erreichen könnte','Weil Parteiverbote im Grundgesetz nicht vorgesehen sind'],1,'Das Gericht stellte Verfassungsfeindlichkeit fest, aber fehlende Potentialität. Daraufhin wurde Art. 21 Abs. 3 GG eingeführt.'],
+ ['Was kennzeichnet Populismus nach Jan-Werner Müller?',['Jede Kritik an Eliten','Der moralische Anspruch, allein das „wahre Volk“ zu vertreten','Volksnahe Sprache'],1,'Anti-Elitismus allein reicht nicht; entscheidend ist der anti-pluralistische Alleinvertretungsanspruch.'],
+ ['Welche Forderung gehört zum legitimen demokratischen Streit?',['Wahlrecht nur für Deutsche mit deutschen Vorfahren','Bestrafung regierungskritischer Presse','Längere Fristen für die Einbürgerung'],2,'Einbürgerungsfristen sind politisch gestaltbar. Die anderen Forderungen verletzen Art. 3 bzw. Art. 5 GG.']
+];
+const qr=new Map();
+$('#quiz').innerHTML=qs.map((q,i)=>`<div class="qcard" data-q="${i}"><h3>${i+1}. ${q[0]}</h3><div class="opts">${q[1].map((o,j)=>`<button class="opt" data-j="${j}">${o}</button>`).join('')}</div><p class="why">${q[3]}</p></div>`).join('');
+$$('#quiz .qcard').forEach(card=>card.addEventListener('click',e=>{const o=e.target.closest('.opt');if(!o||card.classList.contains('done'))return;const i=+card.dataset.q,c=qs[i][2],j=+o.dataset.j;card.classList.add('done');$$('.opt',card).forEach((x,k)=>{x.disabled=true;if(k===c)x.classList.add('correct')});if(j!==c)o.classList.add('wrong');qr.set(i,j===c);const s=[...qr.values()].filter(Boolean).length,n=qr.size;$('#ringTxt').textContent=`${s}/5`;$('#ring').style.background=`conic-gradient(var(--primary) ${s/5*360}deg,var(--dynamic) 0)`;$('#scoreMsg').textContent=n<5?`${n} von 5 beantwortet.`:s===5?'Sehr sicher: Du unterscheidest Begriffe, Maßstäbe und Urteilsarten präzise.':s>=3?'Gute Grundlage – lies die Erklärungen bei den markierten Fragen.':'Geh noch einmal zu Begriffen, Grundgesetz und Populismus zurück.'}));
+})();
+</script>
+</body>
+</html>
