@@ -20,3 +20,15 @@ Der Ordner `werkstatt/` enthält die Quelltexte der Vertiefungsmodule und der PD
   `python3 werkstatt/module/build.py werkstatt/module .`
 - `werkstatt/pdf/*.html` sind die A4-Vorlagen der Zusammenfassungen; `werkstatt/render_pdf.py` erzeugt daraus die PDFs (benötigt Python-Playwright):
   `python3 werkstatt/render_pdf.py werkstatt/pdf pdf erfundene-traditionen nationalismus-demokratie gene-ohne-reisepass`
+
+## Urheber und Lizenz
+
+- Konzept, Didaktik, Aufgaben und Texte: Mario Walter (2026).
+- Umgesetzt mit KI-Unterstützung (Claude); Auswahl, Prüfung und Überarbeitung durch den Urheber.
+- Programmcode: MIT-Lizenz, siehe `LICENSE`.
+- Texte, Aufgaben, Daten und selbst gezeichnete Grafiken: CC BY-NC-SA 4.0, siehe `LICENSE-INHALTE.md`.
+- Fremdmaterial (Bilder, Karten, Datensätze, Zitate Dritter) behält seine eigene Lizenz; Nachweise stehen am Ort der Verwendung. Siehe die Liste in `LICENSE-INHALTE.md`.
+- Zitiervorschlag: Walter, Mario (2026): Nation im Kopf · Interaktives Lernlabor. https://github.com/GeschichtefuerdieGegenwart/nation-im-kopf-gene – maschinenlesbar in `CITATION.cff`.
+- Stand vor dem Fortbildungsauftrag der Schule (3. November 2026): Commit `0cc0a7fa2abd`, siehe `docs/stand-2026-11-03.md`.
+
+Für eine kommerzielle Nutzung ist eine eigene Vereinbarung mit dem Urheber nötig.

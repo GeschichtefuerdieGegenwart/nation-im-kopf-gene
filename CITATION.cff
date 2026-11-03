@@ -1,0 +1,18 @@
+cff-version: 1.2.0
+message: "Wenn du dieses Material verwendest oder darüber schreibst, zitiere es bitte so."
+title: "Nation im Kopf · Interaktives Lernlabor"
+abstract: "Lernlabor zu Nationalismus für das Wahlfach Demokratiebildung und Geschichte mit Gemeinschaftskunde: vier Theorien, fünf Länderfälle, Vertiefungen zu Abstammung, erfundenen Traditionen und Nationalismus als Gefahr für die Demokratie."
+authors:
+  - family-names: Walter
+    given-names: Mario
+type: software
+version: "Stand 2026-11-03"
+date-released: "2026-11-03"
+repository-code: "https://github.com/GeschichtefuerdieGegenwart/nation-im-kopf-gene"
+license: MIT
+keywords:
+  - Unterricht
+  - Lernumgebung
+  - Berufliches Gymnasium
+  - Baden-Württemberg
+notes: "Code: MIT. Texte, Aufgaben, Daten und Grafiken: CC BY-NC-SA 4.0 (siehe LICENSE-INHALTE.md). Entwickelt mit KI-Unterstützung; Konzept, Auswahl und Überarbeitung durch den Urheber."
