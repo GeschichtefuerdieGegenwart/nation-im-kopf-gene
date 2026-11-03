@@ -223,4 +223,5 @@ $('#copyResult').addEventListener('click',async()=>{const text=`NATION IM KOPF �
 $('#resetAll').addEventListener('click',()=>{if(!confirm('Alle Eingaben und Markierungen dieser Sitzung zurücksetzen?'))return;$$('textarea,input[type="text"],input[type="number"]').forEach(x=>x.value='');$$('input[type="checkbox"]').forEach(x=>x.checked=false);state.done.clear();updateProgress();showPage(0);notify('Neue Lernrunde gestartet.')});
 if(location.hash.startsWith('#modul-'))showPage((parseInt(location.hash.split('-')[1])||1)-1);updateProgress();
 })();</script>
+  <p class="urheberzeile" style="font-size:1rem;opacity:.72;margin-top:1.5rem">© 2026 Mario Walter · Inhalte CC BY-NC-SA 4.0 · Code MIT · mit KI-Unterstützung entwickelt</p>
 </body></html>
