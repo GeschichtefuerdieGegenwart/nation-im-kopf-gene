@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="utf-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1"/>
+<meta name="description" content="Übungsplattform zur Klassenarbeit Nationalismus: Abrufen, Stolperkarten, Kipp-Punkte, Sach- und Werturteil und operatorengerechte Aufgaben mit Erwartungshorizont."/>
+<title>Fit für die Klassenarbeit – Übungsplattform Nationalismus</title>
+<link href="https://fonts.googleapis.com" rel="preconnect"/>
+<link crossorigin="" href="https://fonts.gstatic.com" rel="preconnect"/>
+<link href="https://fonts.googleapis.com/css2?family=Atkinson+Hyperlegible:wght@400;700&family=Fraunces:opsz,wght@9..144,600;9..144,700&display=swap" rel="stylesheet"/>
+<style>
+{{CSS}}
+/* Übungsplattform */
+.areas{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:var(--s3);margin-top:var(--s6)}
+.area{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s4);border-top:5px solid var(--c,var(--teal));display:flex;flex-direction:column;gap:var(--s2)}
+.area h3{font-size:var(--text-base)}
+.area p{font-size:var(--text-sm);color:var(--muted)}
+.area .links{display:flex;flex-wrap:wrap;gap:var(--s2);margin-top:auto}
+.area .links a{font-size:var(--text-sm);font-weight:700;color:var(--text);border:1px solid var(--border);border-radius:999px;padding:4px 12px;text-decoration:none;background:var(--surface-2)}
+.area .tag{align-self:flex-start}
+.filter{display:flex;flex-wrap:wrap;gap:var(--s2);margin-bottom:var(--s4)}
+.filter button{min-height:44px;border:1px solid var(--border);border-radius:999px;padding:var(--s2) var(--s4);background:var(--surface-2);font-weight:700;font-size:var(--text-sm)}
+.filter button[aria-pressed=true]{background:var(--text);color:var(--bg);border-color:transparent}
+.cards{display:grid;gap:var(--s3)}
+.rq{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s4);border-left:5px solid var(--c,var(--teal))}
+.rq .meta{font-size:var(--text-xs);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:var(--s1)}
+.rq .qq{font-weight:700;margin-bottom:var(--s3)}
+.rq .ans{display:none;background:var(--surface-2);border-radius:var(--r-md);padding:var(--s3) var(--s4);font-size:var(--text-sm);margin:var(--s3) 0}
+.rq.open .ans{display:block}
+.rq .rate{display:none;flex-wrap:wrap;gap:var(--s2);align-items:center;font-size:var(--text-sm)}
+.rq.open .rate{display:flex}
+.rq .rate button,.rq .show{min-height:40px;border:1px solid var(--border);border-radius:999px;padding:4px 14px;background:var(--surface-2);font-size:var(--text-sm)}
+.rq .rate button[aria-pressed=true]{background:var(--text);color:var(--bg)}
+.rq.open .show{display:none}
+.tally{position:sticky;bottom:var(--s3);margin-top:var(--s5);background:var(--text);color:var(--bg);border-radius:var(--r-lg);padding:var(--s4);display:flex;flex-wrap:wrap;gap:var(--s4);align-items:center;font-size:var(--text-sm);z-index:5}
+.tally b{font-family:var(--font-display)}
+.tally .rec{flex:1 1 260px}
+.classify{display:grid;gap:var(--s3)}
+.cl-item{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-lg);padding:var(--s4)}
+.cl-item .src{font-size:var(--text-xs);font-weight:700;letter-spacing:.06em;text-transform:uppercase;color:var(--muted);margin-bottom:var(--s1)}
+.cl-item p.st{font-weight:700;margin-bottom:var(--s3)}
+.cl-btns{display:flex;flex-wrap:wrap;gap:var(--s2)}
+.cl-btns button{min-height:40px;border:1px solid var(--border);border-radius:999px;padding:4px 14px;background:var(--surface-2);font-size:var(--text-sm)}
+.cl-btns button.correct{background:var(--success-hi);border-color:var(--success)}
+.cl-btns button.wrong{background:var(--error-hi);border-color:var(--error)}
+.cl-fb{display:none;margin-top:var(--s3);font-size:var(--text-sm);color:var(--muted)}
+.cl-item.done .cl-fb{display:block}
+.cl-fb b{color:var(--text)}
+.progress{font-size:var(--text-sm);color:var(--muted);margin-top:var(--s3)}
+.ops{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:var(--s3);margin-bottom:var(--s5)}
+.ops div{background:var(--surface);border:1px solid var(--border);border-radius:var(--r-md);padding:var(--s3);font-size:var(--text-sm)}
+.ops b{display:block;margin-bottom:var(--s1)}
+.kuer{border:2px dashed var(--gold);border-radius:var(--r-lg);padding:var(--s5);background:var(--surface)}
+@media (max-width:860px){.areas{grid-template-columns:1fr 1fr}.ops{grid-template-columns:1fr}}
+@media (max-width:540px){.areas{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<a class="skip" href="#main">Zum Inhalt springen</a>
+{{HEADER}}
+
+<main id="main">
+
+<div class="hero" style="grid-template-columns:1fr">
+ <div>
+  <span class="eyebrow">Übungsplattform · Klassenarbeit Nationalismus</span>
+  <h1>Fit für die <em>Klassenarbeit</em></h1>
+  <p class="lead">Hier übst du alles, was in der Klassenarbeit drankommt: das Lernlabor „Nation im Kopf“, „Gene ohne Reisepass“ und „Nationalismus als Gefahr für die Demokratie?“. Die Übungen folgen den Zusammenfassungen, die du als PDF herunterladen kannst. Du kannst so oft üben, wie du willst.</p>
+  <div class="motto"><svg width="40" height="40" viewBox="0 0 24 24" fill="none" stroke="var(--primary)" stroke-width="1.8" aria-hidden="true"><path d="M12 2v4M12 18v4M4.9 4.9l2.8 2.8M16.3 16.3l2.8 2.8M2 12h4M18 12h4"/></svg><div><strong>Erst aus dem Kopf abrufen, dann nachschauen.</strong><p class="note" style="margin-top:4px">So bleibt mehr hängen als beim Wiederlesen. Nichts wird gespeichert oder gesendet.</p></div></div>
+ </div>
+</div>
+
+<div class="areas">
+ <div class="area" style="--c:var(--teal)"><span class="tag">Pflicht · A</span><h3>Nation im Kopf</h3><p>Vier Theorien, Idealtypen und Kontinuum, vier Ebenen der Zugehörigkeit, fünf Länderfälle.</p><div class="links"><a href="index.html">Lernlabor</a></div></div>
+ <div class="area" style="--c:var(--g1)"><span class="tag">Pflicht · B</span><h3>Gene ohne Reisepass</h3><p>Gene folgen der Geografie, nicht den Grenzen. Was DNA-Tests können und was nicht.</p><div class="links"><a href="gene-ohne-reisepass.html">Modul</a><a href="pdf/gene-ohne-reisepass-zusammenfassung.pdf" download>PDF · 2 Seiten</a></div></div>
+ <div class="area" style="--c:var(--primary)"><span class="tag">Pflicht · C</span><h3>Nationalismus und Demokratie</h3><p>Begriffe, Ambivalenz, Kipp-Punkte, Grundgesetz, Populismus, Urteilsbildung und die aktuelle Debatte um ein AfD-Verbot.</p><div class="links"><a href="nationalismus-demokratie.html">Modul</a><a href="pdf/nationalismus-demokratie-zusammenfassung.pdf" download>PDF · 4 Seiten</a></div></div>
+ <div class="area" style="--c:var(--gold)"><span class="tag">Kür</span><h3>Erfundene Traditionen</h3><p>Für Expertinnen und Experten. Du darfst dieses Wissen in der Klassenarbeit nutzen, musst es aber nicht.</p><div class="links"><a href="erfundene-traditionen.html">Modul</a><a href="pdf/erfundene-traditionen-zusammenfassung.pdf" download>PDF · 2 Seiten</a></div></div>
+</div>
+
+<section id="abruf" class="reveal">
+ <span class="eyebrow">01 · Abrufen</span>
+ <h2 class="title">Fragen aus dem Kopf beantworten</h2>
+ <p class="intro">Überlege oder schreibe deine Antwort zuerst auf. Klicke erst dann auf „Antwort zeigen“ und schätze dich ehrlich ein. Unten siehst du, wo du am meisten üben solltest.</p>
+ <div class="filter" id="abrufFilter" aria-label="Bereich wählen"></div>
+ <div class="cards" id="abrufCards"></div>
+ <div class="tally" role="status" aria-live="polite"><div><b id="tSure">0</b> sicher · <b id="tPart">0</b> teilweise · <b id="tOpen">0</b> noch offen</div><div class="rec" id="tRec">Schätze dich nach jeder Antwort ein. Dann bekommst du eine Empfehlung.</div><button class="btn" id="mixBtn" style="background:var(--bg);color:var(--text)">Neue Zufallsrunde</button></div>
+</section>
+
+<section id="stolper" class="reveal">
+ <span class="eyebrow">02 · Stolperkarten</span>
+ <h2 class="title">Stimmt das, oder ist es ein Denkfehler?</h2>
+ <p class="intro">Unter richtigen Aussagen verstecken sich typische Denkfehler. Entscheide und begründe für dich, bevor du klickst. Die Rückmeldung erklärt, was stimmt.</p>
+ <div class="filter" id="stolperFilter" aria-label="Bereich wählen"></div>
+ <div class="classify" id="stolperCards"></div>
+ <p class="progress" id="stolperProg" role="status" aria-live="polite"></p>
+</section>
+
+<section id="kipp" class="reveal">
+ <span class="eyebrow">03 · Wo kippt es?</span>
+ <h2 class="title">Demokratischer Streit oder Grenzüberschreitung?</h2>
+ <p class="intro">Nicht jede nationale Forderung gefährdet die Demokratie. Es kippt, wenn Zugehörigkeit an Abstammung gebunden wird, wenn andere als minderwertig gelten, wenn Vielfalt verboten, Opposition zum „Verrat“ erklärt oder Rechte nur dem „eigenen Volk“ zugestanden werden. Ordne zu.</p>
+ <div class="classify" id="kippCards"></div>
+ <p class="progress" id="kippProg" role="status" aria-live="polite"></p>
+</section>
+
+<section id="urteil" class="reveal">
+ <span class="eyebrow">04 · Urteilsarten</span>
+ <h2 class="title">Tatsache, Sachurteil oder Werturteil?</h2>
+ <p class="intro"><b>Tatsache:</b> nachprüfbare Beschreibung. <b>Sachurteil:</b> beurteilt Wirkung, Folgen oder Erklärungskraft an Kriterien. <b>Werturteil:</b> bewertet nach Normen wie Würde, Gleichheit oder Freiheit und legt diesen Maßstab offen.</p>
+ <div class="classify" id="urteilCards"></div>
+ <p class="progress" id="urteilProg" role="status" aria-live="polite"></p>
+</section>
+
+<section id="klausur" class="reveal">
+ <span class="eyebrow">05 · Aufgaben wie in der Klassenarbeit</span>
+ <h2 class="title">Operatorengerecht schreiben</h2>
+ <p class="intro">Nimm dir pro Aufgabe 15 bis 20 Minuten, ohne Unterlagen. Vergleiche erst danach mit dem Erwartungshorizont. Dein Text bleibt in diesem Fenster und wird nicht gespeichert.</p>
+ <div class="ops">
+  <div><span class="afb i">AFB I</span><b>nennen, beschreiben, erläutern</b>Wissen geordnet wiedergeben und mit Beispielen veranschaulichen.</div>
+  <div><span class="afb ii">AFB II</span><b>erklären, herausarbeiten, analysieren, vergleichen</b>Zusammenhänge begründen, Theorien auf Fälle anwenden.</div>
+  <div><span class="afb iii">AFB III</span><b>beurteilen, bewerten, erörtern</b>Abwägen, Maßstab offenlegen, Gegenposition und Grenze nennen.</div>
+ </div>
+ <div class="filter" id="klausurFilter" aria-label="Bereich wählen"></div>
+ <div class="tasks" id="klausurTasks"></div>
+</section>
+
+<section id="kuer" class="reveal">
+ <span class="eyebrow">06 · Kür</span>
+ <h2 class="title">Erfundene Traditionen: für Expertinnen und Experten</h2>
+ <div class="kuer">
+  <p>Das Modul „Erfundene Traditionen“ gehört nicht zum Pflichtstoff. Wer sich damit beschäftigt hat, kann es in der Klassenarbeit als zusätzliches Argument nutzen, zum Beispiel bei Hobsbawm, beim Kaiserreich oder bei der Frage, ob eine Demokratie eigene Rituale braucht.</p>
+  <ul style="margin:var(--s3) 0 var(--s4) var(--s5);display:grid;gap:var(--s2)">
+   <li><b>Hobsbawm:</b> Viele nationale Rituale sind jünger, als sie wirken (Sedantag ab 1871, Nationaldenkmäler, 14. Juli in Frankreich erst seit 1880). Jung heißt nicht wertlos: Sie erzeugen echte Gefühle und ziehen Grenzen.</li>
+   <li><b>Smith:</b> Solche Erfindungen überzeugen nur, weil sie an ältere Erinnerungen anknüpfen (Arminius, Barbarossa).</li>
+   <li><b>Brücke zur Demokratie:</b> Der Sedantag feierte ein „Wir“, aus dem Katholiken, Sozialdemokraten, Polen und Juden ausgegrenzt wurden. Eine Einbürgerungsfeier markiert Zugehörigkeit dagegen über Rechte und Verfassung.</li>
+  </ul>
+  <div class="classify" id="kuerCards"></div>
+ </div>
+</section>
+
+{{MODULES}}
+
+<section id="quellen" class="sources reveal">
+ <span class="eyebrow">Hinweise</span>
+ <h2 class="title">Grundlage und Datenschutz</h2>
+ <p>Die Inhalte folgen dem Lernlabor, den Vertiefungsmodulen und ihren PDF-Zusammenfassungen. Belege findest du dort. Die aktuelle Debatte um ein AfD-Verbot hat den Stand vom 8. November 2026.</p>
+ <footer>Die Seite speichert keine Eingaben und Einschätzungen. Wenn du sie neu lädst, beginnst du von vorn.
+    <p class="urheberzeile" style="font-size:1rem;opacity:.72;margin-top:1.5rem">© 2026 Mario Walter · Inhalte CC BY-NC-SA 4.0 · Code MIT · mit KI-Unterstützung entwickelt</p></footer>
+</section>
+</main>
+
+<script>
+{{COMMONJS}}
+(()=>{
+const $=(s,r=document)=>r.querySelector(s),$$=(s,r=document)=>[...r.querySelectorAll(s)];
+const AREA={A:['Nation im Kopf','var(--teal)'],B:['Gene ohne Reisepass','var(--g1)'],C:['Nationalismus und Demokratie','var(--primary)'],K:['Kür: Erfundene Traditionen','var(--gold)']};
+const esc=t=>t.replace(/</g,'&lt;');
+
+/* 01 Abrufen: [Bereich, Frage, Antwort, Fundstelle] */
+const Q=[
+['A','Was meint Anderson mit „vorgestellter politischer Gemeinschaft“? Nenne ein Beispiel.','Die meisten Mitglieder einer Nation begegnen sich nie, stellen sich aber ein gemeinsames „Wir“ vor – begrenzt und souverän. „Vorgestellt“ heißt nicht „erfunden“: Die Vorstellung wirkt real. Medien: Zeitung, Karte, Volkszählung, Museum.','Lernlabor · Theorie Anderson'],
+['A','Warum ist für Gellner die staatliche Schule so wichtig, und was kommt bei ihm zuerst: Nation oder Nationalismus?','Die Industriegesellschaft braucht mobile Menschen, die dieselbe Schriftsprache beherrschen. Die Schule vermittelt Standardsprache und ein nationales „Wir“. Zugespitzt: Der Nationalismus stellt die Nation her, nicht umgekehrt.','Lernlabor · Theorie Gellner'],
+['A','Unterscheide Hobsbawm und Smith in je einem Satz.','Hobsbawm: Jüngere oder veränderte Rituale erwecken durch Wiederholung den Eindruck alter Kontinuität („erfundene Traditionen“). Smith: Nationalismus greift auf ältere Mythen, Erinnerungen, Symbole und Landschaften zurück und deutet sie neu.','Lernlabor · Theorien Hobsbawm, Smith'],
+['A','Unterscheide Willensnation, Kulturnation und Abstammungsnation.','Willensnation: Zugehörigkeit durch den Willen, gemeinsam einen Staat mit gleichen Rechten zu bilden. Kulturnation: gemeinsame Sprache, Literatur, Religion, Erinnerung, auch ohne eigenen Staat; Kultur ist erlernbar. Abstammungsnation: Zugehörigkeit gilt als angeboren und unveränderlich.','Lernlabor · Begriffe'],
+['A','Warum ordnet das Lernlabor Länderfälle auf einem Kontinuum ein und nicht in Schubladen?','Idealtypen gibt es in der Wirklichkeit nicht rein. Reale Nationsvorstellungen mischen politische, rechtliche, kulturelle, religiöse und abstammungsbezogene Merkmale, und die Mischung verändert sich historisch.','Lernlabor · Kontinuum'],
+['A','Nenne die vier Ebenen der Zugehörigkeit und zeige an einem Beispiel, dass sie auseinanderfallen können.','Rechtlich, politisch, sozial, persönlich. Beispiel: Jemand hat die deutsche Staatsangehörigkeit (rechtlich), wird im Alltag aber wegen Name oder Akzent nicht als zugehörig anerkannt (sozial).','Lernlabor · Ebenen'],
+['A','Wähle einen Länderfall: Was war ein Wendepunkt, und wer wurde ausgeschlossen?','Argentinien: Masseneinwanderung 1870–1930, Schule als Werkzeug; Indigene und Afroargentinier unsichtbar gemacht. Polen: kein Staat 1795–1918; „polnisch = katholisch“ grenzte Juden, Orthodoxe, Säkulare aus. Côte d’Ivoire: „Ivoirité“ in den 1990ern; nördliche Gruppen, Ouattara. Griechenland: Megali Idea; gemischte Zugehörigkeiten. Bosnien-Herzegowina: Dayton 1995; wer keinem der drei „konstitutiven Völker“ angehört, ist bei höchsten Ämtern benachteiligt.','Lernlabor · Länderfälle'],
+['B','Was zeigt die Studie von Novembre u. a. (2008)?','Genetische Ähnlichkeit in Europa folgt der geografischen Entfernung, als fließender Verlauf, nicht als nationale Blöcke. Die Hälfte der Personen ließ sich auf etwa 310 km, 90 % auf etwa 700 km genau verorten.','PDF Gene · Abschnitt 2'],
+['B','Wo liegt der größte Teil der menschlichen genetischen Vielfalt?','Etwa 85 % innerhalb von Bevölkerungen, nur etwa 15 % zwischen ihnen (Lewontin 1972, später bestätigt).','PDF Gene · Abschnitt 3'],
+['B','Was ergab die Studie zu Kroaten, Serben und Bosniaken (2005)?','Die väterlichen Linien kommen in allen drei Gruppen vor, nur unterschiedlich häufig. Die Gruppen teilen einen großen Teil desselben, für den Balkan typischen Genpools. Nationen entstanden durch Religion, Sprache, Staaten und Kriege, nicht durch DNA.','PDF Gene · Abschnitt 5'],
+['B','Warum ändern sich DNA-Testergebnisse, obwohl die DNA gleich bleibt?','Tests vergleichen mit Referenzgruppen heute lebender Menschen. Wo eine Region beginnt, legt der Anbieter fest. Neue Referenzgruppen oder Rechenverfahren ändern die Prozentangaben.','PDF Gene · Abschnitt 6'],
+['B','Was zeigen Milchverträglichkeit und helle Haut über „typische“ Merkmale?','Ähnliche Merkmale entstanden in verschiedenen Regionen über verschiedene Gene (konvergente Evolution), ausgelöst durch Lebensweise und Umwelt, z. B. Viehhaltung. Ähnliches Aussehen heißt nicht enge Verwandtschaft, und es gibt kein nationales Gesamtpaket.','PDF Gene · Abschnitt 7'],
+['B','Was kann DNA zeigen, und was nicht?','Kann: Verwandtschaft, statistische Ähnlichkeit zu Referenzgruppen, wahrscheinliche Herkunftsregionen von Vorfahren, Spuren von Wanderungen. Kann nicht: Staatsangehörigkeit, Sprache, Religion, nationale Identität, ob jemand „richtig“ dazugehört – das ist eine politische und soziale Frage.','PDF Gene · Seite 1'],
+['C','Unterscheide Patriotismus, Nationalismus und Chauvinismus.','Patriotismus: Verbundenheit ohne Abwertung anderer, Kritik möglich. Nationalismus: Nation als höchster politischer Wert, Staat und Nation sollen sich decken. Chauvinismus: behauptete Überlegenheit, Abwertung anderer. Die Grenzen sind fließend.','PDF Demokratie · Abschnitt 1'],
+['C','Was meinen demos und ethnos?','demos: Volk als Gemeinschaft gleichberechtigter Bürgerinnen und Bürger, Zugehörigkeit erwerbbar. ethnos: Volk als Abstammungs- oder Kulturgemeinschaft, in die man hineingeboren wird.','PDF Demokratie · Abschnitt 1'],
+['C','Nenne je ein Beispiel, in dem Nationalismus Demokratie gestützt und gefährdet hat.','Motor: Hambacher Fest 1832, Paulskirche 1848/49, Friedliche Revolution 1989, Dekolonisation. Gefahr: „Reichsfeinde“ im Kaiserreich, NS-„Volksgemeinschaft“, Jugoslawienkriege 1991–1995.','PDF Demokratie · Abschnitt 2'],
+['C','Wann kippt nationale Zugehörigkeit in Ausgrenzung? Nenne drei Kipp-Punkte.','Wenn Zugehörigkeit an Abstammung gebunden wird; wenn die eigene Nation als überlegen gilt; wenn Homogenität gefordert wird; wenn Opposition als „Volksverrat“ gilt; wenn Rechte nur für das „eigene Volk“ gelten. Die mittlere Stufe (z. B. „Leitkultur“, „eigene Interessen zuerst“) ist kritisierbar, aber legitimer demokratischer Streit.','PDF Demokratie · Abschnitt 3'],
+['C','Was stellte das Bundesverfassungsgericht 2017 im NPD-Urteil fest, und warum gab es kein Verbot?','Ein an einer „ethnisch definierten Volksgemeinschaft“ ausgerichteter Volksbegriff missachtet die Menschenwürde. Die NPD ist verfassungsfeindlich. Kein Verbot, weil Anhaltspunkte fehlten, dass sie ihre Ziele erreichen könnte (Potentialität). Danach Art. 21 Abs. 3 GG.','PDF Demokratie · Seite 2'],
+['C','Was kennzeichnet Populismus nach Jan-Werner Müller?','Anti-elitär und vor allem anti-pluralistisch: der moralische Anspruch, allein das „wahre Volk“ zu vertreten. Nicht jede Elitenkritik ist populistisch.','PDF Demokratie · Abschnitt 5'],
+['C','Wer darf ein Parteiverbot beantragen, und wer entscheidet darüber?','Beantragen: Bundestag, Bundesrat oder Bundesregierung. Entscheiden: allein das Bundesverfassungsgericht (Art. 21 Abs. 4 GG). Ein Gutachten oder eine Einstufung durch den Verfassungsschutz ist kein Verbot.','PDF Demokratie · Seite 3'],
+['C','Was stellt das Rechtsgutachten der GFF vom Juni 2026 fest, und warum ist es kein Urteil?','Es prüft die AfD nach den Maßstäben des NPD-Urteils: Gesamtkonzept gegen die Menschenwürde (u. a. Ausbürgerungen, Religionsverbote), Verstoß gegen das Demokratieprinzip (angekündigte Strafverfolgung politischer Gegner), Potentialität gegeben. Ein Antrag hätte „wahrscheinlich Erfolg“. Es ist die Bewertung eines Vereins; entscheiden kann nur das BVerfG.','PDF Demokratie · Seite 3'],
+['C','Warum genügt dem GFF-Gutachten ein ethnisch-kulturelles Volksverständnis allein nicht?','Entscheidend sind die rechtlichen Maßnahmen, die daraus folgen sollen, z. B. Ausbürgerungen oder Ungleichbehandlung bestimmter Deutscher. Erst eine darauf gestützte Diskriminierung verletzt die Menschenwürde.','PDF Demokratie · Seite 3'],
+['C','„Ist die Partei verfassungswidrig?“ und „Soll ein Verbot beantragt werden?“ – worin unterscheiden sich die Fragen?','Die erste ist eine Rechtsfrage: Sachurteil anhand der Kriterien von Art. 21 Abs. 2 GG. Die zweite ist eine politische Frage: Abwägung von Zielen und Folgen, Werturteil mit offengelegtem Maßstab. Man kann eine Partei für gefährlich halten und ein Verbot trotzdem ablehnen.','PDF Demokratie · Seite 4'],
+['K','Was ist eine „erfundene Tradition“ nach Hobsbawm?','Eine Praxis mit festen Regeln und symbolischem Charakter, die durch Wiederholung Werte einübt und eine Kontinuität zu einer passenden Vergangenheit behauptet. Beispiel: Sedantag 1871–1918.','PDF Erfundene Traditionen · Abschnitt 1'],
+['K','Wie kannst du Erfundene Traditionen in einer Urteilsaufgabe nutzen?','Als zusätzliches Argument: Das nationale „Wir“ wurde bewusst hergestellt (Hobsbawm), knüpfte aber an Bekanntes an (Smith). Solche Rituale zogen Grenzen nach innen, etwa gegen Katholiken, Sozialdemokraten, Polen und Juden im Kaiserreich.','PDF Erfundene Traditionen · Seite 2']
+];
+let fA='alle';const rating=new Map();
+function drawAbruf(list){
+ $('#abrufCards').innerHTML=list.map(i=>{const q=Q[i];return `<article class="rq" data-i="${i}" style="--c:${AREA[q[0]][1]}"><p class="meta">${AREA[q[0]][0]}</p><p class="qq">${esc(q[1])}</p><button class="show">Antwort zeigen</button><div class="ans"><p>${esc(q[2])}</p><p class="note" style="margin:var(--s2) 0 0">Nachlesen: ${q[3]}</p></div><div class="rate" role="group" aria-label="Selbsteinschätzung"><span>Wie sicher warst du?</span>${['sicher','teilweise','noch offen'].map((r,k)=>`<button data-r="${k}" aria-pressed="${rating.get(i)===k}">${r}</button>`).join('')}</div></article>`}).join('');
+}
+function filterBtns(el,cb){const cats=['alle','A','B','C','K'];$(el).innerHTML=cats.map(c=>`<button data-f="${c}" aria-pressed="${c==='alle'}">${c==='alle'?'Alle':c==='K'?'Kür':c+' · '+AREA[c][0]}</button>`).join('');$(el).addEventListener('click',e=>{const b=e.target.closest('button');if(!b)return;$$('button',$(el)).forEach(x=>x.setAttribute('aria-pressed',x===b));cb(b.dataset.f)})}
+const idx=f=>Q.map((q,i)=>i).filter(i=>f==='alle'||Q[i][0]===f);
+filterBtns('#abrufFilter',f=>{fA=f;drawAbruf(idx(f))});drawAbruf(idx('alle'));
+$('#abrufCards').addEventListener('click',e=>{const card=e.target.closest('.rq');if(!card)return;const i=+card.dataset.i;
+ if(e.target.closest('.show')){card.classList.add('open');card.querySelector('.rate button').focus();return}
+ const r=e.target.closest('.rate button');if(!r)return;rating.set(i,+r.dataset.r);$$('.rate button',card).forEach(x=>x.setAttribute('aria-pressed',x===r));tally()});
+function tally(){const v=[...rating.values()];$('#tSure').textContent=v.filter(x=>x===0).length;$('#tPart').textContent=v.filter(x=>x===1).length;$('#tOpen').textContent=v.filter(x=>x===2).length;
+ const open={A:0,B:0,C:0,K:0};rating.forEach((r,i)=>{if(r>0)open[Q[i][0]]+=r});const best=['A','B','C'].sort((a,b)=>open[b]-open[a])[0];
+ $('#tRec').textContent=open[best]===0?'Bisher alles sicher. Probiere eine Zufallsrunde oder eine Aufgabe in Abschnitt 05.':`Am meisten Übung brauchst du bei ${best} · ${AREA[best][0]}. Lies dort nach und wiederhole die Fragen morgen noch einmal.`}
+$('#mixBtn').addEventListener('click',()=>{const pool=idx(fA).filter(i=>rating.get(i)!==0);const src=pool.length>=5?pool:idx(fA);const pick=src.map(i=>[Math.random(),i]).sort((a,b)=>a[0]-b[0]).slice(0,5).map(x=>x[1]);drawAbruf(pick);$('#abruf').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})});
+
+/* Generische Zuordnung mit Fortschritt */
+function classify(el,prog,cats,items,label){
+ const draw=list=>{$(el).innerHTML=list.map(i=>{const it=items[i];return `<div class="cl-item" data-i="${i}">${it[3]?`<p class="src">${AREA[it[3]][0]}</p>`:''}<p class="st">„${esc(it[0])}“</p><div class="cl-btns">${cats.map((c,j)=>`<button data-j="${j}">${c}</button>`).join('')}</div><p class="cl-fb">${it[2]}</p></div>`}).join('');upd()};
+ let right=0,done=0;const upd=()=>{if(prog)$(prog).textContent=done?`${done} bearbeitet, davon ${right} auf Anhieb richtig.`:''};
+ $(el).addEventListener('click',e=>{const b=e.target.closest('button'),card=e.target.closest('.cl-item');if(!b||!card||card.classList.contains('done'))return;const it=items[+card.dataset.i];card.classList.add('done');$$('button',card).forEach((x,k)=>{x.disabled=true;if(k===it[1])x.classList.add('correct')});const ok=+b.dataset.j===it[1];if(!ok)b.classList.add('wrong');done++;if(ok)right++;card.querySelector('.cl-fb').insertAdjacentHTML('afterbegin',`<b>${ok?'Richtig.':'Noch nicht.'}</b> `);upd()});
+ draw(items.map((_,i)=>i));return list=>{right=0;done=0;draw(list)};
+}
+
+/* 02 Stolperkarten */
+const S=[
+['„Vorgestellt“ heißt bei Anderson: Die Nation ist frei erfunden und darum nicht wirklich.',1,'„Vorgestellt“ heißt nicht „erfunden“: Die Vorstellung des „Wir“ wirkt real, etwa über Zeitung, Karte, Museum.','A'],
+['Nach Gellner gibt es zuerst die Nation; der Nationalismus folgt aus ihr.',1,'Gellner dreht es um: Nationalismus trägt dazu bei, die Nation herzustellen, vor allem über Schule und Standardsprache.','A'],
+['Smith: Nationalismus greift auf ältere Erinnerungen, Landschaften und Symbole zurück und deutet sie neu.',0,'Kern von Smiths Ansatz (Ethnosymbolismus).','A'],
+['Wer einen Pass besitzt, gehört damit automatisch zur Willensnation.',1,'Ein Pass zeigt rechtliche Zugehörigkeit. Er beweist noch keinen gemeinsamen politischen Willen.','A'],
+['Ein Mensch kann rechtlich dazugehören und im Alltag trotzdem als „nicht wirklich zugehörig“ behandelt werden.',0,'Rechtliche und soziale Zugehörigkeit können auseinanderfallen.','A'],
+['Kulturnation und Abstammungsnation meinen dasselbe.',1,'Kultur kann man lernen und verändern. Die Abstammungsnation behauptet eine angeborene, unveränderliche Zugehörigkeit.','A'],
+['Polen war zwischen 1795 und 1918 eine Nation ohne eigenen Staat.',0,'Nach den Teilungen bis zur Wiedergründung 1918; Sprache, Literatur und Kirche trugen die Nation.','A'],
+['Die Länderfälle zeigen, wie die Menschen in diesen Ländern heute sind.',1,'Die Fälle zeigen umkämpfte historische Vorstellungen von Nation, nicht den „Charakter“ heutiger Menschen.','A'],
+['Es gibt ein Gen, das alle Deutschen haben und alle anderen nicht.',1,'Kein Gen und keine DNA-Stelle trennt nationale Gruppen. Unterschiede sind Häufigkeiten, die fließend ineinander übergehen.','B'],
+['Mit DNA lässt sich statistisch schätzen, aus welcher Region Vorfahren wahrscheinlich stammen.',0,'Als Wahrscheinlichkeit und abhängig von den Vergleichsgruppen, oft auf einige hundert Kilometer genau.','B'],
+['Der größte Teil der genetischen Vielfalt liegt zwischen Bevölkerungen.',1,'Etwa 85 % liegen innerhalb von Bevölkerungen.','B'],
+['Alle Menschen sind genetisch identisch – deshalb gibt es keine nationalen Gene.',1,'Menschen unterscheiden sich in vielen DNA-Varianten. „Keine nationalen Gene“ heißt: Die Unterschiede enden nicht an Staatsgrenzen.','B'],
+['Ändert ein Anbieter seine Referenzgruppen, kann sich das Testergebnis ändern, obwohl die DNA gleich bleibt.',0,'Die Regionen in Testergebnissen sind gesetzte Kategorien.','B'],
+['Novembre u. a. zeigen, dass sich die Bevölkerungen genau an den Staatsgrenzen unterscheiden.',1,'Das Gegenteil: Ähnlichkeit folgt der Entfernung, als fließender Verlauf.','B'],
+['Patriotismus und Chauvinismus meinen dasselbe: Liebe zum eigenen Land.',1,'Patriotismus wertet andere nicht ab, Kritik bleibt möglich. Chauvinismus behauptet Überlegenheit.','C'],
+['Nationalismus hat auch demokratische Bewegungen gestützt, etwa 1832 in Hambach und 1848/49.',0,'Einheit und Freiheit gehörten zusammen: Volkssouveränität, Grundrechte der Paulskirche.','C'],
+['„Wir sind das Volk!“ (1989) und „Wir allein sind das Volk!“ meinen dasselbe.',1,'1989: Bürger fordern Rechte gegenüber einer Diktatur (demos). „Wir allein“: populistischer Alleinvertretungsanspruch.','C'],
+['Weil die NPD verfassungsfeindlich war, wurde sie 2017 verboten.',1,'Verfassungsfeindlich ja, aber kein Verbot: Es fehlte die Potentialität. Danach Art. 21 Abs. 3 GG.','C'],
+['Jede Forderung nach strengeren Einbürgerungsregeln ist verfassungswidrig.',1,'Einbürgerungsregeln sind politisch gestaltbar – legitimer demokratischer Streit.','C'],
+['Das GFF-Gutachten von 2026 hat die AfD verboten.',1,'Ein Gutachten ist eine Bewertung. Verbieten kann nur das Bundesverfassungsgericht, und nur auf Antrag von Bundestag, Bundesrat oder Bundesregierung.','C'],
+['Dem GFF-Gutachten reicht ein ethnisch-kulturelles Volksverständnis allein, um Verfassungswidrigkeit anzunehmen.',1,'Nein: Entscheidend sind die geplanten rechtlichen Maßnahmen, etwa Ausbürgerungen oder die Ungleichbehandlung bestimmter Deutscher.','C'],
+['Das VG Köln hat 2026 festgestellt, dass die AfD verfassungstreu ist.',1,'Das Gericht sah einen „starken Verdacht“, aber keine Grundtendenz, die die Gesamtpartei prägt. Die AfD bleibt vorerst Verdachtsfall; das Hauptverfahren läuft.','C'],
+['Anders als bei der NPD 2017 sieht das GFF-Gutachten bei der AfD die Potentialität als gegeben an.',0,'Begründung: rund 70.000 Mitglieder, starke Präsenz in Parlamenten, gesicherte Finanzierung.','C']
+];
+const resetS=classify('#stolperCards','#stolperProg',['stimmt','Denkfehler'],S);
+filterBtns('#stolperFilter',f=>resetS(S.map((s,i)=>i).filter(i=>f==='alle'||S[i][3]===f)));
+$('#stolperFilter button[data-f="K"]').remove();
+
+/* 03 Kipp-Punkte */
+classify('#kippCards','#kippProg',['demokratisch-inklusiv','legitimer Streit','demokratiegefährdend'],[
+['Deutsch ist, wer die deutsche Staatsangehörigkeit besitzt – egal, woher die Eltern stammen.',0,'Zugehörigkeit über gleiche Rechte (demos), vgl. Art. 116 GG.'],
+['Wer eingebürgert werden will, sollte länger in Deutschland gelebt haben als heute.',1,'Fristen kann der Gesetzgeber ändern. Kritisierbar, aber legitimer Streit.'],
+['Zum Volk gehört nur, wer deutsche Vorfahren hat.',2,'Abstammung als Kriterium: ethnischer Volksbegriff, unvereinbar mit Art. 1 und 3 GG (BVerfG 2017).'],
+['Zugewanderte sollen sich an eine „Leitkultur“ anpassen.',1,'Anpassungserwartung: umstritten, kann Druck erzeugen, gehört aber zum demokratischen Streit, solange gleiche Rechte gelten.'],
+['Wer die Regierungspolitik kritisiert, ist ein Volksverräter.',2,'Opposition als „Verrat“: verletzt Meinungsfreiheit und Demokratieprinzip.'],
+['Unsere Nation steht über allen anderen.',2,'Chauvinismus: behauptete Überlegenheit, Abwertung anderer.'],
+['Bei internationalen Verträgen sollte die Regierung zuerst die eigenen Interessen vertreten.',1,'„Eigene Interessen zuerst“: politische Position, legitimer Streit.'],
+['Deutsche mit zweitem Pass sollen bei Straftaten ausgebürgert werden, andere Deutsche nicht.',2,'Rechte hängen dann an der Herkunft: Ungleichbehandlung von Staatsbürgern; ein Beispiel, das im GFF-Gutachten als Beleg gegen die Menschenwürde gewertet wird.'],
+['Vielfalt der Herkunft, Religion und Sprache gehört zu einer Demokratie.',0,'Pluralismus als Grundlage.']
+]);
+
+/* 04 Urteilsarten */
+classify('#urteilCards','#urteilProg',['Tatsache','Sachurteil','Werturteil'],[
+['Zwischen 1870 und 1930 ließen sich mehr als vier Millionen Einwandernde dauerhaft in Argentinien nieder.',0,'Nachprüfbare Beschreibung.','A'],
+['Gellners Ansatz erklärt die Nationsbildung in Argentinien überzeugender als Smiths Ansatz.',1,'Beurteilt die Erklärungskraft von Theorien an Kriterien.','A'],
+['Eine Demokratie sollte niemanden wegen seiner Herkunft von gleichen Rechten ausschließen.',2,'Normative Forderung mit dem Maßstab Gleichheit.','A'],
+['DNA-Tests können keine Staatsangehörigkeit feststellen, weil diese eine rechtliche Beziehung ist.',1,'Begründete Aussage über die Aussagekraft eines Verfahrens.','B'],
+['Der Sedantag stärkte die Bindung vieler Protestanten an das Reich, erreichte die Arbeiterbewegung aber kaum.',1,'Beurteilt Wirkung und Reichweite.','K'],
+['Das Verwaltungsgericht Köln hat im Februar 2026 die Einstufung der AfD als „gesichert rechtsextremistisch“ vorläufig gestoppt.',0,'Beschreibt eine Entscheidung, nachprüfbar.','C'],
+['Nach den Maßstäben des NPD-Urteils hätte ein Verbotsantrag gegen die AfD wahrscheinlich Erfolg.',1,'Prognose an rechtlichen Kriterien – strittig, aber begründbar oder widerlegbar.','C'],
+['Ein Verbotsverfahren würde der AfD eher nützen, weil sie sich als Opfer darstellen könnte.',1,'Aussage über mögliche Folgen: Sachurteil (Prognose).','C'],
+['Die Demokratie sollte ihre Gegner mit Argumenten und Wahlen besiegen, nicht mit Verboten.',2,'Normative Aussage darüber, welches Mittel richtig ist.','C'],
+['Ein Nationsverständnis, das Menschen nach Abstammung sortiert, ist mit der Menschenwürde unvereinbar und abzulehnen.',2,'Maßstab Menschenwürde, normative Folgerung.','C']
+]);
+
+/* 05 Aufgaben: [Bereich, AFB-Klasse, AFB-Text, Aufgabe, Erwartungshorizont[]] */
+const T=[
+['A','ii','AFB II','Erklären Sie mit Anderson und Gellner, wie in Argentinien zwischen 1870 und 1930 eine Nation entstand.',['Ausgangslage: Masseneinwanderung, viele Sprachen und Herkünfte.','Gellner: staatliche Schule mit spanischer Standardsprache macht Menschen kommunikationsfähig und mobil; Nationalismus stellt Nation her.','Anderson: gemeinsame Medien, Geschichte, Symbole erzeugen ein vorgestelltes „Wir“.','Ein- und Ausschluss: Anpassung an europäisch geprägte Norm; Indigene und Afroargentinier unsichtbar gemacht.','Fazit: beide Theorien ergänzen sich; Grenze benennen.']],
+['A','iii','AFB III','Beurteilen Sie die Aussage: „Zur Nation gehört, wer die gleiche Sprache spricht.“ Beziehen Sie zwei Theorien, einen Länderfall sowie die Begriffe Willensnation und Kulturnation ein.',['Einordnen: Die Aussage entspricht der Kulturnation; Sprache als einziges Kriterium.','Dafür: Polen 1795–1918 – Sprache, Literatur, Erinnerung trugen die Nation ohne Staat (Anderson).','Dagegen: Argentinien – Sprache als Ergebnis staatlicher Schule (Gellner); Ausschlüsse durch kulturelle Norm.','Ebenen: rechtlich entscheidet die Staatsangehörigkeit; sozial kann ein Akzent Anerkennung verhindern.','Urteil mit Maßstab (gleiche Rechte, Willensnation) und Grenze (Sprache als Voraussetzung demokratischer Beteiligung).']],
+['B','ii','AFB II','Erklären Sie, warum ein DNA-Test nicht feststellen kann, ob eine Person Deutsche oder Serbin ist.',['Funktionsweise: Vergleich mit Referenzgruppen, statistische Schätzung, gesetzte Regionen.','Befunde: Verlauf statt Blöcke (Novembre 2008); gemeinsamer Genpool auf dem Balkan (2005); 85 % Vielfalt innerhalb von Gruppen.','Staatsangehörigkeit ist rechtlich, Sprache und Identität kulturell und persönlich – nichts davon steht in der DNA.','Genau formulieren: Verwandtschaft und Abstammungsmuster sind untersuchbar, Nationalität nicht.']],
+['B','iii','AFB III','Beurteilen Sie die Aussage: „Wer keine deutschen Vorfahren hat, kann kein richtiger Deutscher sein.“',['Einordnen: Abstammungsnation, ethnischer Volksbegriff.','Sachebene: keine nationalen Gene; Ebenen der Zugehörigkeit; Recht im Wandel (1913, 2000, 2024).','Maßstab: Art. 1, 3 Abs. 3, 116 GG; BVerfG 2017.','Gegenposition aufgreifen (z. B. gemeinsame Geschichte als Bindung) und abwägen.','Urteil und Grenze (soziale Anerkennung lässt sich nicht verordnen).']],
+['C','ii','AFB II','Analysieren Sie das NPD-Urteil des Bundesverfassungsgerichts von 2017 im Hinblick auf das Verhältnis von Volksbegriff und Menschenwürde.',['Ethnisch definierte Volksgemeinschaft missachtet die Menschenwürde, weil sie Nicht-Zugehörigen elementare Rechtsgleichheit abspricht.','Bezug: Art. 1, 3 Abs. 3, 20 Abs. 2 GG (Staatsvolk als demos).','Verfassungsfeindlich, aber kein Verbot wegen fehlender Potentialität.','Folgen: Art. 21 Abs. 3 GG; 2024 Ausschluss der Nachfolgepartei von der Parteienfinanzierung.']],
+['C','iii','AFB III','Beurteilen Sie die Aussage: „Wer seine Nation liebt, ist eine Gefahr für die Demokratie.“',['Begriffe klären: Patriotismus, Nationalismus, Chauvinismus, Verfassungspatriotismus.','Dagegen: Nationalismus als Motor (Hambach 1832, Paulskirche, 1989).','Dafür unter Bedingungen: Kipp-Punkte (Abstammung, Überlegenheit, Opposition als Verrat, Rechte nur für das „eigene Volk“).','Urteil: Nicht die Bindung als solche ist das Problem, sondern ihre exklusive Form; Maßstab offengelegt.','Gegenposition (liberaler Nationalismus) und Grenze benennen.']],
+['C','iii','AFB III','Erörtern Sie, ob ein Verbotsverfahren gegen die AfD ein geeignetes Mittel ist, die Demokratie zu schützen.',['Einordnung: Art. 21 Abs. 2 GG, wehrhafte Demokratie; Antrag durch Bundestag, Bundesrat oder Bundesregierung; Entscheidung beim BVerfG.','Sachebene: Prüfschritte nach 2017; Befunde des GFF-Gutachtens (2026); Gegenbefund VG Köln (2026); Gutachten ist kein Urteil.','Pro: Schutz von Würde und gleichen Rechten; Potentialität; das GG sieht das Mittel vor.','Contra: Risiko des Scheiterns, Opferrolle, lange Dauer; Wählerinnen und Wähler bleiben, politische Auseinandersetzung nötig.','Rechtsfrage (Sachurteil) und politische Zweckmäßigkeit (Werturteil) trennen; Maßstab und Grenze nennen.']],
+['K','iii','Kür · AFB III','Bewerten Sie, ob eine Demokratie eigene Rituale braucht.',['Hobsbawm: Rituale stiften Bindung, auch wenn sie jung sind; Kaiserreich als Beispiel für Ausgrenzung.','Smith: Rituale wirken, wenn sie an Erinnerungen anknüpfen.','Demokratisch: Einbürgerungsfeier, Verfassungstag – Zugehörigkeit über Rechte.','Abwägung: Bindung vs. Ausgrenzung und Überwältigung; Urteil mit Maßstab.']]
+];
+const drawT=f=>{$('#klausurTasks').innerHTML=T.filter(t=>f==='alle'||t[0]===f).map((t,i)=>`<div class="task"><p class="note" style="margin:0 0 var(--s1)">${AREA[t[0]][0]}</p><h3><span class="afb ${t[1]}">${t[2]}</span>${esc(t[3])}</h3><textarea aria-label="Deine Antwort"></textarea><details><summary>Erwartungshorizont</summary><ul>${t[4].map(x=>`<li>${esc(x)}</li>`).join('')}</ul></details></div>`).join('')};
+filterBtns('#klausurFilter',drawT);drawT('alle');
+
+/* 06 Kür */
+classify('#kuerCards',null,['stimmt','Denkfehler'],[
+['Erfundene Traditionen sind Lügen und deshalb bedeutungslos.',1,'Sie sind jung und bewusst gestaltet, erzeugen aber echte Gefühle, Bindungen und Ausgrenzungen.'],
+['Der 14. Juli ist in Frankreich erst seit 1880 Nationalfeiertag, obwohl er an 1789 erinnert.',0,'Eingeführt von der Dritten Republik – zeitgleich mit der Denkmal- und Feierwelle in Deutschland.'],
+['Hobsbawm und Smith schließen sich völlig aus.',1,'Sie beleuchten verschiedene Seiten derselben Sache: das Machen (Hobsbawm) und das Anknüpfen (Smith).']
+]);
+})();
+</script>
+</body>
+</html>
