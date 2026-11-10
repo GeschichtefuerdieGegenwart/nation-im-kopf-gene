@@ -11,7 +11,7 @@ if "/* === Gemeinsame Erweiterungen" in base_css:
 extra_css = (SRC / "extra.css").read_text(encoding="utf-8")
 
 MODULES = [
-    ("index.html", "Lernlabor „Nation im Kopf“", "Leitfrage, vier Theorien, Länderfälle und Abschlussurteil", None),
+    ("index.html", "Lernlabor „Nation im Kopf“", "Leitfrage, vier Theorien, Länderfälle und Abschlussurteil", "pdf/nation-im-kopf-zusammenfassung.pdf"),
     ("gene-ohne-reisepass.html", "Gene ohne Reisepass", "DNA, Abstammung und Nation: Was zeigt die Forschung?", "pdf/gene-ohne-reisepass-zusammenfassung.pdf"),
     ("erfundene-traditionen.html", "Erfundene Traditionen", "Hobsbawm und Smith am Kaiserreich, an Frankreich und Schottland", "pdf/erfundene-traditionen-zusammenfassung.pdf"),
     ("nationalismus-demokratie.html", "Nationalismus als Gefahr für die Demokratie?", "Begriffe, Kipp-Punkte, Grundgesetz, Urteilsbildung und aktuelle Debatte", "pdf/nationalismus-demokratie-zusammenfassung.pdf"),
